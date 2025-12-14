@@ -1,0 +1,58 @@
+{
+	"backtrace" : 0,
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : 
+		[
+			"core/src/pipeline/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			}
+		]
+	},
+	"id" : "nstudio-pipeline_autogen_timestamp_deps::@30b62243d16394b7978d",
+	"isGeneratorProvided" : true,
+	"name" : "nstudio-pipeline_autogen_timestamp_deps",
+	"paths" : 
+	{
+		"build" : "core/src/pipeline",
+		"source" : "core/src/pipeline"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "",
+			"sourceIndexes" : 
+			[
+				0
+			]
+		},
+		{
+			"name" : "CMake Rules",
+			"sourceIndexes" : 
+			[
+				1
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build_ubuntu/core/src/pipeline/CMakeFiles/nstudio-pipeline_autogen_timestamp_deps",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build_ubuntu/core/src/pipeline/CMakeFiles/nstudio-pipeline_autogen_timestamp_deps.rule",
+			"sourceGroupIndex" : 1
+		}
+	],
+	"type" : "UTILITY"
+}

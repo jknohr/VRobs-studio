@@ -1,0 +1,45 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"install"
+		],
+		"files" : 
+		[
+			"core/src/rendering/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 64,
+				"parent" : 0
+			}
+		]
+	},
+	"installers" : 
+	[
+		{
+			"backtrace" : 1,
+			"component" : "Unspecified",
+			"destination" : "lib",
+			"paths" : 
+			[
+				"core/src/rendering/libnstudio-rendering.a"
+			],
+			"targetId" : "nstudio-rendering::@04148e01d08527166d37",
+			"targetIndex" : 39,
+			"type" : "target"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "core/src/rendering",
+		"source" : "core/src/rendering"
+	}
+}

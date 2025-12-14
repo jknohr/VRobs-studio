@@ -7,6 +7,9 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
+# QML Language Server support (fixes qmllint import warnings)
+set(QT_QML_GENERATE_QMLLS_INI ON)
+
 # Modules
 # Modules
 add_subdirectory(core)

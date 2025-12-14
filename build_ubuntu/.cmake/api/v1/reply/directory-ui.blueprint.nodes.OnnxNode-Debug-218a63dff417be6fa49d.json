@@ -1,0 +1,43 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"install"
+		],
+		"files" : 
+		[
+			"ui/blueprint/nodes/OnnxNode/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 18,
+				"parent" : 0
+			}
+		]
+	},
+	"installers" : 
+	[
+		{
+			"backtrace" : 1,
+			"component" : "Unspecified",
+			"destination" : "share/neural-studio/qml/blueprint/nodes/OnnxNode",
+			"paths" : 
+			[
+				"ui/blueprint/nodes/OnnxNode/OnnxNode.qml"
+			],
+			"type" : "file"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "ui/blueprint/nodes/OnnxNode",
+		"source" : "ui/blueprint/nodes/OnnxNode"
+	}
+}

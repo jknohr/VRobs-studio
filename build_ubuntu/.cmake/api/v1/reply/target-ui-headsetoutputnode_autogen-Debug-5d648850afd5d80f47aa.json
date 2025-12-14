@@ -1,0 +1,71 @@
+{
+	"backtrace" : 0,
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : 
+		[
+			"ui/blueprint/nodes/HeadsetOutputNode/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			}
+		]
+	},
+	"dependencies" : 
+	[
+		{
+			"id" : "ui-headsetoutputnode_autogen_timestamp_deps::@b6a0e7fdfdb6ffd0de77"
+		}
+	],
+	"id" : "ui-headsetoutputnode_autogen::@b6a0e7fdfdb6ffd0de77",
+	"isGeneratorProvided" : true,
+	"name" : "ui-headsetoutputnode_autogen",
+	"paths" : 
+	{
+		"build" : "ui/blueprint/nodes/HeadsetOutputNode",
+		"source" : "ui/blueprint/nodes/HeadsetOutputNode"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "",
+			"sourceIndexes" : 
+			[
+				0
+			]
+		},
+		{
+			"name" : "CMake Rules",
+			"sourceIndexes" : 
+			[
+				1,
+				2
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build_ubuntu/ui/blueprint/nodes/HeadsetOutputNode/CMakeFiles/ui-headsetoutputnode_autogen",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build_ubuntu/ui/blueprint/nodes/HeadsetOutputNode/CMakeFiles/ui-headsetoutputnode_autogen.rule",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build_ubuntu/ui/blueprint/nodes/HeadsetOutputNode/ui-headsetoutputnode_autogen/timestamp.rule",
+			"sourceGroupIndex" : 1
+		}
+	],
+	"type" : "UTILITY"
+}

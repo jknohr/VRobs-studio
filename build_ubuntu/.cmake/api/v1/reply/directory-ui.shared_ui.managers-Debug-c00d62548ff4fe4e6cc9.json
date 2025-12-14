@@ -1,0 +1,55 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"install"
+		],
+		"files" : 
+		[
+			"ui/shared_ui/managers/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 88,
+				"parent" : 0
+			}
+		]
+	},
+	"installers" : 
+	[
+		{
+			"backtrace" : 1,
+			"component" : "Unspecified",
+			"destination" : "share/neural-studio/qml/managers",
+			"paths" : 
+			[
+				"ui/shared_ui/managers/BaseManager.qml",
+				"ui/shared_ui/managers/CameraManager/CameraManager.qml",
+				"ui/shared_ui/managers/ThreeDAssetsManager/ThreeDAssetsManager.qml",
+				"ui/shared_ui/managers/VideoManager/VideoManager.qml",
+				"ui/shared_ui/managers/GraphicsManager/GraphicsManager.qml",
+				"ui/shared_ui/managers/AudioManager/AudioManager.qml",
+				"ui/shared_ui/managers/FontManager/FontManager.qml",
+				"ui/shared_ui/managers/ShaderManager/ShaderManager.qml",
+				"ui/shared_ui/managers/TextureManager/TextureManager.qml",
+				"ui/shared_ui/managers/EffectsManager/EffectsManager.qml",
+				"ui/shared_ui/managers/ScriptManager/ScriptManager.qml",
+				"ui/shared_ui/managers/MLManager/MLManager.qml",
+				"ui/shared_ui/managers/LLMManager/LLMManager.qml"
+			],
+			"type" : "file"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "ui/shared_ui/managers",
+		"source" : "ui/shared_ui/managers"
+	}
+}

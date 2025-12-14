@@ -1,0 +1,43 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"install"
+		],
+		"files" : 
+		[
+			"ui/blueprint/nodes/GeminiNode/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 18,
+				"parent" : 0
+			}
+		]
+	},
+	"installers" : 
+	[
+		{
+			"backtrace" : 1,
+			"component" : "Unspecified",
+			"destination" : "share/neural-studio/qml/blueprint/nodes/GeminiNode",
+			"paths" : 
+			[
+				"ui/blueprint/nodes/GeminiNode/GeminiNode.qml"
+			],
+			"type" : "file"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "ui/blueprint/nodes/GeminiNode",
+		"source" : "ui/blueprint/nodes/GeminiNode"
+	}
+}

@@ -1,0 +1,71 @@
+{
+	"backtrace" : 0,
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : 
+		[
+			"ui/blueprint/nodes/OnnxNode/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			}
+		]
+	},
+	"dependencies" : 
+	[
+		{
+			"id" : "ui-onnxnode_autogen_timestamp_deps::@930a9c21b94b5d7163f5"
+		}
+	],
+	"id" : "ui-onnxnode_autogen::@930a9c21b94b5d7163f5",
+	"isGeneratorProvided" : true,
+	"name" : "ui-onnxnode_autogen",
+	"paths" : 
+	{
+		"build" : "ui/blueprint/nodes/OnnxNode",
+		"source" : "ui/blueprint/nodes/OnnxNode"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "",
+			"sourceIndexes" : 
+			[
+				0
+			]
+		},
+		{
+			"name" : "CMake Rules",
+			"sourceIndexes" : 
+			[
+				1,
+				2
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build_ubuntu/ui/blueprint/nodes/OnnxNode/CMakeFiles/ui-onnxnode_autogen",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build_ubuntu/ui/blueprint/nodes/OnnxNode/CMakeFiles/ui-onnxnode_autogen.rule",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build_ubuntu/ui/blueprint/nodes/OnnxNode/ui-onnxnode_autogen/timestamp.rule",
+			"sourceGroupIndex" : 1
+		}
+	],
+	"type" : "UTILITY"
+}

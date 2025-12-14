@@ -333,16 +333,16 @@ DART_TESTING_TIMEOUT:STRING=1500
 DYNAMIC_LOADER:BOOL=ON
 
 //No help, variable specified on the command line.
-ENABLE_AJA:BOOL=FALSE
+ENABLE_AJA:UNINITIALIZED=false
 
 //No help, variable specified on the command line.
-ENABLE_VLC:BOOL=TRUE
+ENABLE_VLC:UNINITIALIZED=true
 
 //No help, variable specified on the command line.
-ENABLE_WAYLAND:BOOL=TRUE
+ENABLE_WAYLAND:UNINITIALIZED=true
 
 //No help, variable specified on the command line.
-ENABLE_WEBRTC:BOOL=FALSE
+ENABLE_WEBRTC:UNINITIALIZED=false
 
 //Search path to use when XDG_CONFIG_DIRS is unset or empty or
 // the current process is SUID/SGID. Default is freedesktop compliant.

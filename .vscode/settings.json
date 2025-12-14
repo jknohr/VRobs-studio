@@ -1,0 +1,7 @@
+{
+    "qmlls.buildDir": "${workspaceFolder}/build_ubuntu",
+    "qmlls.importPaths": [
+        "/home/subtomic/Qt/6.10.1/gcc_64/qml"
+    ],
+    "qmlls.enabled": true
+}

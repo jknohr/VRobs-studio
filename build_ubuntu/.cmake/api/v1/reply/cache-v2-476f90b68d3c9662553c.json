@@ -1866,8 +1866,8 @@
 					"value" : "No help, variable specified on the command line."
 				}
 			],
-			"type" : "BOOL",
-			"value" : "FALSE"
+			"type" : "UNINITIALIZED",
+			"value" : "false"
 		},
 		{
 			"name" : "ENABLE_VLC",
@@ -1878,8 +1878,8 @@
 					"value" : "No help, variable specified on the command line."
 				}
 			],
-			"type" : "BOOL",
-			"value" : "TRUE"
+			"type" : "UNINITIALIZED",
+			"value" : "true"
 		},
 		{
 			"name" : "ENABLE_WAYLAND",
@@ -1890,8 +1890,8 @@
 					"value" : "No help, variable specified on the command line."
 				}
 			],
-			"type" : "BOOL",
-			"value" : "TRUE"
+			"type" : "UNINITIALIZED",
+			"value" : "true"
 		},
 		{
 			"name" : "ENABLE_WEBRTC",
@@ -1902,8 +1902,8 @@
 					"value" : "No help, variable specified on the command line."
 				}
 			],
-			"type" : "BOOL",
-			"value" : "FALSE"
+			"type" : "UNINITIALIZED",
+			"value" : "false"
 		},
 		{
 			"name" : "FALLBACK_CONFIG_DIRS",

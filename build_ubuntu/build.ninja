@@ -631,7 +631,7 @@ build core/src/scene/nstudio-scene_autogen/timestamp core/src/scene/nstudio-scen
 #############################################
 # Phony custom command for core/src/scene/CMakeFiles/nstudio-scene_autogen_timestamp_deps
 
-build core/src/scene/CMakeFiles/nstudio-scene_autogen_timestamp_deps | ${cmake_ninja_workdir}core/src/scene/CMakeFiles/nstudio-scene_autogen_timestamp_deps: phony /home/subtomic/Qt/6.10.1/gcc_64/libexec/moc /home/subtomic/Qt/6.10.1/gcc_64/lib/libQt6Core.so.6.10.1 /home/subtomic/Qt/6.10.1/gcc_64/lib/libQt6Quick3D.so.6.10.1 /home/subtomic/Qt/6.10.1/gcc_64/libexec/uic core/src/usd_manager/libneural_studio_usd_manager.a || core/src/usd_manager/libneural_studio_usd_manager.a core/src/usd_manager/neural_studio_usd_manager_autogen core/src/usd_manager/neural_studio_usd_manager_autogen_timestamp_deps
+build core/src/scene/CMakeFiles/nstudio-scene_autogen_timestamp_deps | ${cmake_ninja_workdir}core/src/scene/CMakeFiles/nstudio-scene_autogen_timestamp_deps: phony /home/subtomic/Qt/6.10.1/gcc_64/lib/libQt6Core.so.6.10.1 /home/subtomic/Qt/6.10.1/gcc_64/libexec/moc core/src/usd_manager/libneural_studio_usd_manager.a /home/subtomic/Qt/6.10.1/gcc_64/libexec/uic /home/subtomic/Qt/6.10.1/gcc_64/lib/libQt6Quick3D.so.6.10.1 || core/src/usd_manager/libneural_studio_usd_manager.a core/src/usd_manager/neural_studio_usd_manager_autogen core/src/usd_manager/neural_studio_usd_manager_autogen_timestamp_deps
 
 
 #############################################
@@ -768,7 +768,7 @@ build core/src/pipeline/nstudio-pipeline_autogen/timestamp core/src/pipeline/nst
 #############################################
 # Phony custom command for core/src/pipeline/CMakeFiles/nstudio-pipeline_autogen_timestamp_deps
 
-build core/src/pipeline/CMakeFiles/nstudio-pipeline_autogen_timestamp_deps | ${cmake_ninja_workdir}core/src/pipeline/CMakeFiles/nstudio-pipeline_autogen_timestamp_deps: phony /home/subtomic/Qt/6.10.1/gcc_64/libexec/moc /home/subtomic/Qt/6.10.1/gcc_64/lib/libQt6Core.so.6.10.1 /home/subtomic/Qt/6.10.1/gcc_64/libexec/uic
+build core/src/pipeline/CMakeFiles/nstudio-pipeline_autogen_timestamp_deps | ${cmake_ninja_workdir}core/src/pipeline/CMakeFiles/nstudio-pipeline_autogen_timestamp_deps: phony /home/subtomic/Qt/6.10.1/gcc_64/libexec/moc /home/subtomic/Qt/6.10.1/gcc_64/libexec/uic /home/subtomic/Qt/6.10.1/gcc_64/lib/libQt6Core.so.6.10.1
 
 
 #############################################
@@ -961,7 +961,7 @@ build core/src/rendering/nstudio-rendering_autogen/timestamp core/src/rendering/
 #############################################
 # Phony custom command for core/src/rendering/CMakeFiles/nstudio-rendering_autogen_timestamp_deps
 
-build core/src/rendering/CMakeFiles/nstudio-rendering_autogen_timestamp_deps | ${cmake_ninja_workdir}core/src/rendering/CMakeFiles/nstudio-rendering_autogen_timestamp_deps: phony /home/subtomic/Qt/6.10.1/gcc_64/libexec/moc /home/subtomic/Qt/6.10.1/gcc_64/lib/libQt6Core.so.6.10.1 /home/subtomic/Qt/6.10.1/gcc_64/lib/libQt6Gui.so.6.10.1 /home/subtomic/Qt/6.10.1/gcc_64/lib/libQt6Quick.so.6.10.1 /home/subtomic/Qt/6.10.1/gcc_64/libexec/uic _deps/openxr-build/src/loader/libopenxr_loader.so.1.0.32 || _deps/openxr-build/include/openxr/generate_openxr_header _deps/openxr-build/src/loader/libopenxr_loader.so _deps/openxr-build/src/loader/openxr_loader_autogen _deps/openxr-build/src/loader/openxr_loader_autogen_timestamp_deps _deps/openxr-build/src/xr_global_generated_files
+build core/src/rendering/CMakeFiles/nstudio-rendering_autogen_timestamp_deps | ${cmake_ninja_workdir}core/src/rendering/CMakeFiles/nstudio-rendering_autogen_timestamp_deps: phony /home/subtomic/Qt/6.10.1/gcc_64/lib/libQt6Gui.so.6.10.1 /home/subtomic/Qt/6.10.1/gcc_64/libexec/moc /home/subtomic/Qt/6.10.1/gcc_64/lib/libQt6Core.so.6.10.1 /home/subtomic/Qt/6.10.1/gcc_64/libexec/uic /home/subtomic/Qt/6.10.1/gcc_64/lib/libQt6Quick.so.6.10.1 _deps/openxr-build/src/loader/libopenxr_loader.so.1.0.32 || _deps/openxr-build/include/openxr/generate_openxr_header _deps/openxr-build/src/loader/libopenxr_loader.so _deps/openxr-build/src/loader/openxr_loader_autogen _deps/openxr-build/src/loader/openxr_loader_autogen_timestamp_deps _deps/openxr-build/src/xr_global_generated_files
 
 
 #############################################
@@ -2747,7 +2747,7 @@ build ui/blueprint/nodes/ui-basenode_autogen/timestamp ui/blueprint/nodes/ui-bas
 #############################################
 # Phony custom command for ui/blueprint/nodes/CMakeFiles/ui-basenode_autogen_timestamp_deps
 
-build ui/blueprint/nodes/CMakeFiles/ui-basenode_autogen_timestamp_deps | ${cmake_ninja_workdir}ui/blueprint/nodes/CMakeFiles/ui-basenode_autogen_timestamp_deps: phony /home/subtomic/Qt/6.10.1/gcc_64/libexec/moc /home/subtomic/Qt/6.10.1/gcc_64/lib/libQt6Core.so.6.10.1 /home/subtomic/Qt/6.10.1/gcc_64/lib/libQt6Quick.so.6.10.1 /home/subtomic/Qt/6.10.1/gcc_64/libexec/uic
+build ui/blueprint/nodes/CMakeFiles/ui-basenode_autogen_timestamp_deps | ${cmake_ninja_workdir}ui/blueprint/nodes/CMakeFiles/ui-basenode_autogen_timestamp_deps: phony /home/subtomic/Qt/6.10.1/gcc_64/libexec/moc /home/subtomic/Qt/6.10.1/gcc_64/libexec/uic /home/subtomic/Qt/6.10.1/gcc_64/lib/libQt6Core.so.6.10.1 /home/subtomic/Qt/6.10.1/gcc_64/lib/libQt6Quick.so.6.10.1
 
 
 #############################################
@@ -2892,7 +2892,7 @@ build ui/blueprint/nodes/StitchNode/ui-stitchnode_autogen/timestamp ui/blueprint
 #############################################
 # Phony custom command for ui/blueprint/nodes/StitchNode/CMakeFiles/ui-stitchnode_autogen_timestamp_deps
 
-build ui/blueprint/nodes/StitchNode/CMakeFiles/ui-stitchnode_autogen_timestamp_deps | ${cmake_ninja_workdir}ui/blueprint/nodes/StitchNode/CMakeFiles/ui-stitchnode_autogen_timestamp_deps: phony /home/subtomic/Qt/6.10.1/gcc_64/libexec/moc /home/subtomic/Qt/6.10.1/gcc_64/lib/libQt6Core.so.6.10.1 /home/subtomic/Qt/6.10.1/gcc_64/lib/libQt6Quick.so.6.10.1 /home/subtomic/Qt/6.10.1/gcc_64/libexec/uic
+build ui/blueprint/nodes/StitchNode/CMakeFiles/ui-stitchnode_autogen_timestamp_deps | ${cmake_ninja_workdir}ui/blueprint/nodes/StitchNode/CMakeFiles/ui-stitchnode_autogen_timestamp_deps: phony /home/subtomic/Qt/6.10.1/gcc_64/libexec/moc /home/subtomic/Qt/6.10.1/gcc_64/libexec/uic /home/subtomic/Qt/6.10.1/gcc_64/lib/libQt6Core.so.6.10.1 /home/subtomic/Qt/6.10.1/gcc_64/lib/libQt6Quick.so.6.10.1
 
 
 #############################################
@@ -3037,7 +3037,7 @@ build ui/blueprint/nodes/HeadsetOutputNode/ui-headsetoutputnode_autogen/timestam
 #############################################
 # Phony custom command for ui/blueprint/nodes/HeadsetOutputNode/CMakeFiles/ui-headsetoutputnode_autogen_timestamp_deps
 
-build ui/blueprint/nodes/HeadsetOutputNode/CMakeFiles/ui-headsetoutputnode_autogen_timestamp_deps | ${cmake_ninja_workdir}ui/blueprint/nodes/HeadsetOutputNode/CMakeFiles/ui-headsetoutputnode_autogen_timestamp_deps: phony /home/subtomic/Qt/6.10.1/gcc_64/libexec/moc /home/subtomic/Qt/6.10.1/gcc_64/lib/libQt6Core.so.6.10.1 /home/subtomic/Qt/6.10.1/gcc_64/lib/libQt6Quick.so.6.10.1 /home/subtomic/Qt/6.10.1/gcc_64/libexec/uic
+build ui/blueprint/nodes/HeadsetOutputNode/CMakeFiles/ui-headsetoutputnode_autogen_timestamp_deps | ${cmake_ninja_workdir}ui/blueprint/nodes/HeadsetOutputNode/CMakeFiles/ui-headsetoutputnode_autogen_timestamp_deps: phony /home/subtomic/Qt/6.10.1/gcc_64/libexec/moc /home/subtomic/Qt/6.10.1/gcc_64/libexec/uic /home/subtomic/Qt/6.10.1/gcc_64/lib/libQt6Core.so.6.10.1 /home/subtomic/Qt/6.10.1/gcc_64/lib/libQt6Quick.so.6.10.1
 
 
 #############################################
@@ -3182,7 +3182,7 @@ build ui/blueprint/nodes/RTXUpscaleNode/ui-rtxupscalenode_autogen/timestamp ui/b
 #############################################
 # Phony custom command for ui/blueprint/nodes/RTXUpscaleNode/CMakeFiles/ui-rtxupscalenode_autogen_timestamp_deps
 
-build ui/blueprint/nodes/RTXUpscaleNode/CMakeFiles/ui-rtxupscalenode_autogen_timestamp_deps | ${cmake_ninja_workdir}ui/blueprint/nodes/RTXUpscaleNode/CMakeFiles/ui-rtxupscalenode_autogen_timestamp_deps: phony /home/subtomic/Qt/6.10.1/gcc_64/libexec/moc /home/subtomic/Qt/6.10.1/gcc_64/lib/libQt6Core.so.6.10.1 /home/subtomic/Qt/6.10.1/gcc_64/lib/libQt6Quick.so.6.10.1 /home/subtomic/Qt/6.10.1/gcc_64/libexec/uic
+build ui/blueprint/nodes/RTXUpscaleNode/CMakeFiles/ui-rtxupscalenode_autogen_timestamp_deps | ${cmake_ninja_workdir}ui/blueprint/nodes/RTXUpscaleNode/CMakeFiles/ui-rtxupscalenode_autogen_timestamp_deps: phony /home/subtomic/Qt/6.10.1/gcc_64/libexec/moc /home/subtomic/Qt/6.10.1/gcc_64/libexec/uic /home/subtomic/Qt/6.10.1/gcc_64/lib/libQt6Core.so.6.10.1 /home/subtomic/Qt/6.10.1/gcc_64/lib/libQt6Quick.so.6.10.1
 
 
 #############################################
@@ -3327,7 +3327,7 @@ build ui/blueprint/nodes/WasmNode/ui-wasmnode_autogen/timestamp ui/blueprint/nod
 #############################################
 # Phony custom command for ui/blueprint/nodes/WasmNode/CMakeFiles/ui-wasmnode_autogen_timestamp_deps
 
-build ui/blueprint/nodes/WasmNode/CMakeFiles/ui-wasmnode_autogen_timestamp_deps | ${cmake_ninja_workdir}ui/blueprint/nodes/WasmNode/CMakeFiles/ui-wasmnode_autogen_timestamp_deps: phony /home/subtomic/Qt/6.10.1/gcc_64/libexec/moc ui/blueprint/nodes/libui-basenode.a /home/subtomic/Qt/6.10.1/gcc_64/lib/libQt6Core.so.6.10.1 /home/subtomic/Qt/6.10.1/gcc_64/lib/libQt6Quick.so.6.10.1 /home/subtomic/Qt/6.10.1/gcc_64/libexec/uic || ui/blueprint/nodes/libui-basenode.a ui/blueprint/nodes/ui-basenode_autogen ui/blueprint/nodes/ui-basenode_autogen_timestamp_deps
+build ui/blueprint/nodes/WasmNode/CMakeFiles/ui-wasmnode_autogen_timestamp_deps | ${cmake_ninja_workdir}ui/blueprint/nodes/WasmNode/CMakeFiles/ui-wasmnode_autogen_timestamp_deps: phony /home/subtomic/Qt/6.10.1/gcc_64/libexec/moc /home/subtomic/Qt/6.10.1/gcc_64/libexec/uic /home/subtomic/Qt/6.10.1/gcc_64/lib/libQt6Core.so.6.10.1 ui/blueprint/nodes/libui-basenode.a /home/subtomic/Qt/6.10.1/gcc_64/lib/libQt6Quick.so.6.10.1 || ui/blueprint/nodes/libui-basenode.a ui/blueprint/nodes/ui-basenode_autogen ui/blueprint/nodes/ui-basenode_autogen_timestamp_deps
 
 
 #############################################
@@ -3472,7 +3472,7 @@ build ui/blueprint/nodes/OnnxNode/ui-onnxnode_autogen/timestamp ui/blueprint/nod
 #############################################
 # Phony custom command for ui/blueprint/nodes/OnnxNode/CMakeFiles/ui-onnxnode_autogen_timestamp_deps
 
-build ui/blueprint/nodes/OnnxNode/CMakeFiles/ui-onnxnode_autogen_timestamp_deps | ${cmake_ninja_workdir}ui/blueprint/nodes/OnnxNode/CMakeFiles/ui-onnxnode_autogen_timestamp_deps: phony /home/subtomic/Qt/6.10.1/gcc_64/libexec/moc ui/blueprint/nodes/libui-basenode.a /home/subtomic/Qt/6.10.1/gcc_64/lib/libQt6Core.so.6.10.1 /home/subtomic/Qt/6.10.1/gcc_64/lib/libQt6Quick.so.6.10.1 /home/subtomic/Qt/6.10.1/gcc_64/libexec/uic || ui/blueprint/nodes/libui-basenode.a ui/blueprint/nodes/ui-basenode_autogen ui/blueprint/nodes/ui-basenode_autogen_timestamp_deps
+build ui/blueprint/nodes/OnnxNode/CMakeFiles/ui-onnxnode_autogen_timestamp_deps | ${cmake_ninja_workdir}ui/blueprint/nodes/OnnxNode/CMakeFiles/ui-onnxnode_autogen_timestamp_deps: phony /home/subtomic/Qt/6.10.1/gcc_64/libexec/moc /home/subtomic/Qt/6.10.1/gcc_64/libexec/uic /home/subtomic/Qt/6.10.1/gcc_64/lib/libQt6Core.so.6.10.1 ui/blueprint/nodes/libui-basenode.a /home/subtomic/Qt/6.10.1/gcc_64/lib/libQt6Quick.so.6.10.1 || ui/blueprint/nodes/libui-basenode.a ui/blueprint/nodes/ui-basenode_autogen ui/blueprint/nodes/ui-basenode_autogen_timestamp_deps
 
 
 #############################################
@@ -3617,7 +3617,7 @@ build ui/blueprint/nodes/GeminiNode/ui-gemininode_autogen/timestamp ui/blueprint
 #############################################
 # Phony custom command for ui/blueprint/nodes/GeminiNode/CMakeFiles/ui-gemininode_autogen_timestamp_deps
 
-build ui/blueprint/nodes/GeminiNode/CMakeFiles/ui-gemininode_autogen_timestamp_deps | ${cmake_ninja_workdir}ui/blueprint/nodes/GeminiNode/CMakeFiles/ui-gemininode_autogen_timestamp_deps: phony /home/subtomic/Qt/6.10.1/gcc_64/libexec/moc ui/blueprint/nodes/libui-basenode.a /home/subtomic/Qt/6.10.1/gcc_64/lib/libQt6Core.so.6.10.1 /home/subtomic/Qt/6.10.1/gcc_64/lib/libQt6Quick.so.6.10.1 /home/subtomic/Qt/6.10.1/gcc_64/libexec/uic || ui/blueprint/nodes/libui-basenode.a ui/blueprint/nodes/ui-basenode_autogen ui/blueprint/nodes/ui-basenode_autogen_timestamp_deps
+build ui/blueprint/nodes/GeminiNode/CMakeFiles/ui-gemininode_autogen_timestamp_deps | ${cmake_ninja_workdir}ui/blueprint/nodes/GeminiNode/CMakeFiles/ui-gemininode_autogen_timestamp_deps: phony /home/subtomic/Qt/6.10.1/gcc_64/libexec/moc /home/subtomic/Qt/6.10.1/gcc_64/libexec/uic /home/subtomic/Qt/6.10.1/gcc_64/lib/libQt6Core.so.6.10.1 ui/blueprint/nodes/libui-basenode.a /home/subtomic/Qt/6.10.1/gcc_64/lib/libQt6Quick.so.6.10.1 || ui/blueprint/nodes/libui-basenode.a ui/blueprint/nodes/ui-basenode_autogen ui/blueprint/nodes/ui-basenode_autogen_timestamp_deps
 
 
 #############################################
@@ -3762,7 +3762,7 @@ build ui/blueprint/preview/ui-preview_autogen/timestamp ui/blueprint/preview/ui-
 #############################################
 # Phony custom command for ui/blueprint/preview/CMakeFiles/ui-preview_autogen_timestamp_deps
 
-build ui/blueprint/preview/CMakeFiles/ui-preview_autogen_timestamp_deps | ${cmake_ninja_workdir}ui/blueprint/preview/CMakeFiles/ui-preview_autogen_timestamp_deps: phony /home/subtomic/Qt/6.10.1/gcc_64/libexec/moc /home/subtomic/Qt/6.10.1/gcc_64/lib/libQt6Core.so.6.10.1 /home/subtomic/Qt/6.10.1/gcc_64/libexec/uic /home/subtomic/Qt/6.10.1/gcc_64/lib/libQt6Quick.so.6.10.1
+build ui/blueprint/preview/CMakeFiles/ui-preview_autogen_timestamp_deps | ${cmake_ninja_workdir}ui/blueprint/preview/CMakeFiles/ui-preview_autogen_timestamp_deps: phony /home/subtomic/Qt/6.10.1/gcc_64/libexec/moc /home/subtomic/Qt/6.10.1/gcc_64/libexec/uic /home/subtomic/Qt/6.10.1/gcc_64/lib/libQt6Core.so.6.10.1 /home/subtomic/Qt/6.10.1/gcc_64/lib/libQt6Quick.so.6.10.1
 
 
 #############################################
@@ -4105,7 +4105,7 @@ build ui/shared_ui/managers/ui-managers_autogen/timestamp ui/shared_ui/managers/
 #############################################
 # Phony custom command for ui/shared_ui/managers/CMakeFiles/ui-managers_autogen_timestamp_deps
 
-build ui/shared_ui/managers/CMakeFiles/ui-managers_autogen_timestamp_deps | ${cmake_ninja_workdir}ui/shared_ui/managers/CMakeFiles/ui-managers_autogen_timestamp_deps: phony /home/subtomic/Qt/6.10.1/gcc_64/lib/libQt6Widgets.so.6.10.1 /home/subtomic/Qt/6.10.1/gcc_64/libexec/moc ui/blueprint/nodes/libui-basenode.a /home/subtomic/Qt/6.10.1/gcc_64/lib/libQt6Quick3D.so.6.10.1 /home/subtomic/Qt/6.10.1/gcc_64/libexec/uic /home/subtomic/Qt/6.10.1/gcc_64/lib/libQt6Core.so.6.10.1 /home/subtomic/Qt/6.10.1/gcc_64/lib/libQt6SpatialAudio.so.6.10.1 /home/subtomic/Qt/6.10.1/gcc_64/lib/libQt6ShaderTools.so.6.10.1 /home/subtomic/Qt/6.10.1/gcc_64/lib/libQt6Multimedia.so.6.10.1 /home/subtomic/Qt/6.10.1/gcc_64/lib/libQt6Quick.so.6.10.1 /home/subtomic/Qt/6.10.1/gcc_64/lib/libQt6Svg.so.6.10.1 /home/subtomic/Qt/6.10.1/gcc_64/lib/libQt6QuickTimeline.so.6.10.1 /home/subtomic/Qt/6.10.1/gcc_64/lib/libQt6UiTools.so.6.10.1 || ui/blueprint/nodes/libui-basenode.a ui/blueprint/nodes/ui-basenode_autogen ui/blueprint/nodes/ui-basenode_autogen_timestamp_deps
+build ui/shared_ui/managers/CMakeFiles/ui-managers_autogen_timestamp_deps | ${cmake_ninja_workdir}ui/shared_ui/managers/CMakeFiles/ui-managers_autogen_timestamp_deps: phony /home/subtomic/Qt/6.10.1/gcc_64/lib/libQt6Widgets.so.6.10.1 /home/subtomic/Qt/6.10.1/gcc_64/libexec/moc /home/subtomic/Qt/6.10.1/gcc_64/libexec/uic /home/subtomic/Qt/6.10.1/gcc_64/lib/libQt6SpatialAudio.so.6.10.1 /home/subtomic/Qt/6.10.1/gcc_64/lib/libQt6Svg.so.6.10.1 ui/blueprint/nodes/libui-basenode.a /home/subtomic/Qt/6.10.1/gcc_64/lib/libQt6Quick.so.6.10.1 /home/subtomic/Qt/6.10.1/gcc_64/lib/libQt6Core.so.6.10.1 /home/subtomic/Qt/6.10.1/gcc_64/lib/libQt6Quick3D.so.6.10.1 /home/subtomic/Qt/6.10.1/gcc_64/lib/libQt6Multimedia.so.6.10.1 /home/subtomic/Qt/6.10.1/gcc_64/lib/libQt6ShaderTools.so.6.10.1 /home/subtomic/Qt/6.10.1/gcc_64/lib/libQt6UiTools.so.6.10.1 /home/subtomic/Qt/6.10.1/gcc_64/lib/libQt6QuickTimeline.so.6.10.1 || ui/blueprint/nodes/libui-basenode.a ui/blueprint/nodes/ui-basenode_autogen ui/blueprint/nodes/ui-basenode_autogen_timestamp_deps
 
 
 #############################################

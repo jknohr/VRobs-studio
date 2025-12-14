@@ -289,8 +289,8 @@ hdr.process(inputTexture, outputTexture);
 - NVIDIA Video Effects SDK (Maxine) - optional
 
 ### Internal
-- `core/lib/vr/` - VR headset profiles
-- `core/src/scene-graph/` - Node execution (future)
+- `core/src/rendering/` - Headset profiles (VRHeadsetProfile.h)
+- `core/src/scene-graph/` - Node execution graph
 
 ---
 

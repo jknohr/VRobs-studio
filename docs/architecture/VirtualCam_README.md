@@ -146,7 +146,7 @@ Z-Axis Spatial Ordering:
 ### Component Responsibilities
 
 #### VirtualCamManager
-**Location**: `obs-vr/VirtualCamManager.h/.cpp`
+**Location**: `core/src/compositor/` (MixerEngine.h/.cpp)
 
 **Responsibilities**:
 - Load and manage VR headset profiles
@@ -165,7 +165,7 @@ std::vector<StreamInfo> getActiveStreams() const;
 ```
 
 #### SpatialAudioManager
-**Location**: `libvr/SpatialAudioManager.h/.cpp`
+**Location**: `core/src/audio/SpatialAudio.h`
 
 **Responsibilities**:
 - Manage Qt Spatial Audio engine
@@ -636,9 +636,9 @@ cmake --build build --target vr_blueprint_qml
 ### Extending the Compositor
 
 Key files to modify:
-- `obs-vr/VirtualCamManager.cpp` - Core rendering logic
-- `libvr/SpatialAudioManager.cpp` - Audio processing
-- `frontend/blueprint/qml/settings/virtualcamSettings.qml` - UI
+- `core/src/compositor/MixerEngine.cpp` - Core rendering logic
+- `core/src/audio/SpatialAudio.h` - Audio processing
+- `ui/shared_ui/managers/VirtualCamManager/` - UI
 
 ---
 

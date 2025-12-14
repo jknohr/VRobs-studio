@@ -85,17 +85,21 @@ void ThreeDModelNode::execute(const ExecutionContext& context)
     if (m_dirty && !m_modelPath.empty()) {
         std::cout << "Loading 3D model: " << m_modelPath << std::endl;
         
+        // Get SceneManager from context (passed via NodeExecutionGraph)
+        auto* sceneManager = context.sceneManager;
+        if (!sceneManager) return;
+        
         // Detect USD
         if (isUsdFile(m_modelPath)) {
              // Hybrid Path
-             bool success = SceneManager::instance()->OpenUsdStage(m_modelPath);
+             bool success = sceneManager->OpenUsdStage(m_modelPath);
              if (success) {
                  // The stage is now live in UsdStageManager.
                  // SceneManager has populated SceneNodes for each Prim.
              }
         } else {
              // Legacy Path (Assimp/Other)
-             // m_sceneObjectId = SceneManager::loadModel(m_modelPath);
+             // m_sceneObjectId = sceneManager->loadModel(m_modelPath);
         }
         
         m_dirty = false;

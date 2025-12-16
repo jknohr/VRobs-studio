@@ -1,7 +1,7 @@
 # **Neural Studio**
 
 
-FUCK GIT
+
 
 ### *Next-Generation 3D + VR Broadcasting Suite*
 
@@ -285,14 +285,14 @@ graph TD
 # **Technology Stack**
 
 ### Frontend (vr_studio)
-* Qt 6.8+ (Widgets + Quick + Quick3D)
+* Qt 6.10+ (Widgets + Quick + Quick3D)
 * QML for 3D UI
-* C++20 (logic)
+* C++22 (logic)
 * Wayland-native (Niri / wlroots)
 * WebSockets for remote control
 
 ### Backend (libneural)
-* C++20
+* C++22
 * Vulkan (rendering + compute)
 * FFmpeg (encoding/decoding)
 * ONNX Runtime (local ML)
@@ -342,9 +342,9 @@ graph TD
 
 ### Prerequisites
 - **Linux** (Primary development platform) or Windows.
-- **C++ Compiler**: GCC 13+ or Clang 16+ (C++20 support required).
+- **C++ Compiler**: GCC 13+ or Clang 22+ (C++22 support required).
 - **CMake**: Version 3.28 or later.
-- **Dependencies**: `libcurl`, `vulkan-sdk`, `libobs-dev` (legacy compat), `qt6-base-dev`.
+
 
 ### Building
 ```bash

@@ -1,0 +1,182 @@
+// Neural Studio - KTCBT_BrainJob (Button AI/Logic Injection)
+// Location: K/KTC/KTCBT/KTCBT_BrainJob-00000000000000000000000000.fbs
+// Injects behavior, actions, AI logic, and event handling into Button instances
+
+namespace NeuralStudio.Species.K.TC.BT;
+
+// ============================================================================
+// BRAIN JOB - Behavior & Logic Injection
+// Connects buttons to actions, events, AI, and business logic
+// ============================================================================
+
+enum ActionType : byte {
+    None = 0,
+    Navigate,          // Go to route/view
+    Emit,              // Emit signal/event
+    Execute,           // Run command
+    Toggle,            // Toggle state
+    Submit,            // Submit form
+    OpenModal,         // Open dialog/modal
+    CloseModal,        // Close current modal
+    ApiCall,           // Make API request
+    Custom             // Custom handler
+}
+
+table ActionBinding {
+    /// Event that triggers this action
+    trigger_event: string;  // "clicked", "doubleClicked", "pressAndHold", "released"
+    
+    /// Action to perform
+    action_type: ActionType;
+    
+    /// Action target (route, event name, command, etc.)
+    action_target: string;
+    
+    /// Action payload (JSON or FlatBuffer reference)
+    action_payload: string;
+    
+    /// Condition for action (JavaScript expression or rule ID)
+    condition: string;
+    
+    /// Stop propagation after this action?
+    stop_propagation: bool;
+    
+    /// Async action?
+    is_async: bool;
+    
+    /// Show loading state during async?
+    show_loading: bool;
+    
+    /// Success callback action
+    on_success: string;
+    
+    /// Error callback action
+    on_error: string;
+}
+
+table ValidationRule {
+    /// Rule name
+    name: string;
+    
+    /// Condition (returns true if valid)
+    condition: string;
+    
+    /// Error message if invalid
+    error_message: string;
+    
+    /// Disable button if invalid?
+    disable_if_invalid: bool;
+    
+    /// Show error tooltip?
+    show_error_tooltip: bool;
+}
+
+table AIBehavior {
+    /// AI model/agent to use
+    ai_agent_id: string;
+    
+    /// Context to provide to AI
+    context_binding: string;
+    
+    /// AI can modify button text?
+    ai_controls_text: bool;
+    
+    /// AI can modify visibility?
+    ai_controls_visibility: bool;
+    
+    /// AI can modify enabled state?
+    ai_controls_enabled: bool;
+    
+    /// AI can trigger actions?
+    ai_can_trigger: bool;
+    
+    /// Prompt template for AI decisions
+    decision_prompt: string;
+}
+
+table KeyboardShortcut {
+    /// Key combination (e.g., "Ctrl+S", "Enter", "Escape")
+    key_combo: string;
+    
+    /// Scope: "global", "view", "widget", "focused"
+    scope: string;
+    
+    /// Enabled?
+    enabled: bool;
+}
+
+table KTCBT_BrainJob {
+    /// objectbox: id
+    id: ulong;
+    
+    /// BrainJob NeuralID
+    neuralid: string;
+    
+    /// Target button instance ID
+    target_button_id: string;
+    
+    // === Action Bindings ===
+    actions: [ActionBinding];
+    
+    /// Default click action (shorthand)
+    default_action: ActionBinding;
+    
+    // === Keyboard ===
+    keyboard_shortcuts: [KeyboardShortcut];
+    submit_on_enter: bool;   // Enter key triggers click
+    cancel_on_escape: bool;  // Escape key cancels/closes
+    
+    // === Validation ===
+    validation_rules: [ValidationRule];
+    validate_before_action: bool;
+    
+    // === State Binding ===
+    /// Bind enabled state to expression/property
+    enabled_binding: string;
+    
+    /// Bind visibility to expression/property
+    visible_binding: string;
+    
+    /// Bind text to expression/property
+    text_binding: string;
+    
+    /// Bind toggle state to property
+    toggle_binding: string;
+    
+    // === Button Group ===
+    button_group_id: string;  // For radio-button-like exclusivity
+    exclusive: bool;
+    
+    // === AI Integration ===
+    ai_behavior: AIBehavior;
+    
+    // === Analytics ===
+    track_clicks: bool;
+    analytics_event_name: string;
+    analytics_properties: string;  // JSON
+    
+    // === Permissions ===
+    required_permission: string;
+    hide_if_no_permission: bool;
+    disable_if_no_permission: bool;
+    
+    // === Confirmation ===
+    require_confirmation: bool;
+    confirmation_title: string;
+    confirmation_message: string;
+    confirmation_confirm_text: string;
+    confirmation_cancel_text: string;
+    
+    // === Debounce/Throttle ===
+    debounce_ms: int;
+    throttle_ms: int;
+    prevent_double_click: bool;
+    
+    /// objectbox: date
+    created_at: long;
+    
+    /// objectbox: date
+    modified_at: long;
+}
+
+root_type KTCBT_BrainJob;

@@ -1,0 +1,101 @@
+// Neural Studio - AudioNode Integarigation Schema
+// Location: schemas/N/AU/NAU_Integarigation-00000000000000000000000000.fbs
+// Purpose: Shared logic for ALL origins in AudioNode ethnicity (default template)
+//
+// This defines what all audio nodes have in common
+
+namespace NeuralStudio.Ethnicity.NAU;
+
+/// Shared integration logic for all AudioNode origins
+table NAU_Integarigation {
+    /// objectbox: id
+    id: ulong;
+    
+    /// Mutualistic prefix this applies to
+    mutualistic_prefix: string;  // "NAU"
+    
+    // ========================================
+    // SHARED CAPABILITIES
+    // ========================================
+    
+    /// Can provide audio data (source node)
+    can_be_source: bool;
+    
+    /// Can process/transform audio
+    can_transform: bool;
+    
+    /// Requires audio input
+    requires_input: bool;
+    
+    /// Is final output (terminal)
+    is_terminal: bool;
+    
+    /// Rank in pipeline ordering
+    ethnicity_rank: int;
+    
+    // ========================================
+    // SHARED REQUIREMENTS
+    // ========================================
+    
+    /// Requires network access
+    requires_network: bool;
+    
+    /// Requires authentication
+    requires_auth: bool;
+    
+    /// Requires GPU acceleration
+    requires_gpu: bool;
+    
+    /// Requires microphone access
+    requires_microphone: bool;
+    
+    /// Requires speaker/output access
+    requires_speaker: bool;
+    
+    // ========================================
+    // SHARED PINS/PORTS
+    // ========================================
+    
+    /// Default input pin types
+    default_input_pins: [string];  // ["audio_in", "sidechain"]
+    
+    /// Default output pin types
+    default_output_pins: [string];  // ["audio_out"]
+    
+    /// Input port side ("left", "top", etc.)
+    input_port_side: string;
+    
+    /// Output port side ("right", "bottom", etc.)
+    output_port_side: string;
+    
+    // ========================================
+    // SHARED UI CONFIGURATION
+    // ========================================
+    
+    /// Base widgets shared by all audio origins
+    base_widgets: [string];  // ["volume_slider", "mute_button"]
+    
+    /// Base components shared by all audio origins
+    base_components: [string];  // ["waveform_display", "peak_meter"]
+    
+    /// Default header color (hex)
+    default_header_color: string;  // "#4A90D9"
+    
+    /// Default icon path
+    default_icon_path: string;  // "icons/audio.svg"
+    
+    /// Default category for node browser
+    default_category: string;  // "Audio"
+    
+    // ========================================
+    // METADATA
+    // ========================================
+    
+    /// objectbox: date
+    created_at: long;
+    
+    /// objectbox: date
+    last_modified: long;
+}
+
+root_type NAU_Integarigation;

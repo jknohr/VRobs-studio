@@ -1,0 +1,27 @@
+// Neural Studio - MonitorNode Integarigation (NMN)
+// Role: Debug | Rank: 10
+
+namespace NeuralStudio.Species.N.MN;
+
+table NMN_Integarigation {
+    /// objectbox: id
+    id: ulong;
+    
+    mutualistic_prefix: string;
+    ethnicity_type: string;
+    ethnicity_role: string;
+    ethnicity_rank: int;
+    
+    can_be_source: bool;
+    can_transform: bool;
+    requires_input: bool;
+    is_terminal: bool;
+    
+    log_level: string;
+    output_modes: [string];
+    
+    /// objectbox: date
+    created_at: long;
+}
+
+root_type NMN_Integarigation;

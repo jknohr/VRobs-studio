@@ -1,0 +1,21 @@
+// Neural Studio - ShaderNode Ethnicity Index (SH)
+// Role: Transmissive | Rank: 60
+
+namespace NeuralStudio.Species.N.SH;
+
+table NSH_Index {
+    /// objectbox: id
+    id: ulong;
+    /// objectbox: unique
+    l_prefix: string;
+    symbiotic_prefix: string;
+    lineage_archetype: string;
+    lineage_description: string;
+    niche: string;
+    pedandic_variants: [string];
+    lineage_directory: string;
+    /// objectbox: date
+    created_at: long;
+}
+
+root_type NSH_Index;

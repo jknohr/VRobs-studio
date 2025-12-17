@@ -1,0 +1,113 @@
+// Neural Studio - Master Neural ID Index
+// Location: schemas/neuralid_index.fbs
+// Purpose: Central registry of ALL active instances across the entire system
+//
+// This is the ONLY global index. All other indices are scoped to their parent directory.
+
+namespace NeuralStudio;
+
+/// Global index of all active neural IDs in the system
+table NeuralIdIndex {
+    /// ObjectBox auto-generated primary key
+    /// objectbox: id
+    id: ulong;
+    
+    /// Full neural ID (e.g., "NAUAC-550e8400-e29b-41d4-a716-446655440000")
+    /// objectbox: unique
+    /// objectbox: index
+    neuralid: string;
+    
+    // ========================================
+    // PREFIX DECOMPOSITION
+    // ========================================
+    
+    /// Symbiotic prefix (5 chars: s + e + o, e.g., "NAUAC")
+    /// objectbox: index
+    symbiotic_prefix: string;
+    
+    /// Species prefix (1 char: s-prefix, e.g., "N")
+    /// objectbox: index
+    s_prefix: string;
+    
+    /// Ethnicity prefix (2 chars: e-prefix, e.g., "AU")
+    e_prefix: string;
+    
+    /// Origin prefix (2 chars: o-prefix, e.g., "AC")
+    l_prefix: string;
+    
+    /// Mutualistic prefix (3 chars: s + e, e.g., "NAU")
+    mutualistic_prefix: string;
+    
+    // ========================================
+    // CROSS-CATEGORY CLASSIFICATION
+    // ========================================
+    
+    /// Taxonomy: "Core", "UI", "Media", "Connectivity", "Events", "Advanced"
+    taxonomy: string;
+    
+    /// Tribe: "Auditory", "Visual", "Sensory", "Informative", "Universal", "Agentic", "Narrative", "Temporal", "Spatial"
+    tribe: string;
+    
+    /// Lineage archetype name (e.g., "AudioClip", "VideoStream")
+    lineage: string;
+    
+    /// Niche: "AetherBubble", "ImmutableDominion", etc.
+    niche: string;
+    
+    // ========================================
+    // SCHEMA REFERENCES
+    // ========================================
+    
+    /// Path to schema directory
+    schema_directory: string;
+    
+    /// Schema filename (without path)
+    schema_filename: string;
+    
+    /// C++ class name
+    cpp_class_name: string;
+    
+    // ========================================
+    // RELATED SCHEMA IDs (ToOne relations)
+    // ========================================
+    
+    /// Link to Integarigation schema instance
+    /// objectbox: link=IntegarigatioSchema
+    integarigation_id: ulong;
+    
+    /// Link to VectorDoll schema instance
+    /// objectbox: link=VectorDollSchema
+    vectordoll_id: ulong;
+    
+    /// Link to BrainJob schema instance
+    /// objectbox: link=BrainJobSchema
+    brainjob_id: ulong;
+    
+    /// Link to DecayRule schema instance
+    /// objectbox: link=DecayRuleSchema
+    decayrule_id: ulong;
+    
+    // ========================================
+    // METADATA
+    // ========================================
+    
+    /// Is this a default template (UUID = 0000...)?
+    is_default_template: bool;
+    
+    /// Is currently active?
+    is_active: bool;
+    
+    /// Profile this instance belongs to
+    profile_name: string;
+    
+    /// objectbox: date
+    created_at: long;
+    
+    /// objectbox: date
+    last_modified: long;
+    
+    /// objectbox: date
+    last_accessed: long;
+}
+
+root_type NeuralIdIndex;

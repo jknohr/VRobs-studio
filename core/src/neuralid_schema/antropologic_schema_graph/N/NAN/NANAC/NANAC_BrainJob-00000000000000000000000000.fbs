@@ -1,0 +1,113 @@
+// Neural Studio - AudioClip BrainJob Schema
+// Location: schemas/N/AU/AC/NAUAC_BrainJob-00000000000000000000000000.fbs
+// Purpose: AI logic and learning configuration for AudioClip nodes
+
+namespace NeuralStudio.Origin.NAUAC;
+
+/// AI logic for AudioClip nodes
+table NAUAC_BrainJob {
+    /// objectbox: id
+    id: ulong;
+    
+    /// Symbiotic prefix this applies to
+    symbiotic_prefix: string;  // "NAUAC"
+    
+    // ========================================
+    // AI MODEL CONFIGURATION
+    // ========================================
+    
+    /// AI model name
+    ai_model: string;  // "whisper", "musicgen", etc.
+    
+    /// Model version
+    model_version: string;
+    
+    /// Model path (local)
+    model_path: string;
+    
+    /// Model API endpoint (cloud)
+    model_api_endpoint: string;
+    
+    // ========================================
+    // AGENTIC CAPABILITIES
+    // ========================================
+    
+    /// Intent keywords for agent matching
+    intent_keywords: [string];  // ["play", "audio", "music", "sound"]
+    
+    /// Exposed functions for agent calls
+    exposed_functions: [string];  // ["play", "pause", "setVolume"]
+    
+    /// Context sources for agent
+    context_sources: [string];  // ["waveform", "metadata", "position"]
+    
+    // ========================================
+    // ML INFERENCE
+    // ========================================
+    
+    /// Auto-run inference on load
+    auto_inference: bool;
+    
+    /// Inference interval in milliseconds
+    inference_interval_ms: long;
+    
+    /// Batch size for inference
+    batch_size: int;
+    
+    /// Use GPU for inference
+    use_gpu: bool;
+    
+    // ========================================
+    // LEARNED PATTERNS
+    // ========================================
+    
+    /// Common connections from this node type
+    common_connections: [string];  // ["NAUEF", "NAODE"]
+    
+    /// Average usage duration
+    avg_usage_duration_ms: long;
+    
+    /// Typical parameter values (JSON)
+    typical_parameters: string;
+    
+    // ========================================
+    // RECOMMENDATIONS
+    // ========================================
+    
+    /// Recommended next nodes to add
+    recommended_next_nodes: [string];
+    
+    /// Recommended effects to apply
+    recommended_effects: [string];
+    
+    /// Optimization suggestions (JSON)
+    optimization_suggestions: string;
+    
+    // ========================================
+    // LEARNING STATE
+    // ========================================
+    
+    /// Learning enabled
+    learning_enabled: bool;
+    
+    /// Training data path
+    training_data_path: string;
+    
+    /// Training accuracy
+    training_accuracy: float;
+    
+    /// objectbox: date
+    last_trained_at: long;
+    
+    // ========================================
+    // METADATA
+    // ========================================
+    
+    /// objectbox: date
+    created_at: long;
+    
+    /// objectbox: date
+    last_modified: long;
+}
+
+root_type NAUAC_BrainJob;

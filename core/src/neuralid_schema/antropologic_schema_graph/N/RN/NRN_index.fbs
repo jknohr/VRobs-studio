@@ -1,0 +1,21 @@
+// Neural Studio - RecordingNode Ethnicity Index (RN)
+// Role: Recording | Rank: 11
+
+namespace NeuralStudio.Species.N.RN;
+
+table NRN_Index {
+    /// objectbox: id
+    id: ulong;
+    /// objectbox: unique
+    l_prefix: string;
+    symbiotic_prefix: string;
+    lineage_archetype: string;
+    lineage_description: string;
+    niche: string;
+    pedandic_variants: [string];
+    lineage_directory: string;
+    /// objectbox: date
+    created_at: long;
+}
+
+root_type NRN_Index;

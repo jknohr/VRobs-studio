@@ -1,0 +1,58 @@
+// =============================================================================
+// WACVC_VectorDoll.fbs - Volume Control Widget UI Injection Points
+// Species: W (Widget), Ethnicity: AC (AudioControl), Lineage: VC (VolumeControl)
+// =============================================================================
+// Defines how Panes can customize the visual appearance of this widget
+// WITHOUT accessing internal component structure.
+// =============================================================================
+
+namespace NeuralID.Widget.AudioControl.VolumeControl;
+
+// Theme slots that Panes can inject
+table WACVC_ThemeSlots {
+    // Color scheme tokens (resolved from theme)
+    background_token: string = "surface.secondary";
+    icon_default_token: string = "icon.secondary";
+    icon_active_token: string = "accent.primary";
+    icon_muted_token: string = "semantic.error";
+    
+    // Sizing tokens
+    size_variant: SizeVariant = Medium;
+    corner_radius_token: string = "radius.md";
+}
+
+enum SizeVariant : byte {
+    Compact,    // 32px buttons, minimal spacing
+    Medium,     // 40px buttons, normal spacing
+    Large       // 48px buttons, generous spacing
+}
+
+// Layout customization
+table WACVC_LayoutSlots {
+    direction: LayoutDirection = Horizontal;
+    show_labels: bool = false;           // Show text labels under icons
+    compact_mode: bool = false;          // Reduced padding for tight spaces
+}
+
+enum LayoutDirection : byte {
+    Horizontal,
+    Vertical,
+    Grid        // 2x2 with mute centered
+}
+
+// Animation customization
+table WACVC_AnimationSlots {
+    enable_ripples: bool = true;
+    enable_scale_animation: bool = true;
+    animation_speed: float = 1.0;        // Multiplier
+}
+
+// Complete VectorDoll injection interface
+table WACVC_VectorDoll {
+    widget_id: string (required);
+    theme: WACVC_ThemeSlots;
+    layout: WACVC_LayoutSlots;
+    animation: WACVC_AnimationSlots;
+}
+
+root_type WACVC_VectorDoll;

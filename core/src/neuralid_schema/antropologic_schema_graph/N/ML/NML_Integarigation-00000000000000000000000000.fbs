@@ -1,0 +1,29 @@
+// Neural Studio - MLNode Integarigation (NML)
+// Role: Analysis | Rank: 80
+
+namespace NeuralStudio.Species.N.ML;
+
+table NML_Integarigation {
+    /// objectbox: id
+    id: ulong;
+    
+    mutualistic_prefix: string;
+    ethnicity_type: string;
+    ethnicity_role: string;
+    ethnicity_rank: int;
+    
+    can_be_source: bool;
+    can_transform: bool;
+    requires_input: bool;
+    is_terminal: bool;
+    
+    runtimes: [string];  // ONNX, TensorRT, OpenVINO
+    default_runtime: string;
+    supports_gpu: bool;
+    model_formats: [string];
+    
+    /// objectbox: date
+    created_at: long;
+}
+
+root_type NML_Integarigation;

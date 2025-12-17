@@ -1,0 +1,35 @@
+// Neural Studio - App Profile Index
+// Location: schemas/app_profiles/app-profile-index.fbs
+// Purpose: Index of all user profiles
+
+namespace NeuralStudio.Profiles;
+
+/// Index of all app profiles
+table AppProfileIndex {
+    /// objectbox: id
+    id: ulong;
+    
+    /// Profile name
+    /// objectbox: unique
+    profile_name: string;  // "OnlyFans", "YouTube", etc.
+    
+    /// Profile anagram (short code)
+    profile_anagram: string;  // "OF", "YT", etc.
+    
+    /// Profile directory path
+    profile_directory: string;
+    
+    /// Is currently active
+    is_active: bool;
+    
+    /// Is default profile
+    is_default: bool;
+    
+    /// objectbox: date
+    created_at: long;
+    
+    /// objectbox: date
+    last_used: long;
+}
+
+root_type AppProfileIndex;

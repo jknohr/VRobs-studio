@@ -1,0 +1,16 @@
+// Neural Studio - KIZSC Instance Template
+namespace NeuralStudio.Species.K.IZ.SC;
+
+table KIZSC_Instance {
+    /// objectbox: id
+    id: ulong;
+    neuralid: string;
+    display_name: string;
+    enabled: bool;
+    /// objectbox: date
+    created_at: long;
+    /// objectbox: date
+    modified_at: long;
+}
+
+root_type KIZSC_Instance;

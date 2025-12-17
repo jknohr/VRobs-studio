@@ -1,0 +1,108 @@
+// =============================================================================
+// WAC_Integarigation.fbs - AudioControl Widget Shared Logic
+// Species: W (Widget), Ethnicity: AC (AudioControl)
+// Location: W/WAC/WAC_Integarigation-00...fbs
+// =============================================================================
+// Shared logic, signals, and parameters common to ALL AudioControl widgets.
+// Individual lineages (VC, EQ, MX, etc.) inherit and extend these.
+// =============================================================================
+
+namespace NeuralID.Widget.AudioControl;
+
+// =============================================================================
+// WIDGET INTERFACE - How Panes interact with AudioControl widgets
+// =============================================================================
+
+// Standard input slots that Panes can bind to
+table WAC_InputSlots {
+    // Audio source binding
+    audio_source_id: string;        // ID of the audio source to control
+    channel_index: int = 0;         // Which channel (0 = master, 1+ = individual)
+    
+    // State bindings
+    is_muted: bool = false;
+    is_enabled: bool = true;
+    is_visible: bool = true;
+    
+    // Value bindings
+    current_volume: float = 0.8;    // 0.0 - 1.0 normalized
+    min_volume: float = 0.0;
+    max_volume: float = 1.0;
+    volume_step: float = 0.05;      // Increment per button press
+    
+    // Visual customization
+    theme_override: string;         // Theme ID to apply
+}
+
+// Standard output signals that flow up to Panes
+table WAC_OutputSignals {
+    // Value change signals
+    on_volume_changed: float;       // Emitted when volume changes
+    on_mute_toggled: bool;          // Emitted when mute state changes
+    
+    // Interaction signals
+    on_interaction_start: bool;     // User started interacting
+    on_interaction_end: bool;       // User stopped interacting
+    
+    // State signals
+    on_peak_detected: float;        // Audio peak level detected
+    on_clip_detected: bool;         // Audio clipping detected
+}
+
+// =============================================================================
+// COMMON AUDIO PARAMETERS
+// =============================================================================
+
+// Audio level representation
+table AudioLevel {
+    linear: float;                  // 0.0 - 1.0 linear scale
+    db: float;                      // Decibels (-inf to +6dB typical)
+    normalized: float;              // Display-normalized (0.0 - 1.0)
+}
+
+// Channel configuration
+enum ChannelMode : byte {
+    Mono,
+    Stereo,
+    Surround51,
+    Surround71,
+    Custom
+}
+
+// =============================================================================
+// COMPONENT STYLING INTERFACE
+// =============================================================================
+// Widgets customize their child components through this interface.
+// This is how the widget "themes" its buttons without the Pane knowing.
+
+table ComponentStylingOverrides {
+    // Size overrides for child components
+    component_scale: float = 1.0;
+    
+    // Color scheme (applied to all child components)
+    primary_color: string;          // Hex or theme token
+    secondary_color: string;
+    accent_color: string;
+    
+    // Layout hints
+    spacing: float = 8.0;
+    padding: float = 4.0;
+    
+    // Behavioral tweaks
+    animation_speed_multiplier: float = 1.0;
+    haptic_intensity: float = 1.0;
+}
+
+// =============================================================================
+// WIDGET REGISTRATION
+// =============================================================================
+
+table WAC_WidgetRegistration {
+    widget_id: string (required);   // Unique widget instance ID
+    lineage_type: string;           // VC, EQ, MX, etc.
+    input_slots: WAC_InputSlots;
+    output_signals: WAC_OutputSignals;
+    styling: ComponentStylingOverrides;
+}
+
+root_type WAC_WidgetRegistration;

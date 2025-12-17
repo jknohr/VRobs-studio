@@ -1,0 +1,117 @@
+// =============================================================================
+// WACVC_BrainJob.fbs - Volume Control Widget AI/Logic Injection
+// Species: W (Widget), Ethnicity: AC (AudioControl), Lineage: VC (VolumeControl)
+// =============================================================================
+// Defines AI behaviors, automation logic, and intelligent features for
+// the Volume Control widget.
+// =============================================================================
+
+namespace NeuralID.Widget.AudioControl.VolumeControl;
+
+// Automation behaviors
+table WACVC_AutomationBehaviors {
+    // Auto-adjust volume based on audio analysis
+    enable_auto_normalize: bool = false;
+    normalization_target_db: float = -14.0;
+    
+    // Smart mute based on context
+    enable_smart_mute: bool = false;
+    mute_on_silence_threshold_db: float = -50.0;
+    mute_after_silence_ms: int = 3000;
+    
+    // Volume smoothing
+    enable_volume_smoothing: bool = true;
+    smoothing_attack_ms: int = 50;
+    smoothing_release_ms: int = 200;
+}
+
+// AI-driven features
+table WACVC_AIFeatures {
+    // Predictive volume based on content
+    enable_content_aware_volume: bool = false;
+    content_analyzer_model_id: string;
+    
+    // Learn user preferences
+    enable_user_preference_learning: bool = false;
+    preference_history_days: int = 30;
+    
+    // Contextual suggestions
+    enable_volume_suggestions: bool = false;
+    suggest_based_on_time_of_day: bool = true;
+    suggest_based_on_content_type: bool = true;
+}
+
+// Keyboard/controller bindings (widget-level, not component)
+table WACVC_HotkeyBindings {
+    volume_up_key: string = "VolumeUp";
+    volume_down_key: string = "VolumeDown";
+    mute_toggle_key: string = "VolumeMute";
+    
+    // Modifier support
+    enable_shift_fine_control: bool = true;  // Shift = smaller steps
+    fine_step_size: float = 0.01;
+}
+
+// Accessibility enhancements
+table WACVC_AccessibilityBrain {
+    // Voice control
+    enable_voice_commands: bool = false;
+    voice_command_trigger: string = "volume";
+    
+    // Announce changes
+    announce_volume_changes: bool = true;
+    announce_mute_state: bool = true;
+    
+    // Use semantic label for announcements
+    // e.g., "Channel 2 volume set to 80%" vs "Volume set to 80%"
+    include_channel_name_in_announcements: bool = true;
+}
+
+// =============================================================================
+// VOICE COMMAND UNDERSTANDING - AI/NLP integration
+// =============================================================================
+
+// Voice command patterns this widget responds to
+table WACVC_VoiceCommandPatterns {
+    // Mute commands (matched against semantic_label.voice_aliases)
+    // "mute channel 2", "mute john", "mute the microphone"
+    mute_patterns: [string];        // Default: ["mute {channel}", "silence {channel}"]
+    unmute_patterns: [string];      // Default: ["unmute {channel}", "enable {channel}"]
+    
+    // Volume commands
+    // "increase channel 2", "turn up johns mic", "louder on channel 2"
+    volume_up_patterns: [string];   // Default: ["increase {channel}", "louder {channel}", "turn up {channel}"]
+    volume_down_patterns: [string]; // Default: ["decrease {channel}", "quieter {channel}", "turn down {channel}"]
+    
+    // Absolute volume
+    // "set channel 2 to 50%", "john's volume to 80"
+    set_volume_patterns: [string];  // Default: ["set {channel} to {value}", "{channel} volume {value}"]
+    
+    // Query commands
+    // "what's the volume on channel 2?", "is john muted?"
+    query_volume_patterns: [string];
+    query_mute_patterns: [string];
+}
+
+// AI context for smarter command interpretation
+table WACVC_AIContext {
+    // Help AI understand context
+    // "This is a broadcast mixer with 8 channels for live streaming"
+    context_description: string;
+    
+    // Related widgets (for commands like "mute all except channel 1")
+    sibling_widget_ids: [string];
+    
+    // Group memberships (for "mute all microphones")
+    group_tags: [string];           // ["microphones", "inputs", "live-sources"]
+}
+
+table WACVC_BrainJob {
+    widget_id: string (required);
+    automation: WACVC_AutomationBehaviors;
+    ai_features: WACVC_AIFeatures;
+    hotkeys: WACVC_HotkeyBindings;
+    accessibility: WACVC_AccessibilityBrain;
+}
+
+root_type WACVC_BrainJob;

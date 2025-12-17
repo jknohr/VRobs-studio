@@ -1,0 +1,100 @@
+// Neural Studio - Master Species Index
+// Location: schemas/species_index.fbs
+// Purpose: Master registry of all 32+ species codes and their taxonomic classification
+//
+// Each species has its own directory: schemas/[s-prefix]/
+// Each species directory contains: [s-prefix]_index.fbs listing its ethnicities
+
+namespace NeuralStudio;
+
+/// Master index of all species (s-prefix) in the system
+table SpeciesIndex {
+    /// ObjectBox auto-generated primary key
+    /// objectbox: id
+    id: ulong;
+    
+    /// Species prefix (1 char: N, A, P, F, etc.)
+    /// objectbox: unique
+    /// objectbox: index
+    s_prefix: string;
+    
+    /// Species family name (e.g., "Node", "Actor", "Pipeline")
+    species_family: string;
+    
+    /// Species description
+    species_description: string;
+    
+    /// Taxonomy category: "Core", "UI", "Media", "Connectivity", "Events", "Advanced"
+    taxonomy: string;
+    
+    /// Directory path for this species
+    schema_directory: string;
+    
+    /// Ethnicity group - array of e-prefixes available in this species
+    ethnicity_group: [string];
+    
+    /// Count of ethnicities
+    ethnicity_count: int;
+    
+    /// Is this species active/available?
+    is_active: bool;
+    
+    /// objectbox: date
+    created_at: long;
+    
+    /// objectbox: date
+    last_modified: long;
+}
+
+/// Pre-defined species for initialization
+/// Core Entities
+// N = Node       - Backend for Panes (UI)
+// A = Actor      - Scenegraph Representation of a Source
+// P = Pipeline   - Pipeline orchestration
+// S = Settings   - Settings
+// V = Controller - Controllers Backend
+// R = Rule       - Connection rules
+
+/// Media
+// M = Media      - Media files (generic)
+// O = Model      - 3D models, ML models
+
+/// UI
+// U = UIElement  - UI components (generic)
+// W = Widget     - Widgets
+// K = Component  - Components
+// G = Pane       - Panes (Active, Blueprint)
+// F = Frame      - Frames (Active, Blueprint)
+// D = Anchor     - Anchor
+// E = Edge       - Pane connections
+// C = Connector  - Connector
+
+/// Events
+// T = Task       - Tasks, jobs
+// Z = Event      - Events
+// J = Session    - Sessions
+
+/// Connectivity
+// I = API        - API endpoints
+// Y = APIBinding - API bindings
+// B = InteractionBinding - Interaction bindings
+// Q = TransportStream    - Transport streams
+// H = Hardware   - Hardware devices
+
+/// Systems
+// X = Manager    - Manager instances
+// L = Profile    - User profiles
+// 0 = Schema     - Schema
+
+/// Advanced
+// 1 = Agent        - Agents
+// 2 = WASM         - WebAssembly modules
+// 3 = Conversation - AI conversations
+// 4 = File         - File references
+// 5 = CSP          - Content Service Provider
+// 6 = CDN          - Content Delivery Network
+// 7 = Extension    - Extensions (reserved)
+// 8 = Extension    - Extensions (reserved)
+// 9 = Extension    - Extensions (reserved)
+
+root_type SpeciesIndex;

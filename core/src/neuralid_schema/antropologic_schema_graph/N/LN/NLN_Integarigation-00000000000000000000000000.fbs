@@ -1,0 +1,29 @@
+// Neural Studio - LLMNode Integarigation (NLN)
+// Role: Prompt | Rank: 100
+
+namespace NeuralStudio.Species.N.LN;
+
+table NLN_Integarigation {
+    /// objectbox: id
+    id: ulong;
+    
+    mutualistic_prefix: string;
+    ethnicity_type: string;
+    ethnicity_role: string;
+    ethnicity_rank: int;
+    
+    can_be_source: bool;
+    can_transform: bool;
+    requires_input: bool;
+    is_terminal: bool;
+    
+    available_providers: [string];  // Gemini, OpenAI, Claude, Local
+    default_provider: string;
+    max_tokens: int;
+    supports_streaming: bool;
+    
+    /// objectbox: date
+    created_at: long;
+}
+
+root_type NLN_Integarigation;

@@ -1,0 +1,447 @@
+// Neural Studio - KTCBT (Button) Instance Schema
+// Location: K/KTC/KTCBT/KTCBT-00000000000000000000000000.fbs
+// Complete modular button with PREDEFINED VARIANTS
+// Widget-agnostic: widgets connect to standard interface, not button internals
+
+namespace NeuralStudio.Species.K.TC.BT;
+
+// ============================================================================
+// PREDEFINED VARIANT TYPES (for quick selection)
+// Widgets only need to specify which variant, not how it looks
+// ============================================================================
+
+enum PredefinedVariant : byte {
+    Custom = 0,         // Use custom ButtonVariant definition
+    
+    // === By Hierarchy (Visual Weight) ===
+    Primary,            // Solid filled, brand color, main CTA
+    Secondary,          // Ghost/outline, transparent with border
+    Tertiary,           // Text-only, no background/border, looks like link
+    
+    // === By Function & Interaction ===
+    Icon,               // Icon only, no text, for toolbars
+    FAB,                // Floating Action Button, circular
+    Destructive,        // Red/warning color for delete/remove
+    Toggle              // Part of segmented control group
+}
+
+// ============================================================================
+// WIDGET INTEGRATION INTERFACE
+// Standard connection points - widgets connect here, no button knowledge needed
+// ============================================================================
+
+table WidgetInterface {
+    // === Input Slots (widget provides these) ===
+    /// Label text (widget can bind to localized string)
+    label_slot: string;
+    
+    /// Icon source (widget can bind to icon name/path)
+    icon_slot: string;
+    
+    /// Enabled state binding (widget controls when button is active)
+    enabled_slot: string;
+    
+    /// Visible state binding
+    visible_slot: string;
+    
+    /// Badge/counter value
+    badge_slot: string;
+    
+    /// Loading state binding
+    loading_slot: string;
+    
+    /// Toggle state binding (for toggle buttons)
+    toggle_slot: string;
+    
+    // === Output Signals (button emits these to widget) ===
+    /// Main click signal name
+    on_clicked_signal: string;
+    
+    /// Double-click signal name
+    on_double_clicked_signal: string;
+    
+    /// Press and hold signal name
+    on_press_and_hold_signal: string;
+    
+    /// Toggle changed signal name
+    on_toggled_signal: string;
+    
+    /// Hover enter signal
+    on_hover_enter_signal: string;
+    
+    /// Hover exit signal
+    on_hover_exit_signal: string;
+    
+    // === Data Passthrough ===
+    /// Arbitrary data widget wants button to carry (passed back in signals)
+    payload: string;
+    
+    /// Index in list/grid (for list item buttons)
+    item_index: int;
+    
+    /// Model data binding path
+    model_data_path: string;
+}
+
+// ============================================================================
+// ENUMS - Button States and Types
+// ============================================================================
+
+enum ButtonState : byte { 
+    Default = 0, 
+    Hover, 
+    Pressed, 
+    Focused, 
+    Disabled, 
+    Loading, 
+    Success, 
+    Error, 
+    Toggled 
+}
+
+enum ShapePrimitive : byte { 
+    Rectangle = 0, 
+    Circle, 
+    Pill, 
+    RoundedRect, 
+    Polygon, 
+    CustomSVG 
+}
+
+enum FillType : byte { 
+    Solid = 0, 
+    LinearGradient, 
+    RadialGradient, 
+    ConicGradient, 
+    Image, 
+    Video 
+}
+
+enum IconPosition : byte { 
+    None = 0, 
+    Left, 
+    Right, 
+    Top, 
+    Bottom, 
+    Only 
+}
+
+enum CursorType : byte { 
+    Pointer = 0, 
+    Default, 
+    Grab, 
+    NotAllowed, 
+    Crosshair, 
+    Text 
+}
+
+enum TextTransform : byte { 
+    None = 0, 
+    Uppercase, 
+    Lowercase, 
+    Capitalize 
+}
+
+// ============================================================================
+// SUB-TABLES - Reusable structures
+// ============================================================================
+
+table EdgeInsets {
+    top: float;
+    right: float;
+    bottom: float;
+    left: float;
+}
+
+table CornerRadii {
+    top_left: float;
+    top_right: float;
+    bottom_right: float;
+    bottom_left: float;
+    smoothing: float;  // 0-1, Apple squircle continuity
+}
+
+table Shadow {
+    offset_x: float;
+    offset_y: float;
+    blur: float;
+    spread: float;
+    color: string;  // oklch or hex
+    inset: bool;
+}
+
+table GradientStop {
+    position: float;  // 0-1
+    color: string;
+}
+
+table ButtonText {
+    content: string;
+    font_family: string;
+    font_weight: int;
+    font_size: float;
+    line_height: float;
+    letter_spacing: float;
+    transform: TextTransform;
+    color: string;
+    shadow_offset_x: float;
+    shadow_offset_y: float;
+    shadow_blur: float;
+    shadow_color: string;
+    truncate_ellipsis: bool;
+}
+
+table ButtonIcon {
+    source: string;        // SVG path, icon name, or asset URL
+    position: IconPosition;
+    size: float;
+    color: string;
+    spin_on_load: bool;
+    morph_to: string;      // Target icon for state changes
+}
+
+table RippleEffect {
+    enabled: bool;
+    color: string;
+    expansion_speed: float;
+    fade_duration: float;
+}
+
+table HapticFeedback {
+    enabled: bool;
+    pattern: string;   // "light", "medium", "heavy", "custom"
+    intensity: float;
+}
+
+table AudioFeedback {
+    on_hover_sound: string;
+    on_down_sound: string;
+    on_up_sound: string;
+    spatial_audio: bool;
+}
+
+table ScaleTransform {
+    hover_scale: float;    // e.g., 1.02
+    pressed_scale: float;  // e.g., 0.95
+    duration_ms: int;
+}
+
+// ============================================================================
+// STATE OVERRIDES - Per-state styling changes
+// ============================================================================
+
+table StateOverride {
+    state: ButtonState;
+    background_color: string;
+    border_color: string;
+    text_color: string;
+    icon_color: string;
+    opacity: float;
+    scale: float;
+    shadow: Shadow;
+    transition_duration_ms: int;
+    transition_easing: string;  // "ease", "ease-in", "ease-out", "linear"
+}
+
+// ============================================================================
+// CUSTOM BUTTON VARIANT (for Custom type)
+// Full customization when predefined variants don't fit
+// ============================================================================
+
+table ButtonVariant {
+    /// Variant identifier
+    name: string;
+    
+    /// Human-readable description
+    description: string;
+    
+    // === Geometry ===
+    shape: ShapePrimitive;
+    width: float;
+    height: float;
+    min_width: float;
+    max_width: float;
+    padding: EdgeInsets;
+    margin: EdgeInsets;
+    corner_radii: CornerRadii;
+    
+    // === Border/Stroke ===
+    border_width: float;
+    border_color: string;
+    border_style: string;
+    
+    // === Background ===
+    fill_type: FillType;
+    background_color: string;
+    gradient_stops: [GradientStop];
+    gradient_angle: float;
+    background_image: string;
+    
+    // === Material Properties ===
+    opacity: float;
+    backdrop_blur: float;
+    blend_mode: string;
+    
+    // === Shadows ===
+    drop_shadow: Shadow;
+    inner_shadow: Shadow;
+    glow: Shadow;
+    
+    // === Content ===
+    text: ButtonText;
+    icon: ButtonIcon;
+    badge_count: int;
+    badge_color: string;
+    
+    // === Interaction ===
+    cursor: CursorType;
+    ripple: RippleEffect;
+    scale: ScaleTransform;
+    haptic: HapticFeedback;
+    audio: AudioFeedback;
+    
+    // === Timing ===
+    debounce_ms: int;
+    delay_trigger_ms: int;
+    
+    // === Accessibility ===
+    aria_label: string;
+    tabindex: int;
+    focus_ring_color: string;
+    focus_ring_offset: float;
+    focus_ring_width: float;
+    touch_target_padding: float;
+    
+    // === State Overrides for this variant ===
+    state_overrides: [StateOverride];
+}
+
+// ============================================================================
+// MAIN BUTTON INSTANCE TABLE
+// ============================================================================
+
+table KTCBT_Instance {
+    /// objectbox: id
+    id: ulong;
+    
+    /// Full NeuralID: KTCBT-{uuid}
+    /// objectbox: unique
+    neuralid: string;
+    
+    /// Display name for UI/debugging
+    display_name: string;
+    
+    // =========================================================================
+    // VARIANT SELECTION (Primary Configuration)
+    // Widgets just select a variant, don't need to know styling details
+    // =========================================================================
+    
+    /// Select a predefined variant (Primary, Secondary, etc.)
+    /// If Custom, use custom_variant field
+    selected_variant: PredefinedVariant;
+    
+    /// Custom variant definition (only used if selected_variant == Custom)
+    custom_variant: ButtonVariant;
+    
+    // =========================================================================
+    // WIDGET INTERFACE (Standard Connection Points)
+    // Widgets connect through this, no knowledge of button internals needed
+    // =========================================================================
+    
+    /// Standard interface for widget integration
+    widget_interface: WidgetInterface;
+    
+    // =========================================================================
+    // OVERRIDES (Widget/VectorDoll can override these)
+    // Even with predefined variant, specific values can be overridden
+    // =========================================================================
+    
+    /// Override the label text (takes precedence over variant)
+    label_override: string;
+    
+    /// Override the icon (takes precedence over variant)
+    icon_override: string;
+    
+    /// Override background color
+    background_color_override: string;
+    
+    /// Override text color
+    text_color_override: string;
+    
+    /// Override border color
+    border_color_override: string;
+    
+    /// Force a specific size (0 = use variant default)
+    width_override: float;
+    height_override: float;
+    
+    // =========================================================================
+    // RUNTIME STATE
+    // =========================================================================
+    
+    /// Current state
+    current_state: ButtonState;
+    
+    /// Is button enabled?
+    enabled: bool;
+    
+    /// Is button visible?
+    visible: bool;
+    
+    /// Is this a toggle button?
+    is_toggle: bool;
+    toggle_state: bool;
+    
+    /// Is loading?
+    is_loading: bool;
+    
+    // =========================================================================
+    // TOGGLE GROUP (for Toggle variants)
+    // =========================================================================
+    
+    /// Button group ID (for segmented control exclusivity)
+    button_group_id: string;
+    
+    /// Is exclusive within group?
+    exclusive: bool;
+    
+    // =========================================================================
+    // QT QUICK CONTROLS COMPATIBILITY
+    // =========================================================================
+    
+    flat: bool;
+    highlighted: bool;
+    checkable: bool;
+    auto_exclusive: bool;
+    
+    // =========================================================================
+    // INJECTION REFERENCES (populated by system)
+    // =========================================================================
+    
+    /// Positioning/styling injection
+    vector_doll_id: string;
+    
+    /// AI/logic/behavior injection  
+    brain_job_id: string;
+    
+    /// Lifecycle rules injection
+    decay_rule_id: string;
+    
+    /// Shared TriggerControls logic (from KTC_Integarigation)
+    integarigation_id: string;
+    
+    /// Parent widget/container ID
+    parent_widget_id: string;
+    
+    // =========================================================================
+    // METADATA
+    // =========================================================================
+    
+    /// objectbox: date
+    created_at: long;
+    
+    /// objectbox: date
+    modified_at: long;
+}
+
+root_type KTCBT_Instance;

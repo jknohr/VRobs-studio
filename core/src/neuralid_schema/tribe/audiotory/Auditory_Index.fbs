@@ -1,0 +1,46 @@
+// Neural Studio - Auditory Tribe Index
+// Location: schemas/pipelines/auditory/Auditory_Index.fbs
+// Purpose: Index of all pipelines in the Auditory tribe
+
+namespace NeuralStudio.Pipelines.Auditory;
+
+/// Index of all Auditory pipelines
+table Auditory_Index {
+    /// objectbox: id
+    id: ulong;
+    
+    /// Pipeline ID
+    /// objectbox: unique
+    /// objectbox: index
+    pipeline_id: string;
+    
+    /// Pipeline name
+    pipeline_name: string;
+    
+    /// Master node ID (source node that starts this pipeline)
+    master_node_id: string;
+    
+    /// Master rank (priority in execution)
+    master_rank: int;
+    
+    /// Is currently active
+    is_active: bool;
+    
+    /// Total nodes in pipeline
+    node_count: int;
+    
+    /// Pipeline processing mode: "realtime", "offline", "hybrid"
+    processing_mode: string;
+    
+    /// Profile this belongs to
+    /// objectbox: link=AppProfile
+    profile_id: ulong;
+    
+    /// objectbox: date
+    created_at: long;
+    
+    /// objectbox: date
+    last_executed: long;
+}
+
+root_type Auditory_Index;

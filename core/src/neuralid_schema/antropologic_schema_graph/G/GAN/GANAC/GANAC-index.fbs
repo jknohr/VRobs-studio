@@ -1,0 +1,39 @@
+// Neural Studio - AudioClip Origin Index
+// Location: schemas/N/AU/AC/NAUAC-index.fbs
+// Purpose: Index of all AudioClip instances with prefix "NAUAC-"
+
+namespace NeuralStudio.Origin.NAUAC;
+
+/// Index of all AudioClip instances
+table NAUAC_Index {
+    /// objectbox: id
+    id: ulong;
+    
+    /// Full neural ID
+    /// objectbox: unique
+    /// objectbox: index
+    neuralid: string;
+    
+    /// Display name
+    display_name: string;
+    
+    /// Is this the default template (UUID = 0000...)?
+    is_default_template: bool;
+    
+    /// Is currently active (in a pipeline)?
+    is_active: bool;
+    
+    /// Profile name this instance belongs to
+    profile_name: string;
+    
+    /// Project/session this belongs to
+    project_name: string;
+    
+    /// objectbox: date
+    created_at: long;
+    
+    /// objectbox: date
+    last_used: long;
+}
+
+root_type NAUAC_Index;

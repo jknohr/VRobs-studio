@@ -1,0 +1,16 @@
+// Neural Studio - KSDBD Instance Template
+namespace NeuralStudio.Species.K.SD.BD;
+
+table KSDBD_Instance {
+    /// objectbox: id
+    id: ulong;
+    neuralid: string;
+    display_name: string;
+    enabled: bool;
+    /// objectbox: date
+    created_at: long;
+    /// objectbox: date
+    modified_at: long;
+}
+
+root_type KSDBD_Instance;

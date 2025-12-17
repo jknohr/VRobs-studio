@@ -1,0 +1,46 @@
+// Neural Studio - Visual Tribe Index
+// Location: schemas/pipelines/visual/Visual_Index.fbs
+// Purpose: Index of all pipelines in the Visual tribe
+
+namespace NeuralStudio.Pipelines.Visual;
+
+/// Index of all Visual pipelines
+table Visual_Index {
+    /// objectbox: id
+    id: ulong;
+    
+    /// Pipeline ID
+    /// objectbox: unique
+    /// objectbox: index
+    pipeline_id: string;
+    
+    /// Pipeline name
+    pipeline_name: string;
+    
+    /// Master node ID
+    master_node_id: string;
+    
+    /// Master rank
+    master_rank: int;
+    
+    /// Is currently active
+    is_active: bool;
+    
+    /// Node count
+    node_count: int;
+    
+    /// Processing mode
+    processing_mode: string;
+    
+    /// Profile ID
+    /// objectbox: link=AppProfile
+    profile_id: ulong;
+    
+    /// objectbox: date
+    created_at: long;
+    
+    /// objectbox: date
+    last_executed: long;
+}
+
+root_type Visual_Index;

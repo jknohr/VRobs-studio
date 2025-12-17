@@ -1,0 +1,98 @@
+// Neural Studio - KTCBT_DecayRule (Button Lifecycle)
+// Location: K/KTC/KTCBT/KTCBT_DecayRule-00000000000000000000000000.fbs
+// Defines lifecycle, caching, and cleanup rules for Button instances
+
+namespace NeuralStudio.Species.K.TC.BT;
+
+// ============================================================================
+// DECAY RULE - Lifecycle Management
+// Controls when buttons are created, cached, and destroyed
+// ============================================================================
+
+enum LifecyclePolicy : byte {
+    Persistent = 0,    // Never destroyed until explicit deletion
+    SessionScoped,     // Destroyed when session ends
+    ViewScoped,        // Destroyed when view/page unloads
+    WidgetScoped,      // Destroyed when parent widget unloads
+    Ephemeral,         // Destroyed after single use
+    Pooled             // Returned to pool for reuse
+}
+
+enum CacheStrategy : byte {
+    NoCache = 0,       // Always recreate
+    MemoryCache,       // Keep in memory
+    DiskCache,         // Serialize to disk
+    Hybrid             // Memory with disk fallback
+}
+
+table DecayTrigger {
+    /// Condition type: "timeout", "event", "state", "parent_destroyed"
+    condition_type: string;
+    
+    /// Condition value (e.g., timeout in ms, event name)
+    condition_value: string;
+    
+    /// Action: "destroy", "hide", "disable", "pool"
+    action: string;
+    
+    /// Animation to play before action
+    exit_animation: string;
+}
+
+table KTCBT_DecayRule {
+    /// objectbox: id
+    id: ulong;
+    
+    /// DecayRule NeuralID
+    neuralid: string;
+    
+    /// Target button instance ID
+    target_button_id: string;
+    
+    // === Lifecycle ===
+    lifecycle_policy: LifecyclePolicy;
+    
+    /// Max lifetime in milliseconds (0 = infinite)
+    max_lifetime_ms: long;
+    
+    /// Inactivity timeout (destroy if not used)
+    inactivity_timeout_ms: long;
+    
+    // === Creation ===
+    lazy_create: bool;      // Create only when first needed
+    preload: bool;          // Preload during parent init
+    create_on_event: string;  // Event that triggers creation
+    
+    // === Caching ===
+    cache_strategy: CacheStrategy;
+    cache_key: string;
+    cache_ttl_ms: long;     // Time to live in cache
+    max_pool_size: int;     // For pooled buttons
+    
+    // === Destruction ===
+    decay_triggers: [DecayTrigger];
+    destroy_with_parent: bool;
+    destroy_on_error: bool;
+    
+    // === State Preservation ===
+    preserve_state_on_hide: bool;
+    restore_state_on_show: bool;
+    state_snapshot_interval_ms: long;
+    
+    // === Memory Management ===
+    memory_priority: int;   // 0 = low, 100 = critical (keep in memory)
+    can_be_evicted: bool;
+    
+    // === Profiling ===
+    track_creation_time: bool;
+    track_usage_count: bool;
+    track_memory_usage: bool;
+    
+    /// objectbox: date
+    created_at: long;
+    
+    /// objectbox: date
+    modified_at: long;
+}
+
+root_type KTCBT_DecayRule;

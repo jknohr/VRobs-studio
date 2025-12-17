@@ -1,0 +1,29 @@
+// Neural Studio - CameraNode Integarigation (NCA)
+// Role: Source | Rank: 4
+
+namespace NeuralStudio.Species.N.CA;
+
+table NCA_Integarigation {
+    /// objectbox: id
+    id: ulong;
+    
+    mutualistic_prefix: string;
+    ethnicity_type: string;
+    ethnicity_role: string;
+    ethnicity_rank: int;
+    
+    can_be_source: bool;
+    can_transform: bool;
+    requires_input: bool;
+    is_terminal: bool;
+    
+    // Camera-specific
+    supported_resolutions: [string];
+    default_fps: int;
+    available_devices: [string];
+    
+    /// objectbox: date
+    created_at: long;
+}
+
+root_type NCA_Integarigation;

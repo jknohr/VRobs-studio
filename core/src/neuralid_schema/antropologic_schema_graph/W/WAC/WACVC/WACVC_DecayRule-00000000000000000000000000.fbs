@@ -1,0 +1,57 @@
+// =============================================================================
+// WACVC_DecayRule.fbs - Volume Control Widget Lifecycle Management
+// Species: W (Widget), Ethnicity: AC (AudioControl), Lineage: VC (VolumeControl)
+// =============================================================================
+// Defines lifecycle rules: when to create, destroy, cache, or recycle this widget.
+// =============================================================================
+
+namespace NeuralID.Widget.AudioControl.VolumeControl;
+
+// Lifecycle configuration
+table WACVC_Lifecycle {
+    // Creation rules
+    lazy_create: bool = true;            // Create on first visibility
+    preload_in_pane: bool = false;       // Pre-instantiate before pane shows
+    
+    // Destruction rules
+    destroy_on_pane_hide: bool = false;  // Keep alive when pane hidden
+    destroy_on_disconnect: bool = true;  // Destroy when audio source disconnects
+    
+    // Caching
+    cache_state_on_hide: bool = true;    // Remember volume/mute when hidden
+    restore_state_on_show: bool = true;  // Restore cached state
+    
+    // Timeouts
+    idle_timeout_ms: int = 0;            // Auto-hide after idle (0 = never)
+    destroy_timeout_ms: int = 0;         // Auto-destroy after timeout (0 = never)
+}
+
+// Component lifecycle within the widget
+table WACVC_ComponentLifecycle {
+    // When to instantiate child buttons
+    instantiate_components_on: InstantiateOn = WidgetCreate;
+    
+    // Whether to pool/recycle buttons
+    pool_components: bool = false;
+}
+
+enum InstantiateOn : byte {
+    WidgetCreate,      // Create buttons with widget
+    FirstInteraction,  // Lazy-create on first use
+    VisibilityChange   // Create when becoming visible
+}
+
+// Memory management
+table WACVC_MemoryRules {
+    max_cached_instances: int = 10;      // Pool size for recycled widgets
+    priority_level: int = 5;             // 1-10, higher = less likely to garbage collect
+}
+
+table WACVC_DecayRule {
+    widget_id: string (required);
+    lifecycle: WACVC_Lifecycle;
+    component_lifecycle: WACVC_ComponentLifecycle;
+    memory: WACVC_MemoryRules;
+}
+
+root_type WACVC_DecayRule;

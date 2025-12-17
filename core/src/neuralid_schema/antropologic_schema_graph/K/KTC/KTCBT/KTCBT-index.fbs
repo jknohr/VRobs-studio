@@ -1,0 +1,46 @@
+// Neural Studio - KTCBT (Button) Lineage Index
+// Location: K/KTC/KTCBT/KTCBT-index.fbs
+// Indexes all button instances with KTCBT prefix
+
+namespace NeuralStudio.Species.K.TC.BT;
+
+table KTCBT_Index {
+    /// objectbox: id
+    id: ulong;
+    
+    /// Full NeuralID: KTCBT-{uuid}
+    /// objectbox: unique
+    neuralid: string;
+    
+    /// Display name for UI
+    display_name: string;
+    
+    /// Variant name (e.g., "Primary", "Secondary", "Danger", "Ghost")
+    variant_name: string;
+    
+    /// Is this a template instance (26x0 UUID)?
+    is_template: bool;
+    
+    /// Is this button currently active/visible?
+    is_active: bool;
+    
+    /// Parent profile ID
+    profile_id: string;
+    
+    /// Reference to VectorDoll for styling
+    vector_doll_id: string;
+    
+    /// Reference to BrainJob for behavior
+    brain_job_id: string;
+    
+    /// Reference to DecayRule for lifecycle
+    decay_rule_id: string;
+    
+    /// objectbox: date
+    created_at: long;
+    
+    /// objectbox: date
+    modified_at: long;
+}
+
+root_type KTCBT_Index;

@@ -1,0 +1,104 @@
+// Neural Studio - Auditory Pipeline Schema
+// Location: schemas/pipelines/auditory/Auditory_Pipeline-00000000000000000000000000.fbs
+// Purpose: Default template for Auditory pipelines
+
+namespace NeuralStudio.Pipelines.Auditory;
+
+/// Auditory pipeline configuration
+table Auditory_Pipeline {
+    /// objectbox: id
+    id: ulong;
+    
+    /// Pipeline ID
+    /// objectbox: unique
+    pipeline_id: string;
+    
+    /// Pipeline name
+    pipeline_name: string;
+    
+    // ========================================
+    // MASTER/SOURCE
+    // ========================================
+    
+    /// Source master node ID
+    source_master_id: string;
+    
+    /// Master rank
+    master_rank: int;
+    
+    // ========================================
+    // FOUR TRACK SYSTEM
+    // ========================================
+    
+    /// Audio track (JSON: node chain configuration)
+    audio_track: string;
+    
+    /// Visual track (JSON: visualization chain)
+    visual_track: string;
+    
+    /// Data audio track (JSON: metadata/analysis)
+    data_audio_track: string;
+    
+    /// Data visual track (JSON: visual metadata)
+    data_visual_track: string;
+    
+    // ========================================
+    // CONTEXT/POSITIONING
+    // ========================================
+    
+    /// Timeline start position in milliseconds
+    timeline_start_ms: long;
+    
+    /// Scene position X
+    scene_start_x: float;
+    
+    /// Scene position Y
+    scene_start_y: float;
+    
+    /// Scene position Z
+    scene_start_z: float;
+    
+    // ========================================
+    // AUDIO-SPECIFIC METADATA
+    // ========================================
+    
+    /// Sample rate (Hz)
+    sample_rate: int;
+    
+    /// Bit depth
+    bit_depth: int;
+    
+    /// Channel count
+    channel_count: int;
+    
+    /// Buffer size (samples)
+    buffer_size: int;
+    
+    /// Audio format: "pcm", "float", etc.
+    audio_format: string;
+    
+    // ========================================
+    // STATE
+    // ========================================
+    
+    /// Is currently running
+    is_running: bool;
+    
+    /// Current latency in milliseconds
+    current_latency_ms: float;
+    
+    /// Pipeline state: "idle", "running", "paused", "error"
+    state: string;
+    
+    // ========================================
+    // METADATA
+    // ========================================
+    
+    /// objectbox: date
+    created_at: long;
+    
+    /// objectbox: date
+    last_updated: long;
+}
+
+root_type Auditory_Pipeline;

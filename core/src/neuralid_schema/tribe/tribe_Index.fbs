@@ -1,0 +1,35 @@
+// Neural Studio - Master Pipelines Index
+// Location: schemas/pipelines/Pipelines_Index.fbs
+// Purpose: Index of all pipeline tribes and active pipelines
+
+namespace NeuralStudio.Pipelines;
+
+/// Index of all pipeline tribes
+table PipelinesIndex {
+    /// objectbox: id
+    id: ulong;
+    
+    /// Tribe name
+    /// objectbox: unique
+    tribe_name: string;  // "Auditory", "Visual", etc.
+    
+    /// Tribe directory path
+    tribe_directory: string;
+    
+    /// Tribe description
+    tribe_description: string;
+    
+    /// Active pipeline count in this tribe
+    active_pipeline_count: int;
+    
+    /// Total pipeline count
+    total_pipeline_count: int;
+    
+    /// Primary data type: "audio", "video", "data", "mixed"
+    primary_data_type: string;
+    
+    /// objectbox: date
+    created_at: long;
+}
+
+root_type PipelinesIndex;

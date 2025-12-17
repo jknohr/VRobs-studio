@@ -1,0 +1,19 @@
+// Neural Studio - GAG Pane Integarigation - Starter
+namespace NeuralStudio.Species.G.AG;
+
+table GAG_Integarigation {
+    /// objectbox: id
+    id: ulong;
+    mutualistic_prefix: string;
+    ethnicity_type: string;
+    ethnicity_role: string;
+    ethnicity_rank: int;
+    can_be_source: bool;
+    can_transform: bool;
+    requires_input: bool;
+    is_terminal: bool;
+    /// objectbox: date
+    created_at: long;
+}
+
+root_type GAG_Integarigation;

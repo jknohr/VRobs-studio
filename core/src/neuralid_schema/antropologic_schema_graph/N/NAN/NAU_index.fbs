@@ -1,0 +1,47 @@
+// Neural Studio - AudioNode Ethnicity Index
+// Location: schemas/N/AU/NAU_index.fbs  
+// Purpose: Index of all origins (o-prefixes) within AudioNode ethnicity
+//
+// Mutualistic Prefix: NAU = N (Node) + AU (Audio)
+
+namespace NeuralStudio.Ethnicity.NAU;
+
+/// Index of origins in AudioNode (NAU) ethnicity
+table NAU_Index {
+    /// objectbox: id
+    id: ulong;
+    
+    /// o-prefix (2 chars: AC, AF, AM, etc.)
+    /// objectbox: unique
+    l_prefix: string;
+    
+    /// Symbiotic prefix (5 chars: s + e + o, e.g., "NAUAC")
+    symbiotic_prefix: string;
+    
+    /// Lineage archetype name (e.g., "AudioClip", "AudioStream")
+    lineage_archetype: string;
+    
+    /// Lineage description
+    lineage_description: string;
+    
+    /// Niche: "AetherBubble" (streaming), "ImmutableDominion" (static)
+    niche: string;
+    
+    /// Pedandic variants - provider implementations
+    /// e.g., ["QtMultimedia", "FFmpeg", "VLC"]
+    pedandic_variants: [string];
+    
+    /// Directory path for this origin
+    lineage_directory: string;
+    
+    /// VectorDoll config (JSON for UI widget composition)
+    vectordolled_config: string;
+    
+    /// GivingBrain config (JSON for AI logic)
+    giving_brain_config: string;
+    
+    /// objectbox: date
+    created_at: long;
+}
+
+root_type NAU_Index;

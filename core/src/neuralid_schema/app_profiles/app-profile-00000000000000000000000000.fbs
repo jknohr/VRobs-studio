@@ -1,0 +1,57 @@
+// Neural Studio - App Profile Schema
+// Location: schemas/app_profiles/[profile]/app-profile-00000000000000000000000000.fbs
+// Purpose: Default template for user profiles
+
+namespace NeuralStudio.Profiles;
+
+/// Profile configuration
+table AppProfile {
+    /// objectbox: id
+    id: ulong;
+    
+    /// Profile name
+    profile_name: string;
+    
+    /// Profile anagram
+    profile_anagram: string;
+    
+    /// Profile description/goal
+    profile_description: string;
+    
+    /// Profile tags
+    profile_tags: [string];  // ["1080P", "4k", "AI"]
+    
+    // ========================================
+    // RELATIONS
+    // ========================================
+    
+    /// Link to PState (profile state)
+    /// objectbox: link=PState
+    pstate_id: ulong;
+    
+    /// Link to BasicUserSettings
+    /// objectbox: link=BasicUserSettings
+    basic_user_settings_id: ulong;
+    
+    // ========================================
+    // SPECIES CONFIGURATION
+    // ========================================
+    
+    /// Active species in this profile
+    active_species: [string];  // ["N", "P", "F"]
+    
+    /// Species-specific configurations (JSON)
+    species_configs: string;
+    
+    // ========================================
+    // METADATA
+    // ========================================
+    
+    /// objectbox: date
+    created_at: long;
+    
+    /// objectbox: date
+    last_modified: long;
+}
+
+root_type AppProfile;

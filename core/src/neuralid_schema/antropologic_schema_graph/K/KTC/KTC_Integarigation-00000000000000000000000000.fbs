@@ -1,0 +1,230 @@
+// Neural Studio - KTC (TriggerControls) Integarigation
+// Location: K/KTC/KTC_Integarigation-00000000000000000000000000.fbs
+// SHARED LOGIC for ALL Trigger Controls (buttons, links, hotspots, gesture zones)
+// This is injected into all lineages: KTCBT, KTCLN, KTCHS, KTCGZ
+
+namespace NeuralStudio.Species.K.TC;
+
+// ============================================================================
+// SHARED TRIGGER CONTROL INTERFACE
+// All trigger controls (button, link, hotspot, gesture zone) implement this
+// Widgets connect to this interface, not to specific control types
+// ============================================================================
+
+enum TriggerType : byte {
+    Button = 0,         // KTCBT - Standard push button
+    Link,               // KTCLN - Text link
+    Hotspot,            // KTCHS - Invisible clickable area
+    GestureZone         // KTCGZ - Gesture-activated area
+}
+
+enum TriggerActivation : byte {
+    Click = 0,          // Single click/tap
+    DoubleClick,        // Double click/tap
+    LongPress,          // Press and hold
+    Hover,              // Mouse hover (desktop)
+    Gaze,               // Eye tracking (VR/AR)
+    Gesture,            // Custom gesture
+    Keyboard,           // Keyboard shortcut
+    Voice               // Voice command
+}
+
+// ============================================================================
+// COMMON TRIGGER SIGNALS (output to widget)
+// Every trigger control emits these - widgets never need control-specific knowledge
+// ============================================================================
+
+table TriggerSignals {
+    /// Main activation signal (clicked, triggered)
+    on_activated: string;
+    
+    /// Activation began (pressed down, touch started)
+    on_activation_started: string;
+    
+    /// Activation ended (released)
+    on_activation_ended: string;
+    
+    /// Hover/focus entered
+    on_focus_entered: string;
+    
+    /// Hover/focus exited
+    on_focus_exited: string;
+    
+    /// Toggle state changed (if applicable)
+    on_toggle_changed: string;
+    
+    /// Long press triggered
+    on_long_press: string;
+    
+    /// Double activation
+    on_double_activated: string;
+}
+
+// ============================================================================
+// COMMON TRIGGER SLOTS (input from widget)
+// Widgets control all trigger controls through these standard slots
+// ============================================================================
+
+table TriggerSlots {
+    /// Enable/disable the control
+    enabled_slot: string;
+    
+    /// Show/hide the control
+    visible_slot: string;
+    
+    /// Loading state
+    loading_slot: string;
+    
+    /// Primary label/text
+    label_slot: string;
+    
+    /// Icon (Material Symbols Rounded name or asset path)
+    icon_slot: string;
+    
+    /// Toggle state (for toggleable controls)
+    toggle_slot: string;
+    
+    /// Badge/notification count
+    badge_slot: string;
+    
+    /// Tooltip text
+    tooltip_slot: string;
+    
+    /// Accessibility label
+    aria_label_slot: string;
+}
+
+// ============================================================================
+// COMMON ACCESSIBILITY (shared across all trigger controls)
+// ============================================================================
+
+table TriggerAccessibility {
+    /// Screen reader label
+    aria_label: string;
+    
+    /// Accessibility role (button, link, menuitem, etc.)
+    aria_role: string;
+    
+    /// Pressed/expanded state communication
+    aria_pressed: bool;
+    aria_expanded: bool;
+    
+    /// Keyboard navigation order
+    tabindex: int;
+    
+    /// Focus ring styling
+    focus_ring_visible: bool;
+    focus_ring_color: string;
+    focus_ring_offset: float;
+    focus_ring_width: float;
+    
+    /// Minimum touch target size (44px recommended)
+    min_touch_target: float;
+    
+    /// Voice command phrase
+    voice_command: string;
+}
+
+// ============================================================================
+// COMMON INTERACTION PHYSICS (shared haptics, sounds, animations)
+// ============================================================================
+
+table TriggerFeedback {
+    // === Haptics (Mobile/Controller/VR) ===
+    haptic_enabled: bool;
+    haptic_on_down: string;      // "light", "medium", "heavy"
+    haptic_on_up: string;
+    haptic_on_hover: string;     // For VR controllers
+    haptic_intensity: float;
+    
+    // === Audio (uses audio asset IDs or built-in sounds) ===
+    audio_enabled: bool;
+    audio_on_hover: string;
+    audio_on_down: string;
+    audio_on_up: string;
+    audio_on_error: string;
+    audio_spatial: bool;         // 3D positioned audio for VR
+    
+    // === Visual Feedback ===
+    ripple_enabled: bool;
+    ripple_color: string;
+    ripple_duration_ms: int;
+    
+    scale_on_hover: float;       // 1.0 = no scale, 1.02 = grow 2%
+    scale_on_press: float;       // 0.95 = shrink 5%
+    scale_duration_ms: int;
+    
+    // === Timing ===
+    debounce_ms: int;            // Prevent rapid-fire clicks
+    throttle_ms: int;            // Rate limit activations
+    long_press_threshold_ms: int; // Time before long-press
+}
+
+// ============================================================================
+// MAIN INTEGARIGATION TABLE
+// Shared logic injected into all TriggerControl lineages
+// ============================================================================
+
+table KTC_Integarigation {
+    /// objectbox: id
+    id: ulong;
+    
+    /// Integarigation NeuralID
+    /// objectbox: unique
+    neuralid: string;
+    
+    /// What type of trigger control this applies to
+    trigger_type: TriggerType;
+    
+    /// Supported activation methods
+    supported_activations: [TriggerActivation];
+    
+    /// Default activation method
+    default_activation: TriggerActivation;
+    
+    // === Standard Interface ===
+    signals: TriggerSignals;
+    slots: TriggerSlots;
+    
+    // === Shared Accessibility ===
+    accessibility: TriggerAccessibility;
+    
+    // === Shared Feedback ===
+    feedback: TriggerFeedback;
+    
+    // === Icon System ===
+    /// Default icon font family
+    icon_font_family: string;  // "MaterialSymbolsRounded"
+    
+    /// Icon font weight
+    icon_font_weight: int;     // 400 = regular
+    
+    /// Icon optical size
+    icon_optical_size: int;    // 24 = default
+    
+    /// Icon grade (thickness)
+    icon_grade: int;           // 0 = default, -25 to 200
+    
+    /// Icon fill (0 = outlined, 1 = filled)
+    icon_fill: int;
+    
+    // === Theme Integration ===
+    /// Use theme colors automatically
+    use_theme_colors: bool;
+    
+    /// Theme color key for primary color
+    theme_color_key: string;
+    
+    /// Theme color key for text
+    theme_text_color_key: string;
+    
+    // === Metadata ===
+    ethnicity_type: string;    // "TriggerControls"
+    ethnicity_role: string;    // "Input"
+    ethnicity_rank: int;       // 5
+    
+    /// objectbox: date
+    created_at: long;
+}
+
+root_type KTC_Integarigation;

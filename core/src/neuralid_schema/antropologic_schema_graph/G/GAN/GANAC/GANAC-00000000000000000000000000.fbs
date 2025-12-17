@@ -1,0 +1,121 @@
+// Neural Studio - AudioClip Origin Instance Schema
+// Location: schemas/N/AU/AC/NAUAC-00000000000000000000000000.fbs
+// Purpose: Default template for AudioClip instances
+//
+// SymbioticPrefix: NAUAC = N (Node) + AU (Audio) + AC (AudioClip)
+// Niche: ImmutableDominion (static audio file, not streaming)
+
+namespace NeuralStudio.Origin.NAUAC;
+
+/// AudioClip instance schema (default template for cloning)
+table NAUAC_Instance {
+    /// objectbox: id
+    id: ulong;
+    
+    /// Neural ID (e.g., "NAUAC-550e8400-e29b-41d4-a716-446655440000")
+    /// Template uses: "NAUAC-00000000-0000-0000-0000-000000000000"
+    /// objectbox: unique
+    neuralid: string;
+    
+    /// Display name in node browser/canvas
+    display_name: string;
+    
+    // ========================================
+    // AUDIO CLIP SETTINGS
+    // ========================================
+    
+    /// Path to audio file
+    clip_path: string;
+    
+    /// Start time in milliseconds
+    start_time_ms: long;
+    
+    /// End time in milliseconds (-1 for full length)
+    end_time_ms: long;
+    
+    /// Duration in milliseconds (calculated)
+    duration_ms: long;
+    
+    /// Volume (0.0 to 1.0+)
+    volume: float;
+    
+    /// Loop playback
+    loop: bool;
+    
+    /// Playback speed multiplier
+    playback_speed: float;
+    
+    /// Stereo pan (-1.0 left, 0.0 center, 1.0 right)
+    pan: float;
+    
+    /// Pitch shift in semitones
+    pitch_shift: float;
+    
+    // ========================================
+    // PROVIDER SELECTION
+    // ========================================
+    
+    /// Audio provider: "QtMultimedia", "FFmpeg", "VLC", "FMOD"
+    provider: string;
+    
+    /// Provider-specific config (JSON)
+    provider_config: string;
+    
+    // ========================================
+    // STATE
+    // ========================================
+    
+    /// Node enabled
+    enabled: bool;
+    
+    /// Current playback position in milliseconds
+    current_position_ms: long;
+    
+    /// Is currently playing
+    is_playing: bool;
+    
+    /// Is paused
+    is_paused: bool;
+    
+    // ========================================
+    // BLUEPRINT POSITION
+    // ========================================
+    
+    /// X position on canvas
+    position_x: float;
+    
+    /// Y position on canvas
+    position_y: float;
+    
+    /// Z layer (for overlap)
+    position_z: float;
+    
+    /// Node width
+    width: float;
+    
+    /// Node height
+    height: float;
+    
+    // ========================================
+    // CONNECTIONS
+    // ========================================
+    
+    /// Pipeline master ID this node belongs to
+    /// objectbox: link=PipelineIndex
+    pipeline_master_id: ulong;
+    
+    /// Parent group node ID (0 if none)
+    parent_group_id: ulong;
+    
+    // ========================================
+    // METADATA
+    // ========================================
+    
+    /// objectbox: date
+    created_at: long;
+    
+    /// objectbox: date
+    last_modified: long;
+}
+
+root_type NAUAC_Instance;

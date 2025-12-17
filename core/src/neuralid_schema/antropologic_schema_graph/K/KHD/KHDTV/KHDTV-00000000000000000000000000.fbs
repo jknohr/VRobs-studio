@@ -1,0 +1,16 @@
+// Neural Studio - KHDTV Instance Template
+namespace NeuralStudio.Species.K.HD.TV;
+
+table KHDTV_Instance {
+    /// objectbox: id
+    id: ulong;
+    neuralid: string;
+    display_name: string;
+    enabled: bool;
+    /// objectbox: date
+    created_at: long;
+    /// objectbox: date
+    modified_at: long;
+}
+
+root_type KHDTV_Instance;

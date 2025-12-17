@@ -1,0 +1,90 @@
+// Neural Studio - AudioClip DecayRule Schema
+// Location: schemas/N/AU/AC/NAUAC_DecayRule-00000000000000000000000000.fbs
+// Purpose: Lifecycle management and cleanup rules for AudioClip nodes
+
+namespace NeuralStudio.Origin.NAUAC;
+
+/// Lifecycle rules for AudioClip nodes
+table NAUAC_DecayRule {
+    /// objectbox: id
+    id: ulong;
+    
+    /// Symbiotic prefix this applies to
+    symbiotic_prefix: string;  // "NAUAC"
+    
+    // ========================================
+    // DECAY POLICY
+    // ========================================
+    
+    /// Decay policy: "never", "on_idle", "on_ttl", "on_session_end"
+    decay_policy: string;
+    
+    /// Time-to-live in milliseconds (-1 for infinite)
+    ttl_ms: long;
+    
+    /// Max idle time before cleanup
+    max_idle_time_ms: long;
+    
+    /// Max cache size in bytes
+    max_size_bytes: long;
+    
+    /// Minimum usage count before eligible for cleanup
+    min_usage_count: int;
+    
+    // ========================================
+    // CLEANUP ACTIONS
+    // ========================================
+    
+    /// Delete from ObjectBox
+    delete_from_objectbox: bool;
+    
+    /// Delete associated files (audio file)
+    delete_associated_files: bool;
+    
+    /// Archive before delete
+    archive_before_delete: bool;
+    
+    /// Archive path
+    archive_path: string;
+    
+    // ========================================
+    // REFERENCE COUNTING
+    // ========================================
+    
+    /// Current reference count
+    reference_count: int;
+    
+    /// Total usage count
+    usage_count: int;
+    
+    /// Lifetime in milliseconds
+    lifetime_ms: long;
+    
+    /// objectbox: date
+    last_access_at: long;
+    
+    // ========================================
+    // DEPENDENCY HANDLING
+    // ========================================
+    
+    /// Allow deletion if dependencies exist
+    allow_delete_with_dependencies: bool;
+    
+    /// Cascade delete to dependents
+    cascade_delete: bool;
+    
+    /// List of dependent node IDs
+    dependencies: [string];
+    
+    // ========================================
+    // METADATA
+    // ========================================
+    
+    /// objectbox: date
+    created_at: long;
+    
+    /// objectbox: date
+    last_modified: long;
+}
+
+root_type NAUAC_DecayRule;

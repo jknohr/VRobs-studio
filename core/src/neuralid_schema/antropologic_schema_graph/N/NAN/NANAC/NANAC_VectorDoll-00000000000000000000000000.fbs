@@ -1,0 +1,115 @@
+// Neural Studio - AudioClip VectorDoll Schema
+// Location: schemas/N/AU/AC/NAUAC_VectorDoll-00000000000000000000000000.fbs
+// Purpose: UI widget composition and visual configuration for AudioClip nodes
+
+namespace NeuralStudio.Origin.NAUAC;
+
+/// UI configuration for AudioClip nodes
+table NAUAC_VectorDoll {
+    /// objectbox: id
+    id: ulong;
+    
+    /// Symbiotic prefix this applies to
+    symbiotic_prefix: string;  // "NAUAC"
+    
+    // ========================================
+    // PROVIDER WIDGETS
+    // ========================================
+    
+    /// Available providers
+    providers: [string];  // ["QtMultimedia", "FFmpeg", "VLC"]
+    
+    /// Widget categories
+    widget_categories: [string];  // ["transport", "volume", "effects"]
+    
+    /// Complexity levels for widget visibility
+    complexity_levels: [string];  // ["basic", "intermediate", "advanced"]
+    
+    // ========================================
+    // WIDGET MAPPINGS PER PROVIDER
+    // ========================================
+    
+    /// Default widgets (all providers)
+    default_widgets: [string];  // ["play_button", "stop_button", "volume_slider"]
+    
+    /// QtMultimedia-specific widgets
+    qtmultimedia_widgets: [string];
+    
+    /// FFmpeg-specific widgets
+    ffmpeg_widgets: [string];
+    
+    /// VLC-specific widgets
+    vlc_widgets: [string];
+    
+    // ========================================
+    // LAYOUT
+    // ========================================
+    
+    /// Default layout mode: "compact", "expanded", "minimal"
+    default_layout: string;
+    
+    /// Default width in pixels
+    default_width: int;
+    
+    /// Default height in pixels
+    default_height: int;
+    
+    /// Minimum width
+    min_width: int;
+    
+    /// Minimum height
+    min_height: int;
+    
+    /// Can resize
+    resizable: bool;
+    
+    // ========================================
+    // VISUAL THEMING
+    // ========================================
+    
+    /// Header color (hex)
+    header_color: string;  // "#4A90D9"
+    
+    /// Icon path
+    icon_path: string;  // "icons/audio_clip.svg"
+    
+    /// Border color (hex)
+    border_color: string;
+    
+    /// Background color (hex)
+    background_color: string;
+    
+    /// Accent color (hex)
+    accent_color: string;
+    
+    // ========================================
+    // PIN VISUALIZATION
+    // ========================================
+    
+    /// Show left port (input)
+    show_left_port: bool;
+    
+    /// Show right port (output)
+    show_right_port: bool;
+    
+    /// Show top port (control in)
+    show_top_port: bool;
+    
+    /// Show bottom port (control out)
+    show_bottom_port: bool;
+    
+    /// Port color (hex)
+    port_color: string;
+    
+    // ========================================
+    // METADATA
+    // ========================================
+    
+    /// objectbox: date
+    created_at: long;
+    
+    /// objectbox: date
+    last_modified: long;
+}
+
+root_type NAUAC_VectorDoll;

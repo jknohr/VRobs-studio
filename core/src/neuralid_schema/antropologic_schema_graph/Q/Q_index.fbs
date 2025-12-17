@@ -1,0 +1,27 @@
+// Neural Studio - TransportStream Species Index (Q)
+// Taxonomy: Connectivity
+
+namespace NeuralStudio.Species.Q;
+
+table Q_Index {
+    /// objectbox: id
+    id: ulong;
+    /// objectbox: unique
+    e_prefix: string;
+    mutualistic_prefix: string;
+    ethnicity_type: string;
+    ethnicity_description: string;
+    ethnicity_role: string;
+    ethnicity_rank: int;
+    tribe: string;
+    lineage_pedigree: [string];
+    ethnicity_directory: string;
+    integarigation_can_be_source: bool;
+    integarigation_can_transform: bool;
+    integarigation_requires_input: bool;
+    integarigation_is_terminal: bool;
+    /// objectbox: date
+    created_at: long;
+}
+
+root_type Q_Index;

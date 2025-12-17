@@ -1,0 +1,16 @@
+// Neural Studio - KICGL Instance Template
+namespace NeuralStudio.Species.K.IC.GL;
+
+table KICGL_Instance {
+    /// objectbox: id
+    id: ulong;
+    neuralid: string;
+    display_name: string;
+    enabled: bool;
+    /// objectbox: date
+    created_at: long;
+    /// objectbox: date
+    modified_at: long;
+}
+
+root_type KICGL_Instance;

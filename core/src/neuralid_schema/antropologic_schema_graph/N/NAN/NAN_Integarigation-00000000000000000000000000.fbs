@@ -1,0 +1,36 @@
+// Neural Studio - AudioNode Integarigation (NAN)
+// Role: Source | Rank: 4
+// Shared logic for all AudioNode origins
+
+namespace NeuralStudio.Species.N.AN;
+
+table NAN_Integarigation {
+    /// objectbox: id
+    id: ulong;
+    
+    mutualistic_prefix: string;  // "NAN"
+    ethnicity_type: string;      // "AudioNode"
+    ethnicity_role: string;      // "Source"
+    ethnicity_rank: int;         // 4
+    
+    // Capabilities
+    can_be_source: bool;
+    can_transform: bool;
+    requires_input: bool;
+    is_terminal: bool;
+    
+    // Audio-specific shared settings
+    default_sample_rate: int;
+    default_bit_depth: int;
+    default_channels: int;
+    supported_formats: [string];
+    
+    // Provider options
+    available_providers: [string];
+    default_provider: string;
+    
+    /// objectbox: date
+    created_at: long;
+}
+
+root_type NAN_Integarigation;

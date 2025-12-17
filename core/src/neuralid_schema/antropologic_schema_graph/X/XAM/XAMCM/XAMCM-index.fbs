@@ -1,0 +1,23 @@
+// =============================================================================
+// WACVC-index.fbs - Volume Control Widget Lineage Index
+// Species: W (Widget), Ethnicity: AC (AudioControl), Lineage: VC (VolumeControl)
+// Location: W/WAC/WACVC/WACVC-index.fbs
+// =============================================================================
+// Indexes all instances of Volume Control widgets.
+// =============================================================================
+
+namespace NeuralID.Widget.AudioControl.VolumeControl;
+
+// Instance registry for VolumeControl widgets
+table WACVC_InstanceIndex {
+    instances: [WACVC_InstanceRef];
+}
+
+table WACVC_InstanceRef {
+    instance_id: string;            // 26-char instance ID
+    name: string;                   // Human-readable name
+    created_at: string;             // ISO timestamp
+    parent_pane_id: string;         // Which Pane this widget belongs to
+}
+
+root_type WACVC_InstanceIndex;

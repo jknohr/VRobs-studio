@@ -1,0 +1,17 @@
+// Neural Studio - KICPG Lineage Index
+namespace NeuralStudio.Species.K.IC.PG;
+
+table KICPG_Index {
+    /// objectbox: id
+    id: ulong;
+    /// objectbox: unique
+    neuralid: string;
+    display_name: string;
+    is_template: bool;
+    is_active: bool;
+    profile_id: string;
+    /// objectbox: date
+    created_at: long;
+}
+
+root_type KICPG_Index;

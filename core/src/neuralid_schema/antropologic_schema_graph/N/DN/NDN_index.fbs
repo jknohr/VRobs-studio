@@ -1,0 +1,21 @@
+// Neural Studio - DimensionalNode Ethnicity Index (DN)
+// Role: Structural | Rank: 6
+
+namespace NeuralStudio.Species.N.DN;
+
+table NDN_Index {
+    /// objectbox: id
+    id: ulong;
+    /// objectbox: unique
+    l_prefix: string;
+    symbiotic_prefix: string;
+    lineage_archetype: string;
+    lineage_description: string;
+    niche: string;
+    pedandic_variants: [string];
+    lineage_directory: string;
+    /// objectbox: date
+    created_at: long;
+}
+
+root_type NDN_Index;

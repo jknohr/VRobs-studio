@@ -1,0 +1,20 @@
+// Neural Studio - AudioPane Ethnicity Index (GAN)
+// Mirrors: NAN (AudioNode) - Frontend/UI representation
+namespace NeuralStudio.Species.G.AN;
+
+table GAN_Index {
+    /// objectbox: id
+    id: ulong;
+    /// objectbox: unique
+    l_prefix: string;
+    symbiotic_prefix: string;
+    lineage_archetype: string;
+    lineage_description: string;
+    niche: string;
+    pedandic_variants: [string];
+    lineage_directory: string;
+    /// objectbox: date
+    created_at: long;
+}
+
+root_type GAN_Index;

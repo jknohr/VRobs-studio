@@ -1,0 +1,21 @@
+// Neural Studio - CSPNode Ethnicity Index (CS)
+// Role: Hardware | Rank: 1
+
+namespace NeuralStudio.Species.N.CS;
+
+table NCS_Index {
+    /// objectbox: id
+    id: ulong;
+    /// objectbox: unique
+    l_prefix: string;
+    symbiotic_prefix: string;
+    lineage_archetype: string;
+    lineage_description: string;
+    niche: string;
+    pedandic_variants: [string];
+    lineage_directory: string;
+    /// objectbox: date
+    created_at: long;
+}
+
+root_type NCS_Index;

@@ -1,0 +1,27 @@
+// Neural Studio - TransportNode Integarigation (NTP)
+// Role: Transport | Rank: 100
+
+namespace NeuralStudio.Species.N.TP;
+
+table NTP_Integarigation {
+    /// objectbox: id
+    id: ulong;
+    
+    mutualistic_prefix: string;
+    ethnicity_type: string;
+    ethnicity_role: string;
+    ethnicity_rank: int;
+    
+    can_be_source: bool;
+    can_transform: bool;
+    requires_input: bool;
+    is_terminal: bool;
+    
+    protocols: [string];
+    default_port: int;
+    
+    /// objectbox: date
+    created_at: long;
+}
+
+root_type NTP_Integarigation;

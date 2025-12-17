@@ -1,0 +1,17 @@
+// Neural Studio - KPFPB Lineage Index
+namespace NeuralStudio.Species.K.PF.PB;
+
+table KPFPB_Index {
+    /// objectbox: id
+    id: ulong;
+    /// objectbox: unique
+    neuralid: string;
+    display_name: string;
+    is_template: bool;
+    is_active: bool;
+    profile_id: string;
+    /// objectbox: date
+    created_at: long;
+}
+
+root_type KPFPB_Index;

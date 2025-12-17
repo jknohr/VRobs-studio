@@ -1,0 +1,176 @@
+// =============================================================================
+// WACVC-00...fbs - Volume Control Widget Instance Schema
+// Species: W (Widget), Ethnicity: AC (AudioControl), Lineage: VC (VolumeControl)
+// Location: W/WAC/WACVC/WACVC-00...fbs
+// =============================================================================
+// A Volume Control widget composed of 3 KTCBT Button components:
+//   - Mute button (speaker/speaker_off icon)
+//   - Volume Up button (add icon)
+//   - Volume Down button (remove icon)
+//
+// HIERARCHY: Component (K) → Widget (W) → Pane (G) → Node (N)
+// This widget receives signals FROM its components, processes them,
+// and emits unified signals TO the Pane that contains it.
+// The Pane has NO knowledge of the internal button components.
+// =============================================================================
+
+namespace NeuralID.Widget.AudioControl.VolumeControl;
+
+// =============================================================================
+// WIDGET VARIANTS
+// =============================================================================
+
+enum WACVC_Variant : byte {
+    Full,           // 3 buttons: Vol Down, Mute, Vol Up
+    MuteOnly,       // 1 button: Mute only
+    VolumeOnly      // 2 buttons: Vol Down, Vol Up (no mute)
+}
+
+// =============================================================================
+// WIDGET INTERFACE - What Panes see and interact with
+// =============================================================================
+
+// =============================================================================
+// SEMANTIC LABELING - For voice commands and accessibility
+// =============================================================================
+
+// Widget-level identification ("Channel 2", "John's Mic", "Background Music")
+table WACVC_SemanticLabel {
+    // Primary identifier for voice commands
+    channel_name: string;           // "Channel 2", "Master", "Aux 1"
+    channel_number: int = -1;       // Numeric index (-1 = unnamed)
+    
+    // Human-readable label
+    display_label: string;          // "John Smith", "Video Clip 1", "Discord"
+    
+    // Source type hint for AI context
+    source_type: SourceType = Generic;
+    
+    // Voice command aliases (AI responds to these)
+    voice_aliases: [string];        // ["john", "johns mic", "microphone 2"]
+    
+    // Button-specific semantic labels (for individual button voice control)
+    mute_semantic: string = "mute";         // "mute channel 2"
+    volume_up_semantic: string = "increase";// "increase channel 2"
+    volume_down_semantic: string = "decrease"; // "decrease channel 2"
+}
+
+enum SourceType : byte {
+    Generic,
+    Microphone,
+    Desktop,
+    Browser,
+    Application,
+    VideoClip,
+    MusicTrack,
+    VoiceChat,
+    GameAudio,
+    StreamAlert,
+    MediaPlayer
+}
+
+// Input slots (bound by parent Pane)
+table WACVC_InputSlots {
+    // Audio binding
+    audio_source_id: string;        // Which audio source to control
+    channel: int = 0;               // 0 = master
+    
+    // Semantic identification
+    semantic_label: WACVC_SemanticLabel;
+    
+    // Current state (can be externally bound)
+    volume: float = 0.8;            // 0.0 - 1.0
+    is_muted: bool = false;
+    
+    // Configuration
+    step_size: float = 0.05;        // Volume change per button press
+    min_volume: float = 0.0;
+    max_volume: float = 1.0;
+    
+    // Enable/disable
+    is_enabled: bool = true;
+    is_visible: bool = true;
+}
+
+// Output signals (emitted to parent Pane)
+table WACVC_OutputSignals {
+    // Primary signals - what the Pane cares about
+    on_volume_change: float;        // New volume value (0.0 - 1.0)
+    on_mute_toggle: bool;           // New mute state
+    
+    // Interaction feedback
+    on_interaction_started: bool;
+    on_interaction_ended: bool;
+}
+
+// =============================================================================
+// COMPONENT COMPOSITION - Internal structure (hidden from Pane)
+// =============================================================================
+
+// References to the 3 KTCBT button components this widget contains
+table WACVC_ComponentRefs {
+    mute_button_id: string;         // KTCBT instance ID for mute button
+    volume_up_button_id: string;    // KTCBT instance ID for volume up
+    volume_down_button_id: string;  // KTCBT instance ID for volume down
+}
+
+// Styling applied to child components (widget's internal concern)
+table WACVC_ComponentStyling {
+    // Layout
+    layout_direction: LayoutDirection = Horizontal;
+    button_spacing: float = 4.0;
+    container_padding: float = 8.0;
+    
+    // Button sizing
+    button_width: float = 40.0;
+    button_height: float = 40.0;
+    
+    // Visual style (applied to all 3 buttons)
+    button_variant: string = "Icon";  // Uses KTCBT PredefinedVariant
+    button_radius: float = 8.0;
+    
+    // Colors (defaults, can be themed)
+    background_color: string = "#1F2937";
+    icon_color: string = "#9CA3AF";
+    icon_color_active: string = "#6366F1";
+    icon_color_muted: string = "#EF4444";
+    
+    // Icons (Material Symbols codepoints)
+    icon_mute_on: string = "volume_off";
+    icon_mute_off: string = "volume_up";
+    icon_volume_up: string = "add";
+    icon_volume_down: string = "remove";
+    
+    // Animation
+    scale_on_press: float = 0.9;
+    transition_duration_ms: int = 150;
+}
+
+enum LayoutDirection : byte {
+    Horizontal,
+    Vertical
+}
+
+// =============================================================================
+// WIDGET INSTANCE DEFINITION
+// =============================================================================
+
+table WACVC_Instance {
+    // Identity
+    instance_id: string (required);  // 26-char unique ID
+    name: string;                    // Human-readable name
+    
+    // Widget interface
+    input_slots: WACVC_InputSlots;
+    output_signals: WACVC_OutputSignals;
+    
+    // Internal composition (opaque to Pane)
+    component_refs: WACVC_ComponentRefs;
+    component_styling: WACVC_ComponentStyling;
+    
+    // Metadata
+    created_at: string;
+    modified_at: string;
+}
+
+root_type WACVC_Instance;

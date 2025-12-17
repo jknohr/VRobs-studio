@@ -1,0 +1,27 @@
+// =============================================================================
+// WAC_index.fbs - AudioControl Widget Ethnicity Index
+// Species: W (Widget), Ethnicity: AC (AudioControl)
+// Location: W/WAC/WAC_index.fbs
+// =============================================================================
+// Audio control widgets - modular UI building blocks for audio manipulation.
+// These widgets compose Components (K species) and expose unified interfaces
+// to Panes (G species) without exposing internal component details.
+// =============================================================================
+
+namespace NeuralID.Widget.AudioControl;
+
+// Lineage index for AudioControl widgets
+// Each lineage represents a specific type of audio control widget.
+table WAC_LineageIndex {
+    // VC - Volume Control (mute/plus/minus buttons)
+    vc_lineage: string;
+    
+    // Future lineages:
+    // BL - Balance/Pan Control
+    // EQ - Equalizer Control
+    // MX - Mixer Channel Control
+    // MT - Meter Display Widget
+    // FD - Fader Widget
+}
+
+root_type WAC_LineageIndex;

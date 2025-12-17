@@ -1,0 +1,140 @@
+// Neural Studio - KTCBT_VectorDoll (Button UI Injection)
+// Location: K/KTC/KTCBT/KTCBT_VectorDoll-00000000000000000000000000.fbs
+// Injects positioning, layout, and runtime styling into Button instances
+
+namespace NeuralStudio.Species.K.TC.BT;
+
+// ============================================================================
+// VECTOR DOLL - UI Positioning & Styling Injection
+// Injected by parent widgets/containers to position and style buttons
+// ============================================================================
+
+enum LayoutMode : byte {
+    Absolute = 0,      // Fixed x/y position
+    Anchored,          // Anchor-based (Qt Quick style)
+    Flexbox,           // Flexbox child rules
+    Grid,              // Grid cell placement
+    Flow               // Auto-flow in container
+}
+
+enum Alignment : byte {
+    Start = 0,
+    Center,
+    End,
+    Stretch,
+    Baseline
+}
+
+table AnchorSpec {
+    target_id: string;    // ID of anchor target (parent, sibling)
+    target_edge: string;  // "left", "right", "top", "bottom", "center"
+    margin: float;
+}
+
+table TransformSpec {
+    translate_x: float;
+    translate_y: float;
+    translate_z: float;
+    rotate_x: float;
+    rotate_y: float;
+    rotate_z: float;
+    scale_x: float;
+    scale_y: float;
+    origin_x: float;  // 0-1, pivot point
+    origin_y: float;
+}
+
+table AnimationSpec {
+    property: string;     // Property to animate
+    from_value: string;
+    to_value: string;
+    duration_ms: int;
+    easing: string;
+    delay_ms: int;
+    loop: bool;
+}
+
+table KTCBT_VectorDoll {
+    /// objectbox: id
+    id: ulong;
+    
+    /// VectorDoll NeuralID
+    neuralid: string;
+    
+    /// Target button instance ID
+    target_button_id: string;
+    
+    // === Layout Mode ===
+    layout_mode: LayoutMode;
+    
+    // === Absolute Positioning ===
+    x: float;
+    y: float;
+    z: float;  // Z-index / layer order
+    
+    // === Anchor-based Positioning ===
+    anchor_left: AnchorSpec;
+    anchor_right: AnchorSpec;
+    anchor_top: AnchorSpec;
+    anchor_bottom: AnchorSpec;
+    anchor_horizontal_center: AnchorSpec;
+    anchor_vertical_center: AnchorSpec;
+    anchor_fill: string;  // Parent ID to fill
+    anchor_center_in: string;  // Parent ID to center in
+    
+    // === Flexbox/Grid Properties ===
+    flex_grow: float;
+    flex_shrink: float;
+    flex_basis: string;
+    align_self: Alignment;
+    grid_column: int;
+    grid_row: int;
+    grid_column_span: int;
+    grid_row_span: int;
+    
+    // === Size Overrides (override button's own size) ===
+    override_width: float;
+    override_height: float;
+    override_min_width: float;
+    override_max_width: float;
+    use_implicit_size: bool;  // Let button determine its own size
+    
+    // === Transform ===
+    transform: TransformSpec;
+    
+    // === Visibility ===
+    visible: bool;
+    opacity_override: float;
+    clip: bool;  // Clip contents to bounds
+    
+    // === Style Overrides (widget-level overrides) ===
+    override_background_color: string;
+    override_text_color: string;
+    override_border_color: string;
+    override_variant: string;  // Force a specific variant
+    
+    // === Animations ===
+    entrance_animation: AnimationSpec;
+    exit_animation: AnimationSpec;
+    state_animations: [AnimationSpec];
+    
+    // === Spatial/3D (AR/VR) ===
+    world_position_x: float;
+    world_position_y: float;
+    world_position_z: float;
+    look_at_camera: bool;
+    billboard_mode: bool;
+    
+    // === Injection Metadata ===
+    injected_by: string;  // Widget/container that injected this
+    injection_slot: string;  // Named slot in widget
+    injection_priority: int;  // For conflict resolution
+    
+    /// objectbox: date
+    created_at: long;
+    
+    /// objectbox: date
+    modified_at: long;
+}
+
+root_type KTCBT_VectorDoll;

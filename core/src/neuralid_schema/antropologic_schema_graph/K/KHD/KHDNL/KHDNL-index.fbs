@@ -1,0 +1,17 @@
+// Neural Studio - KHDNL Lineage Index
+namespace NeuralStudio.Species.K.HD.NL;
+
+table KHDNL_Index {
+    /// objectbox: id
+    id: ulong;
+    /// objectbox: unique
+    neuralid: string;
+    display_name: string;
+    is_template: bool;
+    is_active: bool;
+    profile_id: string;
+    /// objectbox: date
+    created_at: long;
+}
+
+root_type KHDNL_Index;

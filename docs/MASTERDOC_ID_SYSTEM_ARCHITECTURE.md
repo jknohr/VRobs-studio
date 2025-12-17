@@ -1,1234 +1,2401 @@
-# Neural Studio: Taxonomic ID System Architecture
-## Three-Layer Biological Classification for Atomic Component Composition
+# UI COMPONENT DESIGN RULES
 
-**Version**: 3.0.0  
+DO NOT CHANGE ANYTHING IN THE SYSTEM OF THIS FILE NEARLY ALL THE OTHER FILES ARE WRONG... or half wrong and half right an LLM Models went crazy... 
+
+
+
+## ID SYSTEM ( THE LIFEBLOOD OF THE ENTIRE SYSTEM )
+
+### INTRODUCTION
+
+### DIRECTORY_STRUCTURE
+
+
+schemas/
+│
+├── app-profiles/
+|             ├──app-profile-indexfbs
+|             └── [profile_name]/
+│                        ├──app-profile-00000000000000000000000000.fbs
+│                        ├── pstate--00000000000000000000000000.fbs
+│                       └──BasicUserSettings-00000000000000000000000000-.fbs
+│
+│
+|
+├──  pipelines/
+│   ├── Pipelines_Index.fbs
+│   └── [Tribe]_00000000000000000000000000.fbs
+│         ├── Audiotory/
+|           |        ├── Audiotory_Index.fbs
+|           |        └── Audiotory_Pipeline_00000000000000000000000000.fbs
+|           ├── Visual/
+|           |        ├── Visual_Index.fbs
+|           |        └── Visual_Pipeline_00000000000000000000000000.fbs
+|           ├── Sensory/
+|           |        ├── Sensory_Index.fbs
+|           |        └── Sensory_Pipeline_00000000000000000000000000.fbs
+|           ├── Informative/
+|           |        ├── Informative_Index.fbs
+|           |        └── Informative_Pipeline_00000000000000000000000000.fbs
+|           ├── Agentic/
+|           |        ├── Agentic_Index.fbs
+|           |        └── Agentic_Pipeline_00000000000000000000000000.fbs
+|           ├── Narrative/
+|           |        ├── Narrative_Index.fbs
+|           |        └── Narrative_Pipeline_00000000000000000000000000.fbs
+|           ├── Temporal/
+|           |        ├── Temporal_Index.fbs
+|           |        └── Temporal_Pipeline_00000000000000000000000000.fbs
+|           └── Spatial/ 
+|                    ├── Spatial_Index.fbs           
+|                    └── Spatial_Pipeline_00000000000000000000000000.fbs
+│
+
+│   
+│
+└── [s-prefix]/                           # Species directory (1 char)
+    ├── [s-prefix]_index.fbs             # Index of ethnicities in this species
+    │
+    └── [s-prefix][e-prefix]/            # Ethnicity directory (3 chars total)
+        ├── [s-prefix][e-prefix]_index.fbs              # Index of origins in this ethnicity
+        ├── [s-prefix][e-prefix]_Integarigation-00000000000000000000000000.fbs     # Shared logic for this ethnicity
+        │
+        └── [s-prefix][e-prefix][o-prefix]/             # Origin directory (5 chars total = SymbioticPrefix)
+            ├── [s-prefix][e-prefix][o-prefix]-00000000000000000000000000.fbs  # Instance schema
+            ├── [s-prefix][e-prefix][o-prefix]_VectorDoll-00000000000000000000000000.fbs                  # UI injection
+            ├── [s-prefix][e-prefix][o-prefix]_DecayRule-00000000000000000000000000.fbs                   # Lifecycle
+            └── [s-prefix][e-prefix][o-prefix]_BrainJob-00000000000000000000000000.fbs                    # AI logic
+
+EXAMPLE:
+
+schemas/
+neuralid_index.fbs THIS ONE IS IMPORTANT IT IS THE CENTRAL REGISTRE
+└── N/               [s-prefix]                      ← Species directory
+    ├── N_index.fbs                        ← INDEX of all ethnicities in N
+    │
+    └── NAU/                        [e-prefix]        ← Ethnicity directory
+        ├── NAU_index.fbs                  ← INDEX of all origins in NAU
+        ├── NAU_Integarigation-00000000000000000000000000.fbs         ← Shared logic for NAU
+        │
+        └── NAUAC/                          ← Origin directory
+            ├── NAUAC-index.fbs  --- list of all id's that start with prefix NAUAC that are relevant.
+            ├── NAUAC-00000000000000000000000000.fbs  ← Instance schema
+            ├── NAUAC_VectorDoll-00000000000000000000000000.fbs                   ← UI injection
+            ├── NAUAC_DecayRule-00000000000000000000000000.fbs                    ← Lifecycle
+            └── NAUAC_BrainJob-00000000000000000000000000.fbs                     ← AI logic
+
+IT should be RELATIVE SIMPLE AND LOGICAL TO FOLLOW ...
+
+THERE CAN BE 26+10 s-prefixes (26 letters + 10 numbers) so 36 Folders..
+     └── Each subfolder can have (36²) e-prefixes
+           └── Each subfolder can have (36²) l-prefixes
+
+The CalculationLevel 1 (s-prefix): 1 character$36^1 = \mathbf{36}$ folders.Level 2 (e-prefix): 2 characters (per s-prefix)Each of the 36 folders contains $36^2$ (1,296) subfolders.Total at this level: $36 \times 1,296 = \mathbf{46,656}$ folders.Level 3 (l-prefix): 2 characters (per e-prefix)Each of the 46,656 folders contains $36^2$ (1,296) subfolders.Total at this level: $46,656 \times 1,296 = \mathbf{60,466,176}$ folders.
+
+Each followed by a unique ID. so is room to grow
+and add enough functinality for everything .. 
+
+
+##### INTRODUCTION
+
+
+PROFILE DATABASE INTRODUCTION
+**Launch with it schema mapping all the species, availeble in the system. If No UUID is generated is in a table it will default  to schema defaults for other UUID's that is prefix+26x0**
+
+## SchemaFile streamingprofile.fbs
+| Profile Name | Profile Anagram |       Profile Description        |    Profile TAGS   |     STATE TABLE    |   Species                                    |    basic user settings          |
+| ------------ | --------------- | ---------------------------------| ----------------- | -----------------  | -------------------------------------------- | ------------------------------  |
+|  **string**  |   **string**    |         **string**               | **Array{string}** |    **ST{UUID}**    | **array{vector{sprefix(),string({sprefix()}-0000000000000000000000000000000000000000),string},{string},{string}}**  | **Vector{StateTableID},{UUID}** |
+| `"ONLYFANS"` |     `"OF"`      | `"Channel Goal, Ambition, Plan"` | `"1080P, 4k, AI"` | `"23452345634633"` | `"array{vector{sprefix(),string({sprefix()}-0000000000000000000000000000000000000000),string},{string},{string}}"` | `"Vector{StateTableID},{UUID}"` |      
+| `"TikTok"`   |     `"TT"`      | `"Channel Goal, Ambition, Plan"` | `"1080P, AI"`     | `"23452345634634"` | `"string(sprefix-0000000000000000000000000000000000000000),string},{string},{string}}"` | `"Vector{StateTableID},{UUID}"` |
+| `"YouTube"`  |     `"YT"`      | `"Channel Goal, Ambition, Plan"` | `"4k, VR, DRONE"` | `"23452345634635"` | `"UUID(sprefix-0000000000000000000000000000000000000000),string},{string},{string}}"` | `"Vector{StateTableID},{UUID}"` |
+| `"Instagram"`|     `"IG"`      | `"Channel Goal, Ambition, Plan"` | `"FPV, 1080P, VR"`| `"23452345634636"` | `"UUID(sprefix-0000000000000000000000000000000000000000),string},{string},{string}}"` | `"Vector{StateTableID},{UUID}"` |
+| `"Facebook"` |     `"FB"`      | `"Channel Goal, Ambition, Plan"` | `"4k, AI"`        | `"23452345634637"` | `"UUID(sprefix-0000000000000000000000000000000000000000),string},{string},{string}}"` | `"Vector{StateTableID},{UUID}"` |
+| `"Twitter"`  |     `"TW"`      | `"Channel Goal, Ambition, Plan"` | `"AI, 4k"`        | `"23452345634638"` | `"UUID(sprefix-0000000000000000000000000000000000000000),string},{string},{string}}"` | `"Vector{StateTableID},{UUID}"` |
+| `"Twitch"`   |     `"TW"`      | `"Channel Goal, Ambition, Plan"` | `"4k, PIP, GAME"` | `"23452345634639"` | `"UUID(sprefix-0000000000000000000000000000000000000000),string},{string},{string}}"` | `"Vector{StateTableID},{UUID}"` |
+
+```cpp Example not actual code 
+#include <iostream>
+#include <string>
+#include <boost/uuid/uuid.hpp>            // uuid class
+#include <boost/uuid/uuid_generators.hpp> // generators
+#include <boost/uuid/uuid_io.hpp>         // streaming operators etc.
+#include <boost/lexical_cast.hpp>         // for casting string to UUID object
+
+// Function to check and replace the placeholder UUID
+std::string get_valid_agent_id(std::string loadedUuidString) {
+    // 1. Define the specific placeholder used in your schema file
+    const std::string PLACEHOLDER_UUID_STRING = "23452345634633"; // Example from your table
+
+    // Check if the current value matches the placeholder
+    if (loadedUuidString == PLACEHOLDER_UUID_STRING) {
+        std::cout << "Placeholder detected. Generating a new unique ID." << std::endl;
+
+        // 2. Generate a new UUID using Boost
+        boost::uuids::uuid new_uuid = boost::uuids::random_generator()();
+
+        // 3. Convert the generated UUID object back into a string format
+        std::stringstream ss;
+        ss << new_uuid;
+        std::string generated_uuid_str = ss.str();
+        
+        return generated_uuid_str;
+    } else {
+        std::cout << "Valid existing ID found. Keeping original value." << std::endl;
+        return loadedUuidString;
+    }
+}
+
+
+// Example Usage within main() or your agent initialization function:
+int main() {
+    // Simulate reading the placeholder string from your flatbuffer
+    std::string uuidFromSchema = "23452345634633"; 
+
+    // Process the ID to ensure it is valid/unique
+    std::string finalAgentID = get_valid_agent_id(uuidFromSchema);
+
+    std::cout << "The final Agent ID to use is: " << finalAgentID << std::endl;
+
+    // Example with an already valid ID:
+    std::string validUuidFromSchema = "a8f1d4ae-7dec-41d0-a765-00a0c91e6bf6";
+    std::string finalAgentID2 = get_valid_agent_id(validUuidFromSchema);
+    std::cout << "The final Agent ID 2 to use is: " << finalAgentID2 << std::endl;
+
+    return 0;
+}
+```
+
+
+
+## Schemafile StateTable.fbs
+
+Maps all species tables for the user with to start with Default prefix-00000 but as the user use them with the right generated uuid... 
+Location will alsways be 
+
+
+
+
+
+## Schemafile BasicUserSettings.fbs
+
+
+
+
+## NeuralId_index.fbs
+-----------------------------------------------------------------------------------------------------------------
+| neuralid         | {{symbiotic-prefix()}+{uuid()}} | 
+| symbiotic-prefix | string | 
+| Origin           | string | 
+| Etnicity         | string | 
+| Species          | string | 
+| Taxonomy         | string | 
+| Tribe            | string | 
+| Linnage          | string |
+| Taxonomy         | string |
+| Tribe            | string |
+| Niche            | string |
+| Intarigation     | Integarigation+UUid|
+| VectorDoll       | VectorDoll+UUid |
+| BrainJob         | BrainJob+UUid |
+| DecayRule        | DecayRule+UUid |
+| schema_path    | string | Path to .fbs file |
+| schema_filename | string | Filename only |
+| cpp_header_path | string | Generated .obx.h path |
+| cpp_source_path | string | Generated .obx.cpp path |
+| cpp_class_name | string | C++ class name | 
+
+
+
+
+## SymbioticPrefix_index.fbs
+-----------------------------------------------------------------------------------------------------------------
+
+## Species_index.fbs
+
+        Tracks all 32 species codes. 
+ -----------------------------------------------------------------------------------------------------------------------
+| id       | s-prefix | species-family  |  species description     |     Taxonomy       | Ethenic-Group                 |  
+|--------- | -------- | --------------- | ------------------------ | -----------------  | ----------------------------- | 
+|s-prefix()| string   |     string      | string                   |     string         | array{string}                 | 
+|`"N"`     | `"N"`    | `"Node"`        | What this species represe|     `"Core"`       |`array{vector{string(string)}}`| 
+ -----------------------------------------------------------------------------------------------------------------------
+
+### Core Entities
+
+| PREFIX | Species    | Usage                                           |
+| ----   | ---------- | ----------------------------------------------- |
+| `N`    | Node       | Backend for Panes (UI)                          |
+| `A`    | Actor      | Scenegraph Representation of a Source           |
+| `P`    | Pipeline   | Pipeline orchestration                          |
+| `S`    | Settings   | Settings                           |
+| `V`    | Controller | Controllers Backend                             |
+| `R`    | Rule       | Connection rules                                |
+
+### Media
+
+| PREFIX | Species         | Usage                 |
+| ----   | --------------- | --------------------- |
+| `M`    | Media           | Media files (generic) |
+| `O`    | Model           | 3D models, ML models  |
+
+
+### UI
+
+| PREFIX | Species   | Usage                      |
+| ----   | ---------- | ------------------------- |
+| `U`    | UIElement | UI components (generic)    |
+| `W`    | Widget    | Widgets                    |
+| `K`    | Component | Components                 |
+| `G`    | Pane      | Panes (Active, Blueprint)  |
+| `F`    | Frame     | Frames (Active, Blueprint) |
+| `D`    | Anchor    | Anchor                     |
+| `E`    | Edge      | Pane connections           |
+| `C`    | Connector | Connector                  |
+
+### Events
+
+| PREFIX | Species | Usage       |
+| ----   | ------- | ----------- |
+| `T`    | Task    | Tasks, jobs |
+| `Z`    | Event   | Events      |
+| `J`    | Session | Sessions    |
+
+### Connectivity
+
+| PREFIX | Species            | Usage                 |
+| ----   | ------------------ | --------------------- |
+| `I`    | API                | API endpoints         |
+| `Y`    | APIBinding         | API bindings          |
+| `B`    | InteractionBinding | Interaction bindings  |
+| `Q`    | TransportStream    | Transport streams     |
+| `H`    | Hardware           | Hardware devices      |
+
+
+### Systems
+
+| PREFIX | Species  | Usage             |
+| ----   | -------- | ----------------- |
+| `X`    | Manager  | Manager instances |
+| `L`    | Profile  | User profiles     |
+| `0`    | Schema   | Schema            |
+
+### Advanced
+
+| PREFIX | Species      | Usage                                    |
+| ----   | ------------ | ---------------------------------------- |
+| `1`    | Agent        | Agents                                   |
+| `2`    | WASM         | WebAssembly modules                      |
+| `3`    | Conversation | AI conversations                         |
+| `4`    | File         | File references                          |
+| `5`    | CSP          | Content Service Providerxc               |
+| `6`    | CDN          | Content Delivery Network                 |
+| `7`    | Extension    | Extensions (reserved)                    |
+| `8`    | Extension    | Extensions (reserved)                    |
+| `9`    | Extension    | Extensions (reserved)                    |
+
+---
+
+-----------------------------------------------------------------------------------------------------------------------
+
+## [EthenicTypeName]_index.fbs
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|        id           | e-prefix | EthenicType-type | Ethenicdescription |  MutalisticPrefix  |      Tribe          |   Lineage-Pedigree     |  Intarigation - for Shared Logic                 | 
+|---------------------| -------- | ---------------- | ------------------ | ------------------ | ------------------- | --------------------- |  ----------------------------------------------- |
+| mutalisticPrefix()  |  string  |     string       |       string       |       string       |      string         |       String          | Array{Boolean, Boolean, Boolean, Boolean, Int}   | 
+|     `"NAU"`         | `"AU"`   | `"AudioNode"`     | What this species | `"NAU"`            | `"AuditoryStimuly"` | represents| SourceNode|                                                  |
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+## [OrigiArchtypeName]_index.fbs
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| id                | l-prefix |    Lineage-Archetype     |     Lineage description      |      Niche           |  symbioticPrefix  |        Pedandic-Variants                   | VectorDolled                   | GivingBrain|
+|-------------------| -------- | ----------------------- | ----------------------------- | -------------------- | ----------------- | -----------------------------------------  |  ----------------------------- |------------|
+| SymbioticPrefix() |  string  |           string        |           string              |     string           |      string       |Linniage-Archetype{vector{Variants(string)}}| vector{vector{vector(string)}} |  string    |
+|`"NANAC"`          | `"AC"`   |      `"AudioClip"`      |      UndefinedAudioClip       |`"ImmutibleDomionion"`| `"NANAC"`         |       `"Vector{Variants(string)}"`         | **This can be injection**      | **Logic**  | 
+|`"NANAF"`          | `"AF"`   |     `"AudioClipFX"`     |          SFX CLIP             |`"ImmutibleDomionion"`| `"NANAF"`         |       `"Vector{Variants(string)}"`         | **This can be injection of UI**| **Logic**  | 
+|`"NANAM"`          | `"AM"`   |    `"AudioClipMusic"`   | What this species represents  |`"ImmutibleDomionion"`| `"NANAM"`         |       `"Vector{Variants(string)}"`         | **This can be injection Any**  | **Logic**  | 
+|`"NANAP"`          | `"AP"`   |   `"AudioClipPodCast"`  | What this species represents  |`"ImmutibleDomionion"`| `"NANAP"`         |       `"Vector{Variants(string)}"`         | **This can be injection of UI**| **Logic**  | 
+|`"NANAS"`          | `"AS"`   |     `"AudioStream"`     | What this species represents  |`"AetherBubble"`      | `"NANAS"`         |       `"Vector{Variants(string)}"`         | **This can be injection of UI**| **Logic**  | 
+|`"NANSM"`          | `"SM"`   |   `"AudioStreamMusic"`  | What this species represents  |`"AetherBubble"`      | `"NANSM"`         |       `"Vector{Variants(string)}"`         | **This can be injection of UI**| **Logic**  | 
+|`"NANSP"`          | `"SP"`   | `"AudioStreamPodCast"`  | What this species represents  |`"AetherBubble"`      | `"NANSP"`         |       `"Vector{Variants(string)}"`         | **This can be injection of UI**| **Logic**  | 
+|`"NANAV"`          | `"AV"`   | `"AudioStreamVoiceCall"`| What this species represents  |`"AetherBubble"`      | `"NANAV"`         |       `"Vector{Variants(string)}"`         | **This can be injection of UI**| **Logic**  | 
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+
+
+
+
+##
+
+
+PREFIX CONTAIN 3 layers - 
+Architectural representation and job          REPRESENT SYSTEM |    REPRESENT JOB  | REPRESENT SPECIALIZATION 
+
+-----------------------------------------------------------------------------------------------------------------
+                                             |      LEVEL 1    |       LEVEL 2     |       LEVEL 3       | +UUID |
+-----------------------------------------------------------------------------------------------------------------
+Amout of CHARACTERS GENERATED FOR EACH LVL   |        1        |       2           |        2            |   26  |-----------------------------------------------------------------------------------------------------------------
+Name of Prefix for that level                |   s-prefix      |   e-prefix        |    o-prefix         |   x   |
+-----------------------------------------------------------------------------------------------------------------
+Name of Compounded Prefix at that level      |       x         | MutalisticPrefix  |   SymbioticPrefix  |   x    |
+-----------------------------------------------------------------------------------------------------------------
+Name of Hierarchy Specific Category          | Species(Family) |  Ethenic(Type)    |  Origin(Archetype) |   x    |-----------------------------------------------------------------------------------------------------------------
+Name of Forwarded Grabbing Array of Members  | Ethenic-Group    | Linnage-Pedigree | Pedandic-Variants  |   x    |
+-----------------------------------------------------------------------------------------------------------------
+Name of CrossCategory within each Level      |     Taxonomy     |     Tribe        |     Linnage        |   x    |
+-----------------------------------------------------------------------------------------------------------------
+Name of Members of each levels CrossCat      | Core, UI, Media, | Auditory, Visual |  Aetherbubble,     |   x    |
+                                             | Connectivity     | Sensory    ,     |  ImmutebleDominion,|        |
+In level 1 is focusing on its placement      | Events,          | Informative,     |                    |        |
+in the software architecture                 | Advanced,        | Universal        |                    |        |
+                                             |                  | Sensory, Agentic |                    |        |        
+In level 2 it is giving information on if it |                  | Narrative        |                    |        | 
+processing something Visual or Audio or      |                  |                  |                    |        |
+Or sensory that is VideoStream.              |                  |                  |                    |        |
+If data processing it is the informative     |                  |                  |                    |        |
+if universal it is generic processes..       |                  |                  |                    |        |
+if agentic it is agent process               |                  |                  |                    |        | 
+                                             |                  |                  |                    |        |
+In level 3 it is giving information on       |                  |                  |                    |        |
+Persistency.                                 |                  |                  |                    |        |
+-------------------------------------------  | ---------------- | ---------------- | ------------------ | ------ |
+FROM Here it is possible to add extra        |                  |  Intarigation    |    VectorDolled    |        |
+Columns for Each Level                       | ---------------- | ---------------- | ------------------ | ------ |
+                                             |                  |                  |    GivingBrain     |        | 
+                                             | ---------------- | ---------------- | ------------------ | ------ |
+So each Level does not to have the same
+amount of rows after this.. 
+
+## [Ethenic_Type]_Integarigation_Schema.fbs
+Specialized injection of information based on what they have incommon with each other.
+
+**Each Ethenic_Type has its own Integarigation_Schema**
+
+
+
+## [Lineage_Archtype]-00000000000000000000000000.fbs 
+The State Injection of information based on what they have incommon with each other and meta data for that Linneage_Archtype and Identity.
+**Each Lineage_Archtype has its own Lineage_Archtype_Schema**
+
+
+## [Lineage_Archtype]_VectorDoll.fbs
+Specialized injection of information based on what they have incommon with each other.
+**Each Lineage_Archtype has its own VectorDoll**
+
+## [Lineage_Archtype]_DecayRule_Schema.fbs
+Specialized injection of information based on what they have incommon with each other.
+**Each Lineage_Archtype has its own DecayRule_Schema**
+
+## [Lineage_Archtype]_BrainJob_Schema.fbs
+Specialized injection of information based on what they have incommon with each other.
+**Each Lineage_Archtype has its own BrainJob_Schema**
+
+
+## 
+## Pipelines_Index.fbs
+
+This will be a index of ActivePipelines, Metadata on location and types of Pipelines.. Active Pipelines, and anything relevant for Pipelines
+
+## [Tribe]_Pipeline_Schema.fbs
+
+Each type of Tribe will have a Unique Pipeline_schema optimized for that Tribes flow... Tribe is also used for connecting the nodes and will be part of the rule system there... 
+
+
+
+
+
+## Manager_Index.fbs
+Managers are the main constructors and factories of many systems... 
+
+## [Manager_Type]_00000000000000000000000000.fbs
+
+
+
+
+
+
+
+# Neural Studio: ID System ObjectBox FlatBuffers Schemas
+## Complete Schema Specification with Taxonomic Classification
+
+**Version**: 4.0.0  
 **Date**: 2025-12-17  
-**Status**: Core System Architecture (DO NOT MODIFY WITHOUT APPROVAL)
+**Status**: Complete ObjectBox Schema Specification
 
 ---
 
 ## Table of Contents
 
-1. [Executive Summary](#1-executive-summary)
-2. [Three-Layer Taxonomic Structure](#2-three-layer-taxonomic-structure)
-3. [ID Format Specification](#3-id-format-specification)
-4. [Biological Classification System](#4-biological-classification-system)
-5. [Atomic Component Architecture](#5-atomic-component-architecture)
-6. [ObjectBox Integration](#6-objectbox-integration)
-7. [Dynamic Plugin System](#7-dynamic-plugin-system)
-8. [Complete Taxonomy Tables](#8-complete-taxonomy-tables)
-9. [Implementation Examples](#9-implementation-examples)
+1. [Introduction](#1-introduction)
+2. [FlatBuffers Type Reference](#2-flatbuffers-type-reference)
+3. [Directory Structure](#3-directory-structure)
+4. [Core Index Schemas](#4-core-index-schemas)
+5. [Species Level Schemas](#5-species-level-schemas)
+6. [Ethnicity Level Schemas](#6-ethnicity-level-schemas)
+7. [Origin Level Schemas](#7-origin-level-schemas)
+8. [Profile Schemas](#8-profile-schemas)
+9. [Pipeline Schemas](#9-pipeline-schemas)
+10. [Manager Schemas](#10-manager-schemas)
+11. [Complete Example: AudioClip](#11-complete-example-audioclip)
 
 ---
 
-## 1. Executive Summary
+## 1. Introduction
 
-### The Problem
+### System Overview
 
-Traditional node systems hardcode node types, making it impossible to:
-- Add new node types without recompilation
-- Create custom variants dynamically
-- Support third-party plugins seamlessly
-- Scale to hundreds of component combinations
+The Neural Studio ID System uses a **hierarchical three-layer structure** where:
+- **Layer 1 (Species)**: 1-character prefix - System placement (N=Node, F=Frame, etc.)
+- **Layer 2 (Ethnicity)**: 2-character prefix - Job category (AU=Audio, VI=Video, etc.)
+- **Layer 3 (Origin)**: 2-character prefix - Specialization (AC=AudioClip, ST=Stream, etc.)
 
-### The Solution: Biological Classification
-
-Neural Studio uses a **three-layer taxonomic ID system** inspired by biological classification (Kingdom → Phylum → Species):
+### ID Format
 
 ```
-Layer 1: Species (1 char)   - What kind of entity? (Node, Pipeline, Settings)
-         ↓
-Layer 2: Ethnicity (2 chars) - What category? (Audio, Video, Camera)
-         ↓
-Layer 3: Archetype (2 chars) - What variant? (AudioClip, AudioStream)
-         ↓
-UUID: Unique instance identifier (36 chars)
+[Species:1][Ethnicity:2][Origin:2]-[UUID:36]
 
-Result: NANAC-550e8400-e29b-41d4-a716-446655440000
+Example: NAUAC-550e8400-e29b-41d4-a716-446655440000
+         │││││  └────────────────┬────────────────┘
+         │││││                   UUID (instance)
+         ││││└─ o-prefix: AC = AudioClip
+         │││└── e-prefix: AU = AudioNode
+         ││└─── s-prefix: N = Node
+         │└──── Mutualistic Prefix: NAU (Species + Ethnicity)
+         └───── Symbiotic Prefix: NAUAC (Full classification)
 ```
 
-### Key Innovations
-
-1. **Self-Describing IDs**: Parse type information without database queries
-2. **Atomic Composition**: ~80 atomic components + ~280 widgets = unlimited nodes
-3. **Database-Driven UI**: Widgets configured via ObjectBox entries
-4. **Hot-Swappable Plugins**: Add nodes without recompilation
-5. **Qt 6.10.1 Integration**: Native property binding with C++ performance
-
----
-
-## 2. Three-Layer Taxonomic Structure
-
-### Layer 1: Species (Kingdom)
-
-**What kind of entity is this?**
+### Reserved UUIDs
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│  SPECIES LAYER (1 CHARACTER)                                │
-│  Defines the fundamental nature of the entity               │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│  N  = Node (Processing entities in blueprint)              │
-│  P  = Pipeline (Execution orchestration)                   │
-│  S  = Settings (Configuration data)                        │
-│  E  = Edge (Graph connections)                             │
-│  C  = Controller (UI controllers)                          │
-│  M  = Media (Media files)                                  │
-│  U  = UI (User interface components)                       │
-│  ... (32 total species codes)                              │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
-```
-
-**Example**:
-- `N` = Node species → This ID represents a processing node
-- `P` = Pipeline species → This ID represents pipeline orchestration
-- `S` = Settings species → This ID represents configuration data
-
-### Layer 2: Ethnicity (Phylum/Class)
-
-**What category within the species?**
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│  ETHNICITY LAYER (2 CHARACTERS)                             │
-│  Defines the mutualistic/tribal grouping                    │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│  Species N (Node) has multiple ethnicities:                │
-│                                                             │
-│  AN = AudioNode (Auditory stimuli processing)              │
-│  VD = VideoNode (Visual data processing)                   │
-│  CA = CameraNode (Camera input processing)                 │
-│  EF = EffectsNode (Visual effects processing)              │
-│  ML = MLNode (Machine learning inference)                  │
-│  ... (27 total node ethnicities)                           │
-│                                                             │
-│  Each ethnicity has:                                       │
-│  - Mutualistic Prefix: NAN (Node + Audio + Ethnicity)      │
-│  - Tribe: "AuditoryStimuli" (functional grouping)          │
-│  - Rank: 4 (source node capability)                        │
-│  - Integration Tactics: [T, T, F, F, 4] (behavior flags)   │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
-```
-
-**Example**:
-- `NAN` = Node + AudioNode → Audio processing node
-- `NVD` = Node + VideoNode → Video processing node
-- `NCA` = Node + CameraNode → Camera input node
-
-### Layer 3: Archetype (Species/Variant)
-
-**What specific implementation?**
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│  ARCHETYPE LAYER (2 CHARACTERS)                             │
-│  Defines the specific lineage/variant implementation        │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│  Ethnicity NAN (AudioNode) has multiple archetypes:        │
-│                                                             │
-│  AC = AudioClip (File playback - immutable dominion)       │
-│  AF = AudioClipFX (Effects processing)                     │
-│  AM = AudioClipMusic (Music-specific playback)             │
-│  AP = AudioClipPodcast (Podcast-specific playback)         │
-│  AS = AudioStream (Live streaming - aether bubble)         │
-│  SM = AudioStreamMusic (Music streaming)                   │
-│  SP = AudioStreamPodcast (Podcast streaming)               │
-│  AV = AudioStreamVoiceCall (Voice call streaming)          │
-│                                                             │
-│  Each archetype has:                                       │
-│  - Symbiotic Prefix: NANAC (full classification)           │
-│  - Lineage: AudioClip (variant name)                       │
-│  - Niche: "ImmutableDominion" (data persistence type)      │
-│  - Pedantic Variants: Vector of widget configurations      │
-│  - Vector Dolled: Nested configuration arrays              │
-│  - Giving Brain: AI model assignment                       │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
-```
-
-**Example**:
-- `NANAC` = Node + AudioNode + AudioClip → Audio file playback node
-- `NANAS` = Node + AudioNode + AudioStream → Audio streaming node
-- `NANAV` = Node + AudioNode + AudioStreamVoiceCall → Voice call node
-
----
-
-## 3. ID Format Specification
-
-### Complete Format
-
-```
-[Species:1][Ethnicity:2][Archetype:2]-[UUID:36]
-
-Total: 5 prefix characters + 1 dash + 36 UUID = 42 characters
-```
-
-### Parsing Rules
-
-```cpp
-struct TaxonomicID {
-    char species;          // 1 char  - Index 0
-    string ethnicity;      // 2 chars - Index 1-2
-    string archetype;      // 2 chars - Index 3-4
-    string uuid;           // 36 chars - Index 6-41 (skip dash at 5)
-    
-    // Derived properties
-    string mutualisticPrefix;  // species + ethnicity (e.g., "NAN")
-    string symbioticPrefix;    // full classification (e.g., "NANAC")
-};
-
-TaxonomicID parseID(const string& id) {
-    assert(id.length() == 42);
-    assert(id[5] == '-');
-    
-    return {
-        .species = id[0],
-        .ethnicity = id.substr(1, 2),
-        .archetype = id.substr(3, 2),
-        .uuid = id.substr(6, 36),
-        .mutualisticPrefix = id.substr(0, 3),
-        .symbioticPrefix = id.substr(0, 5)
-    };
-}
-```
-
-### ID Examples with Full Classification
-
-```
-NANAC-550e8400-e29b-41d4-a716-446655440000
-│││││  └────────────────┬────────────────┘
-│││││                   UUID (instance)
-││││└─ Archetype: AC = AudioClip
-│││└── Ethnicity: AN = AudioNode
-││└─── Species: N = Node
-│└──── Mutualistic Prefix: NAN
-└───── Symbiotic Prefix: NANAC
-
-Classification:
-- Kingdom: Node (processing entity)
-- Phylum: AudioNode (auditory stimuli)
-- Class: AuditoryStimuli tribe
-- Order: Source node (rank 4)
-- Family: ImmutableDominion niche
-- Genus: AudioClip lineage
-- Species: File-based audio playback
-- Instance: 550e8400-e29b-41d4-a716-446655440000
-```
-
-### Reserved UUID: Default Template
-
-```
-{PREFIX}-00000000-0000-0000-0000-000000000000
-```
-
-**Meaning**: Default configuration template for this classification
-
-**Examples**:
-```
-NANAC-00000000-0000-0000-0000-000000000000  = Default AudioClip settings
-NANAS-00000000-0000-0000-0000-000000000000  = Default AudioStream settings
-NVDCP-00000000-0000-0000-0000-000000000000  = Default VideoCapture settings
-```
-
-**Usage**:
-1. Schema initializes 000... template with hardcoded defaults
-2. User creates new instance → clones settings from 000... template
-3. User can customize 000... template → all future instances inherit changes
-4. "Reset to Defaults" button → restore from 000... template
-
----
-
-## 4. Biological Classification System
-
-### Complete Taxonomy Table
-
-#### Layer 1: Species (32 Codes)
-
-| Species Code | Species Name | Domain | Description |
-|--------------|--------------|--------|-------------|
-| `N` | Node | Processing | Scene graph processing nodes |
-| `P` | Pipeline | Orchestration | Execution pipeline management |
-| `S` | Settings | Data | Configuration data stores |
-| `E` | Edge | Connectivity | Graph connection definitions |
-| `C` | Controller | UI | Qt controller objects |
-| `R` | Rule | Validation | Connection validation rules |
-| `M` | Media | Assets | Media file references |
-| `A` | MediaAsset | Assets | Specific media assets |
-| `O` | Model | Assets | 3D models, ML models |
-| `G` | SceneGraphAsset | Assets | Scene graph asset definitions |
-| `U` | UI | Interface | UI component definitions |
-| `L` | UIElement | Interface | Specific UI elements |
-| `W` | Widget | Interface | Widget definitions |
-| `F` | Frame | Interface | Frame containers |
-| `D` | Dock | Interface | Dock panel definitions |
-| `V` | Monitor | Output | Monitor output configurations |
-| `T` | Task | Execution | Task/job definitions |
-| `Z` | Event | Execution | Event definitions |
-| `J` | Session | Execution | Session management |
-| `I` | API | Connectivity | API endpoint definitions |
-| `Y` | APIBinding | Connectivity | API binding configurations |
-| `B` | InteractionBinding | Connectivity | Interaction binding rules |
-| `Q` | TransportStream | Connectivity | Transport stream definitions |
-| `K` | IPStream | Connectivity | IP stream configurations |
-| `H` | Bluetooth | Connectivity | Bluetooth connection configs |
-| `X` | Manager | System | Manager instance definitions |
-| `0` | Profile | System | User profile configurations |
-| `1` | Hardware | System | Hardware device definitions |
-| `2` | WASM | Advanced | WebAssembly module configs |
-| `3` | Conversation | Advanced | AI conversation states |
-| `4` | File | Advanced | File reference metadata |
-| `5` | CSP | Advanced | Cloud/security policies |
-
-#### Layer 2: Node Ethnicities (27 Codes)
-
-| Ethnicity Code | Ethnicity Name | Mutualistic Prefix | Tribe | Rank | Integration Tactics |
-|----------------|----------------|-------------------|-------|------|-------------------|
-| `AN` | AudioNode | `NAN` | AuditoryStimuli | 4 | [true, true, false, false, 4] |
-| `VD` | VideoNode | `NVD` | VisualData | 4 | [true, true, false, false, 4] |
-| `CA` | CameraNode | `NCA` | CaptureApparatus | 1 | [true, false, false, false, 1] |
-| `EF` | EffectsNode | `NEF` | EffectProcessing | 6 | [false, true, true, false, 6] |
-| `GR` | GraphicsNode | `NGR` | GraphicalRender | 4 | [true, true, false, false, 4] |
-| `SH` | ShaderNode | `NSH` | ShaderProcessing | 6 | [false, true, true, false, 6] |
-| `SC` | ScriptNode | `NSC` | ScriptExecution | 5 | [true, true, true, false, 5] |
-| `ML` | MLNode | `NML` | MachineLearning | 6 | [false, true, true, true, 6] |
-| `AI` | AINode | `NAI` | ArtificialIntel | 6 | [false, true, true, true, 6] |
-| `TR` | TransformNode | `NTR` | Transformation | 6 | [false, true, true, false, 6] |
-| `FI` | FilterNode | `NFI` | FilterProcessing | 6 | [false, true, true, false, 6] |
-| `CO` | CompositeNode | `NCO` | Composition | 6 | [false, true, true, false, 6] |
-| `MX` | MixerNode | `NMX` | AudioVideoMix | 6 | [false, true, true, false, 6] |
-| `EN` | EncoderNode | `NEN` | Encoding | 60 | [false, true, false, false, 60] |
-| `DE` | DecoderNode | `NDE` | Decoding | 4 | [true, false, false, false, 4] |
-| `ST` | StreamNode | `NST` | Streaming | 60 | [false, false, false, true, 60] |
-| `OU` | OutputNode | `NOU` | OutputSink | 70 | [false, false, false, true, 70] |
-| `IN` | InputNode | `NIN` | InputSource | 1 | [true, false, false, false, 1] |
-| `DA` | DataNode | `NDA` | DataManagement | 0 | [true, false, false, false, 0] |
-| `AP` | APINode | `NAP` | APIInteraction | 2 | [true, false, false, true, 2] |
-| `HW` | HardwareNode | `NHW` | HardwareIO | 1 | [true, false, false, false, 1] |
-| `GR` | GroupNode | `NGR` | Grouping | 3 | [true, true, true, true, 3] |
-| `TG` | TriggerNode | `NTG` | EventTrigger | 9 | [false, false, true, false, 9] |
-| `AN` | AnalysisNode | `NAN` | Analysis | 80 | [false, false, true, false, 80] |
-| `PP` | PostProcessNode | `NPP` | PostProcessing | 70 | [false, true, true, false, 70] |
-| `SU` | SupportNode | `NSU` | Support | 5 | [true, true, true, false, 5] |
-| `WT` | WebTransportNode | `NWT` | WebTransport | 60 | [false, false, false, true, 60] |
-
-**Integration Tactics Explained**:
-```cpp
-struct IntegrationTactics {
-    bool canBeSource;         // Can generate data (no required inputs)
-    bool canTransform;        // Can modify passing data
-    bool requiresInput;       // Must have incoming connections
-    bool isTerminal;          // Final output node
-    int ethnicityRank;        // Pipeline master priority (0=highest)
-};
-```
-
-#### Layer 3: AudioNode Archetypes (8 Variants)
-
-| Archetype Code | Archetype Name | Symbiotic Prefix | Lineage | Niche | Pedantic Variants |
-|----------------|----------------|-----------------|---------|-------|------------------|
-| `AC` | AudioClip | `NANAC` | AudioClip | ImmutableDominion | [QtMultimedia, FFmpeg, VLC] |
-| `AF` | AudioClipFX | `NANAF` | AudioClipFX | ImmutableDominion | [Reverb, EQ, Compressor, Limiter] |
-| `AM` | AudioClipMusic | `NANAM` | AudioClipMusic | ImmutableDominion | [QtMultimedia, FFmpeg, TagLib] |
-| `AP` | AudioClipPodcast | `NANAP` | AudioClipPodcast | ImmutableDominion | [QtMultimedia, FFmpeg, ChapterMarkers] |
-| `AS` | AudioStream | `NANAS` | AudioStream | AetherBubble | [RTSP, HTTP, NDI, WebRTC] |
-| `SM` | AudioStreamMusic | `NANSM` | AudioStreamMusic | AetherBubble | [Spotify, AppleMusic, Tidal, YouTube] |
-| `SP` | AudioStreamPodcast | `NANSP` | AudioStreamPodcast | AetherBubble | [RSS, Spotify, ApplePodcasts] |
-| `AV` | AudioStreamVoiceCall | `NANAV` | AudioStreamVoiceCall | AetherBubble | [SIP, WebRTC, Discord, Zoom] |
-
-**Niche Definitions**:
-- **ImmutableDominion**: File-based, persistent storage (clips, files)
-- **AetherBubble**: Network-based, transient data (streams, APIs)
-- **MorphicField**: Transformative processing (effects, filters)
-- **QuantumFlux**: Real-time hardware I/O (cameras, microphones)
-
----
-
-## 5. Atomic Component Architecture
-
-### The 80+280 System
-
-```
-┌────────────────────────────────────────────────────────────┐
-│  ATOMIC COMPONENTS (~80 Building Blocks)                   │
-│  Pure functional units with zero dependencies              │
-├────────────────────────────────────────────────────────────┤
-│  - AudioBufferProcessor                                    │
-│  - VideoFrameDecoder                                       │
-│  - NetworkStreamReceiver                                   │
-│  - FileIOHandler                                           │
-│  - ComputeShaderExecutor                                   │
-│  - ... (75 more atomic components)                         │
-└────────────────┬───────────────────────────────────────────┘
-                 │
-                 ▼
-┌────────────────────────────────────────────────────────────┐
-│  WIDGETS (~280 Configurable Components)                    │
-│  Composites of atomic components with Qt UI integration    │
-├────────────────────────────────────────────────────────────┤
-│  AudioClipPlayerWidget:                                    │
-│    - Atomic: AudioBufferProcessor                          │
-│    - Atomic: FileIOHandler                                 │
-│    - Qt UI: QSlider (playback position)                    │
-│    - Qt UI: QPushButton (play/pause)                       │
-│                                                             │
-│  VideoStreamDecoderWidget:                                 │
-│    - Atomic: NetworkStreamReceiver                         │
-│    - Atomic: VideoFrameDecoder                             │
-│    - Qt UI: QLabel (video display)                         │
-│    - Qt UI: QComboBox (codec selection)                    │
-│                                                             │
-│  ... (278 more widgets)                                    │
-└────────────────┬───────────────────────────────────────────┘
-                 │
-                 ▼
-┌────────────────────────────────────────────────────────────┐
-│  NODES (Dynamically Composed from Widgets)                 │
-│  Widget composition defined by Symbiotic Prefix in DB      │
-├────────────────────────────────────────────────────────────┤
-│  AudioClipNode (NANAC):                                    │
-│    - AudioClipPlayerWidget (Qt Multimedia variant)         │
-│    - AudioClipSettingsWidget                               │
-│    - WaveformVisualizerWidget                              │
-│    - AudioOutputSelectorWidget                             │
-│                                                             │
-│  VideoStreamNode (NVDST):                                  │
-│    - VideoStreamDecoderWidget (FFmpeg variant)             │
-│    - StreamSettingsWidget                                  │
-│    - CodecConfigWidget                                     │
-│    - BufferMonitorWidget                                   │
-│                                                             │
-│  → Configuration stored in ObjectBox                       │
-│  → Composition rules defined by Pedantic Variants          │
-└────────────────────────────────────────────────────────────┘
-```
-
-### Widget Composition Example
-
-**ObjectBox Entry for NANAC (AudioClip)**:
-```json
-{
-  "symbioticPrefix": "NANAC",
-  "lineage": "AudioClip",
-  "niche": "ImmutableDominion",
-  "pedanticVariants": [
-    {
-      "provider": "QtMultimedia",
-      "widgets": [
-        "AudioClipPlayerWidget_QtMultimedia",
-        "AudioClipSettingsWidget",
-        "WaveformVisualizerWidget",
-        "AudioOutputSelectorWidget"
-      ],
-      "layout": "vertical",
-      "defaultProvider": true
-    },
-    {
-      "provider": "FFmpeg",
-      "widgets": [
-        "AudioClipPlayerWidget_FFmpeg",
-        "AudioClipSettingsWidget",
-        "CodecConfigWidget",
-        "AudioOutputSelectorWidget"
-      ],
-      "layout": "vertical",
-      "defaultProvider": false
-    },
-    {
-      "provider": "VLC",
-      "widgets": [
-        "AudioClipPlayerWidget_VLC",
-        "AudioClipSettingsWidget",
-        "AudioOutputSelectorWidget"
-      ],
-      "layout": "vertical",
-      "defaultProvider": false
-    }
-  ],
-  "vectorDolled": [
-    ["QtMultimedia", "FFmpeg", "VLC"],
-    ["Playback", "Settings", "Visualizer"],
-    ["Core", "Extended", "Minimal"]
-  ],
-  "givingBrain": "AudioProcessingAI_v1"
-}
-```
-
-### Dynamic Node Creation
-
-```cpp
-// 1. User drags AudioNode from AudioManager
-// 2. System looks up NANAC in ObjectBox INDEX store
-auto config = indexStore->getArchetypeConfig("NANAC");
-
-// 3. Select provider (default or user choice)
-auto provider = config.pedanticVariants[0];  // QtMultimedia
-
-// 4. Instantiate widgets dynamically
-QWidget* node = new QWidget();
-QVBoxLayout* layout = new QVBoxLayout(node);
-
-for (const auto& widgetName : provider.widgets) {
-    QWidget* widget = WidgetFactory::create(widgetName);
-    layout->addWidget(widget);
-}
-
-// 5. Generate unique ID
-string nodeId = IDGenerator::generate("N", "AN", "AC");
-// Result: NANAC-550e8400-e29b-41d4-a716-446655440000
-
-// 6. Create node store
-auto nodePath = "~/Neural-Studio/profiles/gaming/nodes/" + nodeId;
-auto nodeStore = ObjectBox::createStore(nodePath, "AudioClipSettings");
-
-// 7. Save initial configuration
-nodeStore->put({
-    .id = nodeId,
-    .provider = "QtMultimedia",
-    .filePath = "",
-    .volume = 1.0f,
-    .loop = false
-});
-
-// 8. Register in profile store
-profileStore->put(GraphNode{
-    .id = nodeId,
-    .symbioticPrefix = "NANAC",
-    .position = {100, 100, 0},
-    .nodeStorePath = nodePath
-});
+Default template: prefix-00000000-0000-0000-0000-000000000000
+Placeholder:      "23452345634633" (numeric, auto-replaced)
 ```
 
 ---
 
-## 6. ObjectBox Integration
+## 2. FlatBuffers Type Reference
 
-### Five-Store Architecture
+### Primitive Types
 
-```
-┌────────────────────────────────────────────────────────────┐
-│  0. INDEX STORE (Meta-Registry)                            │
-│  Location: ~/.config/neural-studio/objectbox/master/index/ │
-│                                                             │
-│  Tables:                                                    │
-│  - SpeciesIndex (32 species codes)                         │
-│  - EthnicityIndex (ethnicities per species)                │
-│  - ArchetypeIndex (archetypes per ethnicity)               │
-│  - SchemaIndex (symbiotic prefix → schema mapping)         │
-│  - WidgetRegistry (280 widget definitions)                 │
-│  - ComponentRegistry (80 atomic components)                │
-│                                                             │
-│  Purpose: Source of truth for all valid ID combinations    │
-└────────────────────────────────────────────────────────────┘
-          │
-          ▼
-┌────────────────────────────────────────────────────────────┐
-│  1. MASTER STORE (Global Definitions)                      │
-│  Location: ~/.config/neural-studio/objectbox/master/       │
-│                                                             │
-│  Tables:                                                    │
-│  - NodeEthnicity (rank, tribe, integration tactics)        │
-│  - ConnectionRule (valid edge connections)                 │
-│  - PipelineTemplate (workflow templates)                   │
-│                                                             │
-│  Purpose: Shared definitions across all profiles           │
-└────────────────────────────────────────────────────────────┘
-          │
-          ▼
-┌────────────────────────────────────────────────────────────┐
-│  2. PROFILE STORE (Per-User Workspace)                     │
-│  Location: ~/Neural-Studio/profiles/<name>/objectbox/      │
-│                                                             │
-│  Tables:                                                    │
-│  - GraphNode (node instance registry)                      │
-│  - GraphEdge (connections between nodes)                   │
-│  - BroadcastSettings (streaming configurations)            │
-│  - SceneObject (3D scene entities)                         │
-│                                                             │
-│  Purpose: Graph topology for this profile                  │
-└────────────────────────────────────────────────────────────┘
-          │
-          ▼
-┌────────────────────────────────────────────────────────────┐
-│  3. NODE VARIANT STORES (Per-Instance)                     │
-│  Location: ~/Neural-Studio/profiles/<name>/nodes/<uuid>/   │
-│                                                             │
-│  Tables (dynamic based on archetype):                      │
-│  - AudioClipSettings (for NANAC nodes)                     │
-│  - AudioStreamSettings (for NANAS nodes)                   │
-│  - VideoCaptureSettings (for NVDCP nodes)                  │
-│                                                             │
-│  Purpose: Instance-specific configuration data             │
-└────────────────────────────────────────────────────────────┘
-          │
-          ▼
-┌────────────────────────────────────────────────────────────┐
-│  4. AI MEMORY STORE (Learning System)                      │
-│  Location: ~/.config/neural-studio/objectbox/ai_memory/    │
-│                                                             │
-│  Tables:                                                    │
-│  - GraphEvent (time-series user actions)                   │
-│  - GraphPattern (learned workflows)                        │
-│  - IntentPrediction (AI suggestions)                       │
-│                                                             │
-│  Purpose: Cross-profile pattern learning                   │
-└────────────────────────────────────────────────────────────┘
-```
+| FlatBuffers Type | C++ Type | ObjectBox Usage | Example |
+|-----------------|----------|-----------------|---------|
+| `bool` | `bool` | Boolean flags | `enabled: bool` |
+| `byte` | `int8_t` | Small integers | `rank: byte` |
+| `ubyte` | `uint8_t` | Small unsigned | `level: ubyte` |
+| `short` | `int16_t` | 16-bit integers | `port: short` |
+| `ushort` | `uint16_t` | 16-bit unsigned | `count: ushort` |
+| `int` | `int32_t` | 32-bit integers | `value: int` |
+| `uint` | `uint32_t` | 32-bit unsigned | `index: uint` |
+| `long` | `int64_t` | Timestamps (ms) | `created_at: long` |
+| `ulong` | `uint64_t` | IDs, large numbers | `id: ulong` |
+| `float` | `float` | 32-bit float | `volume: float` |
+| `double` | `double` | 64-bit float | `precise_value: double` |
+| `string` | `std::string` | UTF-8 text | `name: string` |
+| `[string]` | `std::vector<std::string>` | String arrays | `tags: [string]` |
+| `[ubyte]` | `std::vector<uint8_t>` | Binary data | `data: [ubyte]` |
 
-### Schema Mapping in INDEX Store
+### ObjectBox Annotations
 
-**SchemaIndex Table**:
 ```flatbuffers
-table SchemaIndex {
-    id: ulong (key);
-    symbiotic_prefix: string;      // "NANAC", "NVDCP", etc.
-    species_code: string;           // "N", "P", "S", etc.
-    ethnicity_code: string;         // "AN", "VD", "CA", etc.
-    archetype_code: string;         // "AC", "ST", "CP", etc.
+table Example {
+    /// objectbox: id
+    id: ulong;                      // Primary key (auto-increment)
     
-    // Schema locations
-    settings_schema_path: string;   // "schemas/nodes/audio/AudioClipSettings.fbs"
-    pipeline_schema_path: string;   // "schemas/nodes/audio/AudioClipPipeline.fbs"
-    cpp_class_name: string;         // "AudioClipSettings"
+    /// objectbox: unique
+    unique_field: string;           // Unique constraint
     
-    // Metadata
-    has_pipeline: bool;             // Does this create pipeline stores?
-    ethnicity_rank: int;            // Pipeline master priority
-    niche: string;                  // "ImmutableDominion", "AetherBubble"
+    /// objectbox: index
+    indexed_field: string;          // Indexed for fast queries
     
-    // Widget composition
-    widget_list: [string];          // Array of widget names
-    atomic_components: [string];    // Array of atomic component names
+    /// objectbox: link=OtherTable
+    relation_id: ulong;             // Foreign key (ToOne relation)
+    
+    /// objectbox: date
+    timestamp_ms: long;             // Date in milliseconds
+    
+    /// objectbox: date-nano
+    timestamp_ns: long;             // Date in nanoseconds
 }
 ```
 
-**Example Entry**:
-```json
-{
-  "id": 1,
-  "symbiotic_prefix": "NANAC",
-  "species_code": "N",
-  "ethnicity_code": "AN",
-  "archetype_code": "AC",
-  "settings_schema_path": "schemas/nodes/audio/AudioClipSettings.fbs",
-  "pipeline_schema_path": "schemas/nodes/audio/AudioClipPipeline.fbs",
-  "cpp_class_name": "AudioClipSettings",
-  "has_pipeline": true,
-  "ethnicity_rank": 4,
-  "niche": "ImmutableDominion",
-  "widget_list": [
-    "AudioClipPlayerWidget_QtMultimedia",
-    "AudioClipSettingsWidget",
-    "WaveformVisualizerWidget",
-    "AudioOutputSelectorWidget"
-  ],
-  "atomic_components": [
-    "AudioBufferProcessor",
-    "FileIOHandler",
-    "QtMultimediaBackend"
-  ]
-}
+---
+
+## 3. Directory Structure
+
+### Complete Schema Tree
+
+```
+core/src/state/schemas/
+│
+├── index/                                  # Master indices
+│   ├── NeuralId_index.fbs                 # All IDs registry
+│   ├── SymbioticPrefix_index.fbs          # All 5-char prefixes
+│   └── Species_index.fbs                  # All 32 species codes
+│
+├── profiles/                               # User profile schemas
+│   ├── StreamingProfile.fbs
+│   ├── StateTable.fbs
+│   └── BasicUserSettings.fbs
+│
+├── pipelines/                              # Pipeline schemas
+│   ├── Pipelines_Index.fbs
+│   └── [Tribe]_Pipeline.fbs
+│
+├── managers/                               # Manager schemas
+│   ├── Manager_Index.fbs
+│   └── [ManagerType]_00000000000000000000000000.fbs
+│
+└── [Species]/                              # Per-species hierarchy
+    ├── [Species]_index.fbs                # Species index
+    │
+    └── [Species][Ethnicity]/              # Per-ethnicity directory
+        ├── [Species][Ethnicity]_index.fbs        # Ethnicity index
+        ├── [Species][Ethnicity]_Integarigation.fbs  # Shared ethnicity logic
+        │
+        └── [Species][Ethnicity][Origin]/  # Per-origin directory
+            ├── [Species][Ethnicity][Origin]-00000000000000000000000000.fbs  # Instance schema
+            ├── [Species][Ethnicity][Origin]_VectorDoll.fbs          # UI injection
+            ├── [Species][Ethnicity][Origin]_DecayRule.fbs           # Lifecycle rules
+            └── [Species][Ethnicity][Origin]_BrainJob.fbs            # AI logic
 ```
 
-### Dynamic Schema Discovery
+### Example: Node Species (N) Full Tree
+
+```
+schemas/N/
+├── N_index.fbs
+├── NAU/                                    # Node-Audio ethnicity
+│   ├── NAU_index.fbs
+│   ├── NAU_Integarigation.fbs
+│   ├── NAUAC/                              # AudioClip origin
+│   │   ├── NAUAC-00000000000000000000000000.fbs
+│   │   ├── NAUAC_VectorDoll.fbs
+│   │   ├── NAUAC_DecayRule.fbs
+│   │   └── NAUAC_BrainJob.fbs
+│   ├── NANAS/                              # AudioStream origin
+│   │   ├── NANAS-00000000000000000000000000.fbs
+│   │   ├── NANAS_VectorDoll.fbs
+│   │   ├── NANAS_DecayRule.fbs
+│   │   └── NANAS_BrainJob.fbs
+│   └── ... (6 more audio origins)
+│
+├── NVI/                                    # Node-Video ethnicity
+│   ├── NVI_index.fbs
+│   ├── NVI_Integarigation.fbs
+│   ├── NVICP/                              # VideoCapture origin
+│   │   ├── NVICP-00000000000000000000000000.fbs
+│   │   ├── NVICP_VectorDoll.fbs
+│   │   ├── NVICP_DecayRule.fbs
+│   │   └── NVICP_BrainJob.fbs
+│   └── ...
+│
+└── ... (more ethnicities)
+```
+
+---
+
+## 4. Core Index Schemas
+
+### 4.1 NeuralId_index.fbs
+
+**Location**: `schemas/index/NeuralId_index.fbs`  
+**Purpose**: Master registry of all taxonomic IDs in the system
+
+```flatbuffers
+namespace NeuralStudio.Index;
+
+/// Master ID registry - tracks every taxonomic ID in the system
+table NeuralIdIndex {
+    /// ObjectBox auto-generated ID
+    /// objectbox: id
+    id: ulong;
+    
+    /// Full neural ID (e.g., "NAUAC-550e8400-e29b-41d4-a716-446655440000")
+    /// objectbox: unique
+    neuralid: string;
+    
+    // ========================================
+    // CLASSIFICATION DECOMPOSITION
+    // ========================================
+    
+    /// Symbiotic prefix (5 chars: NAUAC)
+    /// objectbox: index
+    symbiotic_prefix: string;
+    
+    /// Origin prefix (2 chars: AC) - o-prefix
+    origin: string;
+    
+    /// Ethnicity prefix (2 chars: AU) - e-prefix
+    ethnicity: string;
+    
+    /// Species prefix (1 char: N) - s-prefix
+    species: string;
+    
+    // ========================================
+    // CROSS-CATEGORY CLASSIFICATION
+    // ========================================
+    
+    /// Taxonomy: "Core", "UI", "Media", "Connectivity", "Events", "Advanced"
+    taxonomy: string;
+    
+    /// Tribe: "Auditory", "Visual", "Sensory", "Informative", "Universal", "Agentic"
+    tribe: string;
+    
+    /// Lineage: "AudioClip", "VideoStream", etc.
+    lineage: string;
+    
+    /// Niche: "AetherBubble", "ImmutableDominion", etc.
+    niche: string;
+    
+    // ========================================
+    // RELATIONS (ToOne - store ID only)
+    // ========================================
+    
+    /// Link to Integarigation schema
+    /// objectbox: link=IntegarigatioSchema
+    integarigation_id: ulong;
+    
+    /// Link to VectorDoll schema
+    /// objectbox: link=VectorDollSchema
+    vectordoll_id: ulong;
+    
+    /// Link to BrainJob schema
+    /// objectbox: link=BrainJobSchema
+    brainjob_id: ulong;
+    
+    /// Link to DecayRule schema
+    /// objectbox: link=DecayRuleSchema
+    decayrule_id: ulong;
+    
+    // ========================================
+    // SCHEMA PATHS
+    // ========================================
+    
+    /// Path to .fbs schema file
+    schema_path: string;
+    
+    /// Schema filename only
+    schema_filename: string;
+    
+    /// Generated C++ header path
+    cpp_header_path: string;
+    
+    /// Generated C++ source path
+    cpp_source_path: string;
+    
+    /// C++ class name
+    cpp_class_name: string;
+    
+    // ========================================
+    // TIMESTAMPS
+    // ========================================
+    
+    /// objectbox: date
+    created_at: long;
+    
+    /// objectbox: date
+    last_modified: long;
+}
+
+root_type NeuralIdIndex;
+```
+
+# Neural Studio: ID System ObjectBox FlatBuffers Schemas
+## Hierarchical Graph-Based Schema System - CORRECT STRUCTURE
+
+**Version**: 6.0.0 - FINAL CORRECTED  
+**Date**: 2025-12-17  
+**Status**: Hierarchical Graph System (Not Flat Index)
+
+---
+
+## THE KEY INSIGHT
+
+**This is a HIERARCHICAL GRAPH, not a flat database.**
+
+- Each node in the graph has its OWN index of children
+- Indices are SCOPED to their parent directory
+- NO global duplicate tracking (that would be millions of entries)
+- The ONLY global index is `neuralid_index.fbs` (central registry of active instances)
+
+---
+
+## Complete Directory Structure
+
+```
+schemas/
+│
+├── neuralid_index.fbs                    # ← ONLY GLOBAL INDEX (tracks active instances)
+│
+├── app-profiles/
+│   ├── app-profile-index.fbs             # Index of all profiles
+│   │
+│   └── [profile_name]/                   # Profile directory
+│       ├── app-profile-00000000000000000000000000.fbs
+│       ├── pstate-00000000000000000000000000.fbs
+│       └── BasicUserSettings-00000000000000000000000000.fbs
+│
+├── pipelines/
+│   ├── Pipelines_Index.fbs               # Index of all tribes
+│   │
+│   └── [Tribe]/                          # Tribe directory
+│       ├── [Tribe]_Index.fbs             # Index of pipelines in this tribe
+│       └── [Tribe]_Pipeline-00000000000000000000000000.fbs
+│       │
+│       ├── Auditory/
+│       │   ├── Auditory_Index.fbs
+│       │   └── Auditory_Pipeline-00000000000000000000000000.fbs
+│       │
+│       ├── Visual/
+│       │   ├── Visual_Index.fbs
+│       │   └── Visual_Pipeline-00000000000000000000000000.fbs
+│       │
+│       ├── Sensory/
+│       │   ├── Sensory_Index.fbs
+│       │   └── Sensory_Pipeline-00000000000000000000000000.fbs
+│       │
+│       ├── Informative/
+│       │   ├── Informative_Index.fbs
+│       │   └── Informative_Pipeline-00000000000000000000000000.fbs
+│       │
+│       ├── Agentic/
+│       │   ├── Agentic_Index.fbs
+│       │   └── Agentic_Pipeline-00000000000000000000000000.fbs
+│       │
+│       ├── Narrative/
+│       │   ├── Narrative_Index.fbs
+│       │   └── Narrative_Pipeline-00000000000000000000000000.fbs
+│       │
+│       ├── Temporal/
+│       │   ├── Temporal_Index.fbs
+│       │   └── Temporal_Pipeline-00000000000000000000000000.fbs
+│       │
+│       └── Spatial/
+│           ├── Spatial_Index.fbs
+│           └── Spatial_Pipeline-00000000000000000000000000.fbs
+│
+└── [s-prefix]/                           # Species directory (1 char: N, F, A, etc.)
+    ├── [s-prefix]_index.fbs              # Index of ethnicities in THIS species only
+    │
+    └── [s-prefix][e-prefix]/             # Ethnicity directory (3 chars: NAU, NVI, etc.)
+        ├── [s-prefix][e-prefix]_index.fbs                           # Index of origins in THIS ethnicity only
+        ├── [s-prefix][e-prefix]_Integarigation-00000000000000000000000000.fbs    # Shared logic
+        │
+        └── [s-prefix][e-prefix][o-prefix]/                          # Origin directory (5 chars: NAUAC, etc.)
+            ├── [s-prefix][e-prefix][o-prefix]-index.fbs             # ← Index of instances with THIS prefix
+            ├── [s-prefix][e-prefix][o-prefix]-00000000000000000000000000.fbs      # Default template
+            ├── [s-prefix][e-prefix][o-prefix]_VectorDoll-00000000000000000000000000.fbs
+            ├── [s-prefix][e-prefix][o-prefix]_DecayRule-00000000000000000000000000.fbs
+            └── [s-prefix][e-prefix][o-prefix]_BrainJob-00000000000000000000000000.fbs
+```
+
+---
+
+## Real Example: AudioClip (NAUAC)
+
+```
+schemas/
+│
+├── neuralid_index.fbs                    # Global: ALL active instances across entire system
+│
+└── N/
+    ├── N_index.fbs                       # Lists: ["AU", "VI", "CA", "ML", ...] (ethnicities in N)
+    │
+    └── NAU/
+        ├── NAU_index.fbs                 # Lists: ["AC", "AF", "AM", "AP", "AS", "SM", "SP", "AV"] (origins in NAU)
+        ├── NAU_Integarigation-00000000000000000000000000.fbs
+        │
+        └── NAUAC/
+            ├── NAUAC-index.fbs           # Lists: ALL IDs starting with "NAUAC-" (instances of AudioClip)
+            ├── NAUAC-00000000000000000000000000.fbs       # Default template
+            ├── NAUAC_VectorDoll-00000000000000000000000000.fbs
+            ├── NAUAC_DecayRule-00000000000000000000000000.fbs
+            └── NAUAC_BrainJob-00000000000000000000000000.fbs
+```
+
+---
+
+## FlatBuffers Type Reference
+
+| FlatBuffers | C++ | Usage |
+|------------|-----|-------|
+| `bool` | `bool` | Flags |
+| `byte` | `int8_t` | Small signed |
+| `ubyte` | `uint8_t` | Small unsigned |
+| `short` | `int16_t` | 16-bit signed |
+| `ushort` | `uint16_t` | 16-bit unsigned |
+| `int` | `int32_t` | 32-bit signed |
+| `uint` | `uint32_t` | 32-bit unsigned |
+| `long` | `int64_t` | Timestamps (ms) |
+| `ulong` | `uint64_t` | IDs |
+| `float` | `float` | 32-bit float |
+| `double` | `double` | 64-bit float |
+| `string` | `std::string` | UTF-8 text |
+| `[string]` | `std::vector<std::string>` | String arrays |
+| `[ubyte]` | `std::vector<uint8_t>` | Binary data |
+
+### ObjectBox Annotations
+
+```flatbuffers
+/// objectbox: id
+id: ulong;
+
+/// objectbox: unique
+unique_field: string;
+
+/// objectbox: index
+indexed_field: string;
+
+/// objectbox: link=OtherTable
+relation_id: ulong;
+
+/// objectbox: date
+timestamp_ms: long;
+```
+
+---
+
+## Schema Definitions
+
+### neuralid_index.fbs (GLOBAL)
+
+**Location**: `schemas/neuralid_index.fbs`  
+**Purpose**: Central registry of ALL active instances across the entire system
+
+```flatbuffers
+namespace NeuralStudio;
+
+/// Global index of all active neural IDs
+table NeuralIdIndex {
+    /// objectbox: id
+    id: ulong;
+    
+    /// Full neural ID
+    /// objectbox: unique
+    /// objectbox: index
+    neuralid: string;
+    
+    /// Symbiotic prefix (5 chars)
+    /// objectbox: index
+    symbiotic_prefix: string;
+    
+    /// Species prefix (1 char)
+    /// objectbox: index
+    s_prefix: string;
+    
+    /// Ethnicity prefix (2 chars)
+    e_prefix: string;
+    
+    /// Origin prefix (2 chars)
+    o_prefix: string;
+    
+    /// Cross-category classification
+    taxonomy: string;
+    tribe: string;
+    linnage: string;
+    niche: string;
+    
+    /// Schema paths
+    schema_path: string;
+    schema_filename: string;
+    cpp_class_name: string;
+    
+    /// objectbox: date
+    created_at: long;
+    
+    /// objectbox: date
+    last_modified: long;
+}
+
+root_type NeuralIdIndex;
+```
+
+---
+
+### Species Level
+
+#### [s-prefix]_index.fbs
+
+**Location**: `schemas/[s-prefix]/[s-prefix]_index.fbs`  
+**Example**: `schemas/N/N_index.fbs`  
+**Purpose**: Index of ethnicities within THIS species
+
+```flatbuffers
+namespace NeuralStudio.Species.N;
+
+/// Index of ethnicities in Node (N) species
+table N_Index {
+    /// objectbox: id
+    id: ulong;
+    
+    /// e-prefix (2 chars)
+    /// objectbox: unique
+    e_prefix: string;
+    
+    /// Mutualistic prefix (3 chars: s + e)
+    mutualistic_prefix: string;
+    
+    /// Ethnicity type name
+    ethnicity_type: string;
+    
+    /// Ethnicity description
+    ethnicity_description: string;
+    
+    /// Tribe
+    tribe: string;
+    
+    /// Lineage pedigree (array of o-prefixes)
+    lineage_pedigree: [string];
+    
+    /// Integration tactics
+    integarigation_can_be_source: bool;
+    integarigation_can_transform: bool;
+    integarigation_requires_input: bool;
+    integarigation_is_terminal: bool;
+    integarigation_rank: int;
+    
+    /// Directory path
+    ethnicity_directory: string;
+    
+    /// objectbox: date
+    created_at: long;
+}
+
+root_type N_Index;
+```
+
+---
+
+### Ethnicity Level
+
+#### [MutalisticPrefix]_index.fbs
+
+**Location**: `schemas/[s-prefix]/[s-prefix][e-prefix]/[s-prefix][e-prefix]_index.fbs`  
+**Example**: `schemas/N/NAU/NAU_index.fbs`  
+**Purpose**: Index of origins within THIS ethnicity
+
+```flatbuffers
+namespace NeuralStudio.Ethnicity.NAU;
+
+/// Index of origins in AudioNode (NAU) ethnicity
+table NAU_Index {
+    /// objectbox: id
+    id: ulong;
+    
+    /// o-prefix (2 chars)
+    /// objectbox: unique
+    o_prefix: string;
+    
+    /// Symbiotic prefix (5 chars: s + e + o)
+    symbiotic_prefix: string;
+    
+    /// Lineage archetype name
+    lineage_archetype: string;
+    
+    /// Lineage description
+    lineage_description: string;
+    
+    /// Niche
+    niche: string;
+    
+    /// Pedandic variants (provider implementations)
+    pedandic_variants: [string];
+    
+    /// VectorDolled config (nested UI injection)
+    vectordolled_config: string;  // JSON
+    
+    /// GivingBrain config
+    giving_brain_config: string;  // JSON
+    
+    /// Directory path
+    origin_directory: string;
+    
+    /// objectbox: date
+    created_at: long;
+}
+
+root_type NAU_Index;
+```
+
+#### [MutalisticPrefix]_Integarigation-00000000000000000000000000.fbs
+
+**Location**: `schemas/[s-prefix]/[s-prefix][e-prefix]/[s-prefix][e-prefix]_Integarigation-00000000000000000000000000.fbs`  
+**Example**: `schemas/N/NAU/NAU_Integarigation-00000000000000000000000000.fbs`  
+**Purpose**: Shared logic for ALL origins in this ethnicity (default template)
+
+```flatbuffers
+namespace NeuralStudio.Ethnicity.NAU;
+
+/// Shared logic for all AudioNode origins
+table NAU_Integarigation {
+    /// objectbox: id
+    id: ulong;
+    
+    /// Mutualistic prefix
+    mutualistic_prefix: string;
+    
+    // Shared capabilities
+    can_be_source: bool;
+    can_transform: bool;
+    requires_input: bool;
+    is_terminal: bool;
+    ethnicity_rank: int;
+    
+    // Shared requirements
+    requires_network: bool;
+    requires_auth: bool;
+    requires_gpu: bool;
+    requires_microphone: bool;
+    requires_camera: bool;
+    
+    // Shared pins
+    default_input_pins: [string];
+    default_output_pins: [string];
+    input_port_side: string;
+    output_port_side: string;
+    
+    // Shared widgets
+    base_widgets: [string];
+    base_components: [string];
+    
+    // Shared behavior
+    default_header_color: string;
+    default_icon_path: string;
+    default_category: string;
+    
+    /// objectbox: date
+    created_at: long;
+    
+    /// objectbox: date
+    last_modified: long;
+}
+
+root_type NAU_Integarigation;
+```
+
+---
+
+### Origin Level
+
+#### [SymbioticPrefix]-index.fbs
+
+**Location**: `schemas/[s-prefix]/[s-prefix][e-prefix]/[s-prefix][e-prefix][o-prefix]/[s-prefix][e-prefix][o-prefix]-index.fbs`  
+**Example**: `schemas/N/NAU/NAUAC/NAUAC-index.fbs`  
+**Purpose**: Index of ALL instances with THIS symbiotic prefix
+
+```flatbuffers
+namespace NeuralStudio.Origin.NAUAC;
+
+/// Index of all AudioClip instances (IDs starting with "NAUAC-")
+table NAUAC_Index {
+    /// objectbox: id
+    id: ulong;
+    
+    /// Full neural ID
+    /// objectbox: unique
+    /// objectbox: index
+    neuralid: string;
+    
+    /// Display name
+    display_name: string;
+    
+    /// Is this the default template?
+    is_default_template: bool;
+    
+    /// Is currently active?
+    is_active: bool;
+    
+    /// Profile this belongs to
+    profile_name: string;
+    
+    /// objectbox: date
+    created_at: long;
+    
+    /// objectbox: date
+    last_used: long;
+}
+
+root_type NAUAC_Index;
+```
+
+#### [SymbioticPrefix]-00000000000000000000000000.fbs
+
+**Location**: `schemas/[s-prefix]/[s-prefix][e-prefix]/[s-prefix][e-prefix][o-prefix]/[s-prefix][e-prefix][o-prefix]-00000000000000000000000000.fbs`  
+**Example**: `schemas/N/NAU/NAUAC/NAUAC-00000000000000000000000000.fbs`  
+**Purpose**: Default template for cloning new instances
+
+```flatbuffers
+namespace NeuralStudio.Origin.NAUAC;
+
+/// AudioClip instance schema (default template)
+table NAUAC_Instance {
+    /// objectbox: id
+    id: ulong;
+    
+    /// Neural ID
+    /// Template: "NAUAC-00000000-0000-0000-0000-000000000000"
+    /// Instance: "NAUAC-550e8400-e29b-41d4-a716-446655440000"
+    /// objectbox: unique
+    neuralid: string;
+    
+    // AudioClip settings
+    clip_path: string;
+    start_time_ms: long;
+    end_time_ms: long;
+    volume: float;
+    loop: bool;
+    playback_speed: float;
+    pan: float;
+    
+    // Variant selection
+    provider: string;  // "QtMultimedia", "FFmpeg", "VLC"
+    provider_config: string;  // JSON
+    
+    // State
+    enabled: bool;
+    current_position_ms: long;
+    is_playing: bool;
+    
+    // Blueprint position
+    position_x: float;
+    position_y: float;
+    position_z: float;
+    
+    // Pipeline reference
+    /// objectbox: link=PipelineIndex
+    pipeline_master_id: ulong;
+    
+    /// objectbox: date
+    created_at: long;
+    
+    /// objectbox: date
+    last_modified: long;
+}
+
+root_type NAUAC_Instance;
+```
+
+#### [SymbioticPrefix]_VectorDoll-00000000000000000000000000.fbs
+
+**Location**: `schemas/[s-prefix]/[s-prefix][e-prefix]/[s-prefix][e-prefix][o-prefix]/[s-prefix][e-prefix][o-prefix]_VectorDoll-00000000000000000000000000.fbs`  
+**Example**: `schemas/N/NAU/NAUAC/NAUAC_VectorDoll-00000000000000000000000000.fbs`
+
+```flatbuffers
+namespace NeuralStudio.Origin.NAUAC;
+
+/// UI configuration for AudioClip
+table NAUAC_VectorDoll {
+    /// objectbox: id
+    id: ulong;
+    
+    symbiotic_prefix: string;
+    
+    // Widget composition (nested)
+    providers: [string];
+    widget_categories: [string];
+    complexity_levels: [string];
+    
+    // Widget mappings per provider
+    qtmultimedia_widgets: [string];
+    ffmpeg_widgets: [string];
+    vlc_widgets: [string];
+    
+    // Layout
+    default_layout: string;
+    default_width: int;
+    default_height: int;
+    
+    // Visual theming
+    header_color: string;
+    icon_path: string;
+    border_color: string;
+    background_color: string;
+    
+    // Pin visualization
+    show_left_port: bool;
+    show_right_port: bool;
+    show_top_port: bool;
+    show_bottom_port: bool;
+    
+    /// objectbox: date
+    created_at: long;
+    
+    /// objectbox: date
+    last_modified: long;
+}
+
+root_type NAUAC_VectorDoll;
+```
+
+#### [SymbioticPrefix]_DecayRule-00000000000000000000000000.fbs
+
+**Location**: `schemas/[s-prefix]/[s-prefix][e-prefix]/[s-prefix][e-prefix][o-prefix]/[s-prefix][e-prefix][o-prefix]_DecayRule-00000000000000000000000000.fbs`  
+**Example**: `schemas/N/NAU/NAUAC/NAUAC_DecayRule-00000000000000000000000000.fbs`
+
+```flatbuffers
+namespace NeuralStudio.Origin.NAUAC;
+
+/// Lifecycle rules for AudioClip
+table NAUAC_DecayRule {
+    /// objectbox: id
+    id: ulong;
+    
+    symbiotic_prefix: string;
+    
+    // Decay policy
+    decay_policy: string;
+    ttl_ms: long;
+    max_idle_time_ms: long;
+    max_size_bytes: long;
+    min_usage_count: int;
+    
+    // Cleanup actions
+    delete_from_objectbox: bool;
+    delete_associated_files: bool;
+    archive_before_delete: bool;
+    archive_path: string;
+    
+    // Reference counting
+    reference_count: int;
+    usage_count: int;
+    lifetime_ms: long;
+    
+    /// objectbox: date
+    last_access_at: long;
+    
+    // Dependency handling
+    allow_delete_with_dependencies: bool;
+    cascade_delete: bool;
+    dependencies: [string];
+    
+    /// objectbox: date
+    created_at: long;
+    
+    /// objectbox: date
+    last_modified: long;
+}
+
+root_type NAUAC_DecayRule;
+```
+
+#### [SymbioticPrefix]_BrainJob-00000000000000000000000000.fbs
+
+**Location**: `schemas/[s-prefix]/[s-prefix][e-prefix]/[s-prefix][e-prefix][o-prefix]/[s-prefix][e-prefix][o-prefix]_BrainJob-00000000000000000000000000.fbs`  
+**Example**: `schemas/N/NAU/NAUAC/NAUAC_BrainJob-00000000000000000000000000.fbs`
+
+```flatbuffers
+namespace NeuralStudio.Origin.NAUAC;
+
+/// AI logic for AudioClip
+table NAUAC_BrainJob {
+    /// objectbox: id
+    id: ulong;
+    
+    symbiotic_prefix: string;
+    
+    // AI model
+    ai_model: string;
+    model_version: string;
+    model_path: string;
+    model_api_endpoint: string;
+    
+    // Agentic capabilities
+    intent_keywords: [string];
+    exposed_functions: [string];
+    context_sources: [string];
+    
+    // ML inference
+    auto_inference: bool;
+    inference_interval_ms: long;
+    batch_size: int;
+    use_gpu: bool;
+    
+    // Learned patterns
+    common_connections: [string];
+    avg_usage_duration_ms: long;
+    typical_parameters: string;  // JSON
+    
+    // Recommendations
+    recommended_next_nodes: [string];
+    recommended_effects: [string];
+    optimization_suggestions: string;  // JSON
+    
+    // Learning state
+    learning_enabled: bool;
+    training_data_path: string;
+    training_accuracy: float;
+    
+    /// objectbox: date
+    last_trained_at: long;
+    
+    /// objectbox: date
+    created_at: long;
+    
+    /// objectbox: date
+    last_modified: long;
+}
+
+root_type NAUAC_BrainJob;
+```
+
+---
+
+### App Profiles
+
+#### app-profile-index.fbs
+
+**Location**: `schemas/app-profiles/app-profile-index.fbs`
+
+```flatbuffers
+namespace NeuralStudio.Profiles;
+
+/// Index of all profiles
+table AppProfileIndex {
+    /// objectbox: id
+    id: ulong;
+    
+    /// Profile name
+    /// objectbox: unique
+    profile_name: string;
+    
+    /// Profile anagram
+    profile_anagram: string;
+    
+    /// Profile directory
+    profile_directory: string;
+    
+    /// Is active?
+    is_active: bool;
+    
+    /// objectbox: date
+    created_at: long;
+    
+    /// objectbox: date
+    last_used: long;
+}
+
+root_type AppProfileIndex;
+```
+
+#### app-profile-00000000000000000000000000.fbs
+
+**Location**: `schemas/app-profiles/[profile_name]/app-profile-00000000000000000000000000.fbs`
+
+```flatbuffers
+namespace NeuralStudio.Profiles;
+
+/// Profile configuration
+table AppProfile {
+    /// objectbox: id
+    id: ulong;
+    
+    profile_name: string;
+    profile_anagram: string;
+    profile_description: string;
+    profile_tags: [string];
+    
+    /// objectbox: link=PState
+    pstate_id: ulong;
+    
+    /// objectbox: link=BasicUserSettings
+    basic_user_settings_id: ulong;
+    
+    /// Species array
+    species: [string];
+    
+    /// objectbox: date
+    created_at: long;
+    
+    /// objectbox: date
+    last_modified: long;
+}
+
+root_type AppProfile;
+```
+
+#### pstate-00000000000000000000000000.fbs
+
+**Location**: `schemas/app-profiles/[profile_name]/pstate-00000000000000000000000000.fbs`
+
+```flatbuffers
+namespace NeuralStudio.Profiles;
+
+/// Profile state
+table PState {
+    /// objectbox: id
+    id: ulong;
+    
+    /// objectbox: link=AppProfile
+    profile_id: ulong;
+    
+    s_prefix: string;
+    default_template_id: string;
+    active_instances: [string];
+    location_path: string;
+    
+    /// objectbox: date
+    created_at: long;
+    
+    /// objectbox: date
+    last_modified: long;
+}
+
+root_type PState;
+```
+
+#### BasicUserSettings-00000000000000000000000000.fbs
+
+**Location**: `schemas/app-profiles/[profile_name]/BasicUserSettings-00000000000000000000000000.fbs`
+
+```flatbuffers
+namespace NeuralStudio.Profiles;
+
+/// Basic user settings
+table BasicUserSettings {
+    /// objectbox: id
+    id: ulong;
+    
+    /// objectbox: link=AppProfile
+    profile_id: ulong;
+    
+    user_display_name: string;
+    theme: string;
+    language: string;
+    timezone: string;
+    
+    auto_save: bool;
+    auto_save_interval_ms: long;
+    show_grid: bool;
+    grid_size: int;
+    snap_to_grid: bool;
+    
+    default_output_directory: string;
+    
+    /// objectbox: date
+    created_at: long;
+    
+    /// objectbox: date
+    last_modified: long;
+}
+
+root_type BasicUserSettings;
+```
+
+---
+
+### Pipelines
+
+#### Pipelines_Index.fbs
+
+**Location**: `schemas/pipelines/Pipelines_Index.fbs`
+
+```flatbuffers
+namespace NeuralStudio.Pipelines;
+
+/// Index of all pipeline tribes
+table PipelinesIndex {
+    /// objectbox: id
+    id: ulong;
+    
+    /// Tribe name
+    /// objectbox: unique
+    tribe_name: string;
+    
+    /// Tribe directory
+    tribe_directory: string;
+    
+    /// Active pipeline count
+    active_pipeline_count: int;
+    
+    /// objectbox: date
+    created_at: long;
+}
+
+root_type PipelinesIndex;
+```
+
+#### [Tribe]_Index.fbs
+
+**Location**: `schemas/pipelines/[Tribe]/[Tribe]_Index.fbs`  
+**Example**: `schemas/pipelines/Auditory/Auditory_Index.fbs`
+
+```flatbuffers
+namespace NeuralStudio.Pipelines.Auditory;
+
+/// Index of all Auditory pipelines
+table Auditory_Index {
+    /// objectbox: id
+    id: ulong;
+    
+    /// Pipeline ID
+    /// objectbox: unique
+    pipeline_id: string;
+    
+    pipeline_name: string;
+    master_node_id: string;
+    master_rank: int;
+    
+    is_active: bool;
+    node_count: int;
+    
+    /// objectbox: link=AppProfile
+    profile_id: ulong;
+    
+    /// objectbox: date
+    created_at: long;
+    
+    /// objectbox: date
+    last_executed: long;
+}
+
+root_type Auditory_Index;
+```
+
+#### [Tribe]_Pipeline-00000000000000000000000000.fbs
+
+**Location**: `schemas/pipelines/[Tribe]/[Tribe]_Pipeline-00000000000000000000000000.fbs`  
+**Example**: `schemas/pipelines/Auditory/Auditory_Pipeline-00000000000000000000000000.fbs`
+
+```flatbuffers
+namespace NeuralStudio.Pipelines.Auditory;
+
+/// Auditory pipeline configuration
+table Auditory_Pipeline {
+    /// objectbox: id
+    id: ulong;
+    
+    /// objectbox: unique
+    pipeline_id: string;
+    
+    source_master_id: string;
+    master_rank: int;
+    
+    // Four track system
+    audio_track: string;        // JSON
+    visual_track: string;       // JSON
+    data_audio_track: string;   // JSON
+    data_visual_track: string;  // JSON
+    
+    // Context
+    timeline_start_ms: long;
+    scene_start_x: float;
+    scene_start_y: float;
+    scene_start_z: float;
+    
+    // Audio-specific metadata
+    sample_rate: int;
+    bit_depth: int;
+    channel_count: int;
+    buffer_size: int;
+    
+    /// objectbox: date
+    created_at: long;
+    
+    /// objectbox: date
+    last_updated: long;
+}
+
+root_type Auditory_Pipeline;
+```
+
+---
+
+## How Discovery Works
 
 ```cpp
-// When creating a node
-string nodeId = "NANAC-550e8400-e29b-41d4-a716-446655440000";
+// 1. Read species index
+auto nIndex = loadSchema("schemas/N/N_index.fbs");
+auto ethnicities = nIndex->getAll();  // ["AU", "VI", "CA", ...]
 
-// 1. Parse ID
-auto parsed = TaxonomicID::parse(nodeId);
-// Result: {species="N", ethnicity="AN", archetype="AC", ...}
+// 2. For each ethnicity, read ethnicity index
+auto nauIndex = loadSchema("schemas/N/NAU/NAU_index.fbs");
+auto origins = nauIndex->getAll();  // ["AC", "AF", "AM", ...]
 
-// 2. Query INDEX store
-auto schema = indexStore->query()
-    .equal(SchemaIndex_.symbiotic_prefix, parsed.symbioticPrefix)
+// 3. For each origin, read origin index
+auto nauacIndex = loadSchema("schemas/N/NAU/NAUAC/NAUAC-index.fbs");
+auto instances = nauacIndex->getAll();  // ["NAUAC-550e...", "NAUAC-661f...", ...]
+
+// 4. Load specific instance
+auto nauacInstance = loadSchema("schemas/N/NAU/NAUAC/NAUAC-00000000000000000000000000.fbs");
+auto defaultTemplate = nauacInstance->get("NAUAC-00000000-0000-0000-0000-000000000000");
+
+// 5. Clone template for new instance
+auto newInstance = cloneFrom(defaultTemplate);
+newInstance.neuralid = "NAUAC-" + generateUUID();
+```
+
+---
+
+## Key Points
+
+1. **ONLY ONE GLOBAL INDEX**: `neuralid_index.fbs` (tracks active instances)
+2. **ALL OTHER INDICES ARE SCOPED**: Each directory has index of its children only
+3. **NO DUPLICATE TRACKING**: Indices are hierarchical, not flat
+4. **GRAPH STRUCTURE**: Navigate tree by reading indices at each level
+5. **ALL -00000000000000000000000000.fbs ARE DEFAULT TEMPLATES**: For cloning without recompilation
+
+---
+
+**Is this structure correct now?**
+
+### Full Implementation Flow
+
+**1. System Initialization**:
+```cpp
+// Load index schemas
+auto neuralIdIndex = loadSchema("schemas/index/NeuralId_index.fbs");
+auto speciesIndex = loadSchema("schemas/index/Species_index.fbs");
+auto symbioticPrefixIndex = loadSchema("schemas/index/SymbioticPrefix_index.fbs");
+
+// Load species index
+auto nIndex = loadSchema("schemas/N/N_index.fbs");
+
+// Load ethnicity index
+auto nauIndex = loadSchema("schemas/N/NAU/NAU_index.fbs");
+auto nauInteg = loadSchema("schemas/N/NAU/NAU_Integarigation.fbs");
+
+// Load origin schemas
+auto nauacInstance = loadSchema("schemas/N/NAU/NAUAC/NAUAC-00000000000000000000000000.fbs");
+auto nauacVectorDoll = loadSchema("schemas/N/NAU/NAUAC/NAUAC_VectorDoll.fbs");
+auto nauacDecayRule = loadSchema("schemas/N/NAU/NAUAC/NAUAC_DecayRule.fbs");
+auto nauacBrainJob = loadSchema("schemas/N/NAU/NAUAC/NAUAC_BrainJob.fbs");
+```
+
+**2. User Creates AudioClip Node**:
+```cpp
+// Generate ID
+string neuralId = "NAUAC-" + generateUUID();
+// Result: NAUAC-550e8400-e29b-41d4-a716-446655440000
+
+// Register in NeuralId_index
+NeuralIdIndex entry;
+entry.neuralid = neuralId;
+entry.symbiotic_prefix = "NAUAC";
+entry.origin = "AC";
+entry.ethnicity = "AU";
+entry.species = "N";
+entry.taxonomy = "Core";
+entry.tribe = "Auditory";
+entry.lineage = "AudioClip";
+entry.niche = "ImmutableDominion";
+// ... set other fields
+neuralIdIndexBox->put(entry);
+
+// Create instance in NAUAC_Instance schema
+NAUAC_Instance instance;
+instance.neuralid = neuralId;
+instance.clip_path = "";
+instance.volume = 1.0f;
+instance.provider = "QtMultimedia";
+// ... set other fields
+nauacInstanceBox->put(instance);
+
+// Load VectorDoll configuration
+auto vectorDoll = nauacVectorDollBox->get(1);  // Get default template
+// Use vectorDoll.providers, vectorDoll.widget_categories, etc. to build UI
+
+// Load BrainJob configuration
+auto brainJob = nauacBrainJobBox->get(1);
+// Use brainJob.ai_model, brainJob.intent_keywords, etc. for AI features
+
+// Load DecayRule configuration
+auto decayRule = nauacDecayRuleBox->get(1);
+// Use decayRule.decay_policy, decayRule.ttl_ms, etc. for lifecycle
+```
+
+**3. Query by ID**:
+```cpp
+// Find all AudioClip nodes
+auto query = nauacInstanceBox->query()
+    .startsWith(NAUAC_Instance_.neuralid, "NAUAC-")
+    .build();
+auto audioClips = query.find();
+
+// Find specific node
+auto node = nauacInstanceBox->query()
+    .equal(NAUAC_Instance_.neuralid, "NAUAC-550e8400-e29b-41d4-a716-446655440000")
     .build()
     .findFirst();
+```
 
-// 3. Get schema paths
-string settingsSchema = schema->settings_schema_path;
-string pipelineSchema = schema->pipeline_schema_path;
+**4. Navigation via ID**:
+```cpp
+// Parse ID to find schema location
+TaxonomicID parsed = parseID("NAUAC-550e8400...");
+// Result: species="N", ethnicity="AU", origin="AC"
 
-// 4. Create store with correct schema
-auto nodeStore = StoreBuilder::buildStore(
-    nodeStorePath,
-    settingsSchema,
-    schema->cpp_class_name
-);
+// Navigate to schema directory
+string schemaDir = "schemas/" + parsed.species + "/" 
+                 + parsed.species + parsed.ethnicity + "/" 
+                 + parsed.symbioticPrefix + "/";
+// Result: "schemas/N/NAU/NAUAC/"
 
-// 5. If pipeline node, create pipeline store
-if (schema->has_pipeline && isPipelineMaster(nodeId)) {
-    auto pipelineStore = StoreBuilder::buildStore(
-        nodeStorePath,
-        pipelineSchema,
-        "AudioClipPipeline"
-    );
-}
+// Load schemas dynamically
+auto instanceSchema = loadSchema(schemaDir + parsed.symbioticPrefix + "-00000000000000000000000000.fbs");
+auto vectorDollSchema = loadSchema(schemaDir + parsed.symbioticPrefix + "_VectorDoll.fbs");
+auto decayRuleSchema = loadSchema(schemaDir + parsed.symbioticPrefix + "_DecayRule.fbs");
+auto brainJobSchema = loadSchema(schemaDir + parsed.symbioticPrefix + "_BrainJob.fbs");
+```
+
+
+## Appendix B: Schema Generation Script
+
+```bash
+#!/bin/bash
+# generate_schemas.sh - Generate all ObjectBox schemas
+
+# Generate core indices
+flatc --cpp --gen-object-api schemas/index/NeuralId_index.fbs
+flatc --cpp --gen-object-api schemas/index/SymbioticPrefix_index.fbs
+flatc --cpp --gen-object-api schemas/index/Species_index.fbs
+
+# Generate species indices
+for species in N A P S V R M O U W K G F D E C T Z J I Y B Q H X L 0 1 2 3 4 5; do
+    flatc --cpp --gen-object-api schemas/$species/${species}_index.fbs
+done
+
+# Generate ethnicity indices (example for Node species)
+flatc --cpp --gen-object-api schemas/N/NAU/NAU_index.fbs
+flatc --cpp --gen-object-api schemas/N/NAU/NAU_Integarigation.fbs
+
+# Generate origin schemas (example for AudioClip)
+flatc --cpp --gen-object-api schemas/N/NAU/NAUAC/NAUAC-00000000000000000000000000.fbs
+flatc --cpp --gen-object-api schemas/N/NAU/NAUAC/NAUAC_VectorDoll.fbs
+flatc --cpp --gen-object-api schemas/N/NAU/NAUAC/NAUAC_DecayRule.fbs
+flatc --cpp --gen-object-api schemas/N/NAU/NAUAC/NAUAC_BrainJob.fbs
+
+echo "Schema generation complete!"
 ```
 
 ---
 
-## 7. Dynamic Plugin System
+## Appendix C: Benefits of This System
 
-### The Power of Database-Driven Configuration
+### 1. **Self-Navigating**
+ID format directly encodes schema location:
+```
+NAUAC → schemas/N/NAU/NAUAC/
+```
 
-**Traditional System** (requires recompilation):
+### 2. **Infinitely Extensible**
+Add new species/ethnicities/origins without breaking existing code:
+```
+New ethnicity: NVR (Node-VR)
+→ Create schemas/N/NVR/ directory
+→ Add NVR entries to indices
+→ Done!
+```
+
+### 3. **AI-Friendly**
+Structure is self-documenting:
+- Species = System placement
+- Ethnicity = Job category  
+- Origin = Specialization
+- AI can parse meaning from ID alone
+
+### 4. **Database-Driven UI**
+VectorDoll schema defines entire UI:
 ```cpp
-// ❌ Hardcoded node types
-class AudioClipNode : public BaseNode {
-    // Hardcoded implementation
-};
-
-// ❌ Factory knows all types
-NodeFactory::registerType("AudioClip", []() {
-    return new AudioClipNode();
-});
+auto vectorDoll = loadVectorDoll("NAUAC");
+buildUI(vectorDoll.providers, vectorDoll.widgets);
 ```
 
-**Neural Studio System** (no recompilation):
+### 5. **Hot-Swappable**
+Update schemas in database → UI rebuilds automatically:
 ```cpp
-// ✅ Generic node class
-class DynamicNode : public BaseNode {
-    DynamicNode(const string& id) {
-        // 1. Parse ID
-        auto classification = TaxonomicID::parse(id);
-        
-        // 2. Query INDEX for configuration
-        auto config = indexStore->getArchetypeConfig(
-            classification.symbioticPrefix
-        );
-        
-        // 3. Load widgets dynamically
-        for (const auto& widgetName : config.widget_list) {
-            auto widget = WidgetFactory::create(widgetName);
-            m_widgets.push_back(widget);
-        }
-        
-        // 4. Load atomic components
-        for (const auto& componentName : config.atomic_components) {
-            auto component = ComponentFactory::create(componentName);
-            m_components.push_back(component);
-        }
-        
-        // 5. Apply configuration
-        applyConfiguration(config);
-    }
-};
-
-// ✅ Factory creates generic nodes
-NodeFactory::registerType("DynamicNode", [](const string& id) {
-    return new DynamicNode(id);
-});
+// Update VectorDoll
+vectorDoll.providers.push_back("NewProvider");
+vectorDollBox->put(vectorDoll);
+// UI immediately shows new provider option
 ```
 
-### Adding a Plugin Without Recompilation
-
-**Step 1: Add to INDEX Store**
+### 6. **Lifecycle Management**
+DecayRule automates cleanup:
 ```cpp
-// Plugin developer adds entry to INDEX store
-indexStore->put(SchemaIndex{
-    .symbiotic_prefix = "NMY01",  // Custom plugin prefix
-    .species_code = "N",
-    .ethnicity_code = "MY",        // Custom ethnicity
-    .archetype_code = "01",        // Custom archetype
-    .settings_schema_path = "plugins/my_plugin/MyNodeSettings.fbs",
-    .widget_list = {
-        "MyCustomWidget",
-        "MyControlPanel"
-    },
-    .atomic_components = {
-        "MyAtomicProcessor",
-        "MyDataHandler"
-    }
-});
-```
-
-**Step 2: Register Widgets**
-```cpp
-// Plugin provides widget implementation
-WidgetFactory::registerWidget("MyCustomWidget", []() {
-    return new MyCustomWidget();
-});
-```
-
-**Step 3: User Creates Node**
-```
-User drags "My Plugin Node" from custom manager
-  ↓
-System generates ID: NMY01-550e8400-e29b-41d4-a716-446655440000
-  ↓
-DynamicNode class queries INDEX for "NMY01"
-  ↓
-Widgets loaded: MyCustomWidget, MyControlPanel
-  ↓
-Components loaded: MyAtomicProcessor, MyDataHandler
-  ↓
-Node appears in blueprint with full functionality
-```
-
-**No recompilation required!**
-
----
-
-## 8. Complete Taxonomy Tables
-
-### Species Layer (32 Codes)
-
-| Code | Name | Domain | Description | Has Ethnicities |
-|------|------|--------|-------------|----------------|
-| N | Node | Processing | Scene graph nodes | Yes (27) |
-| P | Pipeline | Orchestration | Pipeline management | No |
-| S | Settings | Data | Configuration stores | No |
-| E | Edge | Connectivity | Graph edges | No |
-| C | Controller | UI | Qt controllers | No |
-| R | Rule | Validation | Connection rules | No |
-| M | Media | Assets | Media files | Yes |
-| A | MediaAsset | Assets | Media assets | Yes |
-| O | Model | Assets | 3D/ML models | Yes |
-| G | SceneGraphAsset | Assets | Scene assets | No |
-| U | UI | Interface | UI components | Yes |
-| L | UIElement | Interface | UI elements | Yes |
-| W | Widget | Interface | Widgets | Yes |
-| F | Frame | Interface | Frames | No |
-| D | Dock | Interface | Docks | No |
-| V | Monitor | Output | Monitors | No |
-| T | Task | Execution | Tasks | No |
-| Z | Event | Execution | Events | No |
-| J | Session | Execution | Sessions | No |
-| I | API | Connectivity | APIs | Yes |
-| Y | APIBinding | Connectivity | API bindings | No |
-| B | InteractionBinding | Connectivity | Interaction bindings | No |
-| Q | TransportStream | Connectivity | Transport streams | Yes |
-| K | IPStream | Connectivity | IP streams | Yes |
-| H | Bluetooth | Connectivity | Bluetooth | No |
-| X | Manager | System | Managers | Yes |
-| 0 | Profile | System | Profiles | No |
-| 1 | Hardware | System | Hardware | Yes |
-| 2 | WASM | Advanced | WASM modules | No |
-| 3 | Conversation | Advanced | AI conversations | No |
-| 4 | File | Advanced | File references | No |
-| 5 | CSP | Advanced | Cloud/Security | No |
-
-### Node Ethnicity Layer (27 Codes)
-
-| Code | Name | Mutualistic | Tribe | Rank | Can Be Source | Integration Tactics |
-|------|------|-------------|-------|------|---------------|---------------------|
-| AN | AudioNode | NAN | AuditoryStimuli | 4 | Yes | [T,T,F,F,4] |
-| VD | VideoNode | NVD | VisualData | 4 | Yes | [T,T,F,F,4] |
-| CA | CameraNode | NCA | CaptureApparatus | 1 | Yes | [T,F,F,F,1] |
-| EF | EffectsNode | NEF | EffectProcessing | 6 | No | [F,T,T,F,6] |
-| GR | GraphicsNode | NGR | GraphicalRender | 4 | Yes | [T,T,F,F,4] |
-| SH | ShaderNode | NSH | ShaderProcessing | 6 | No | [F,T,T,F,6] |
-| SC | ScriptNode | NSC | ScriptExecution | 5 | Yes | [T,T,T,F,5] |
-| ML | MLNode | NML | MachineLearning | 6 | No | [F,T,T,T,6] |
-| AI | AINode | NAI | ArtificialIntel | 6 | No | [F,T,T,T,6] |
-| TR | TransformNode | NTR | Transformation | 6 | No | [F,T,T,F,6] |
-| FI | FilterNode | NFI | FilterProcessing | 6 | No | [F,T,T,F,6] |
-| CO | CompositeNode | NCO | Composition | 6 | No | [F,T,T,F,6] |
-| MX | MixerNode | NMX | AudioVideoMix | 6 | No | [F,T,T,F,6] |
-| EN | EncoderNode | NEN | Encoding | 60 | No | [F,T,F,F,60] |
-| DE | DecoderNode | NDE | Decoding | 4 | Yes | [T,F,F,F,4] |
-| ST | StreamNode | NST | Streaming | 60 | No | [F,F,F,T,60] |
-| OU | OutputNode | NOU | OutputSink | 70 | No | [F,F,F,T,70] |
-| IN | InputNode | NIN | InputSource | 1 | Yes | [T,F,F,F,1] |
-| DA | DataNode | NDA | DataManagement | 0 | Yes | [T,F,F,F,0] |
-| AP | APINode | NAP | APIInteraction | 2 | Yes | [T,F,F,T,2] |
-| HW | HardwareNode | NHW | HardwareIO | 1 | Yes | [T,F,F,F,1] |
-| GP | GroupNode | NGP | Grouping | 3 | Yes | [T,T,T,T,3] |
-| TG | TriggerNode | NTG | EventTrigger | 9 | No | [F,F,T,F,9] |
-| AN | AnalysisNode | NAN | Analysis | 80 | No | [F,F,T,F,80] |
-| PP | PostProcessNode | NPP | PostProcessing | 70 | No | [F,T,T,F,70] |
-| SU | SupportNode | NSU | Support | 5 | Yes | [T,T,T,F,5] |
-| WT | WebTransportNode | NWT | WebTransport | 60 | No | [F,F,F,T,60] |
-
-### AudioNode Archetype Layer (8 Variants)
-
-| Code | Name | Symbiotic | Lineage | Niche | Widgets | Atomic Components |
-|------|------|-----------|---------|-------|---------|-------------------|
-| AC | AudioClip | NANAC | AudioClip | ImmutableDominion | PlayerWidget, SettingsWidget, WaveformWidget | AudioBufferProcessor, FileIOHandler |
-| AF | AudioClipFX | NANAF | AudioClipFX | ImmutableDominion | FXWidget, ParameterWidget | AudioEffectProcessor, DSPEngine |
-| AM | AudioClipMusic | NANAM | AudioClipMusic | ImmutableDominion | PlayerWidget, TagEditorWidget, PlaylistWidget | AudioBufferProcessor, FileIOHandler, TagLibHandler |
-| AP | AudioClipPodcast | NANAP | AudioClipPodcast | ImmutableDominion | PlayerWidget, ChapterWidget, TranscriptWidget | AudioBufferProcessor, FileIOHandler, ChapterParser |
-| AS | AudioStream | NANAS | AudioStream | AetherBubble | StreamWidget, CodecWidget, BufferMonitorWidget | NetworkStreamReceiver, AudioBufferProcessor, CodecHandler |
-| SM | AudioStreamMusic | NANSM | AudioStreamMusic | AetherBubble | StreamWidget, PlaylistWidget, RecommendationWidget | NetworkStreamReceiver, AudioBufferProcessor, APIClient |
-| SP | AudioStreamPodcast | NANSP | AudioStreamPodcast | AetherBubble | StreamWidget, EpisodeListWidget, SubscriptionWidget | NetworkStreamReceiver, AudioBufferProcessor, RSSParser |
-| AV | AudioStreamVoiceCall | NANAV | AudioStreamVoiceCall | AetherBubble | CallWidget, ContactListWidget, CallControlsWidget | NetworkStreamReceiver, AudioBufferProcessor, VoIPHandler |
-
----
-
-## 9. Implementation Examples
-
-### Example 1: Creating an AudioClip Node
-
-```cpp
-// User drags AudioClip from AudioManager
-void AudioManager::createAudioClipNode() {
-    // 1. Generate taxonomic ID
-    string nodeId = IDGenerator::generateNode("AN", "AC");
-    // Result: NANAC-550e8400-e29b-41d4-a716-446655440000
-    
-    // 2. Query INDEX for schema information
-    auto schema = indexStore->query()
-        .equal(SchemaIndex_.symbiotic_prefix, "NANAC")
-        .build()
-        .findFirst();
-    
-    // 3. Create GraphNode entry in Profile Store
-    profileStore->put(GraphNode{
-        .id = nodeId,
-        .symbiotic_prefix = "NANAC",
-        .position = {cursorX, cursorY, 0},
-        .enabled = true,
-        .pipeline_master_id = "",  // Not yet determined
-        .node_store_path = ""       // Set below
-    });
-    
-    // 4. Create Node Variant Store
-    string nodePath = QString("~/Neural-Studio/profiles/%1/nodes/%2")
-        .arg(currentProfile)
-        .arg(QString::fromStdString(nodeId))
-        .toStdString();
-    
-    auto nodeStore = StoreBuilder::buildStore(
-        nodePath,
-        schema->settings_schema_path,
-        schema->cpp_class_name
-    );
-    
-    // 5. Initialize with default settings (from 000... template)
-    string defaultId = "NANAC-00000000-0000-0000-0000-000000000000";
-    auto defaults = nodeStore->get(defaultId);
-    
-    nodeStore->put(AudioClipSettings{
-        .id = nodeId,
-        .clip_path = "",
-        .start_time_ms = defaults->start_time_ms,
-        .end_time_ms = defaults->end_time_ms,
-        .volume = defaults->volume,
-        .loop = defaults->loop
-    });
-    
-    // 6. Update GraphNode with store path
-    auto graphNode = profileStore->get(nodeId);
-    graphNode->node_store_path = nodePath;
-    profileStore->put(graphNode);
-    
-    // 7. Create runtime node (DynamicNode)
-    auto runtimeNode = NodeFactory::create("DynamicNode", nodeId);
-    nodeGraph->addNode(runtimeNode);
-    
-    // 8. Create UI representation
-    auto nodeWidget = new BaseNode();
-    nodeWidget->setNodeId(QString::fromStdString(nodeId));
-    
-    // 9. Load widgets based on schema
-    for (const auto& widgetName : schema->widget_list) {
-        auto widget = WidgetFactory::create(widgetName);
-        nodeWidget->addWidget(widget);
-    }
-    
-    // 10. Place in blueprint canvas
-    blueprintCanvas->addNode(nodeWidget, cursorX, cursorY);
+// Automatic cleanup based on rules
+if (now - node.last_access_at > decayRule.ttl_ms) {
+    cleanupNode(node.neuralid);
 }
 ```
 
-### Example 2: Connecting Nodes with Pipeline Master Logic
-
+### 7. **AI Learning**
+BrainJob accumulates intelligence:
 ```cpp
-// User connects AudioClip → AudioFX
-void BlueprintCanvas::connectNodes(
-    const string& sourceId,  // NANAC-550e...
-    const string& targetId   // NANAF-abc1...
-) {
-    // 1. Parse IDs
-    auto sourceTaxonomy = TaxonomicID::parse(sourceId);
-    auto targetTaxonomy = TaxonomicID::parse(targetId);
-    
-    // 2. Get ethnicity information
-    auto sourceEthnicity = indexStore->getEthnicity(sourceTaxonomy.ethnicity);
-    auto targetEthnicity = indexStore->getEthnicity(targetTaxonomy.ethnicity);
-    
-    // 3. Check if target becomes pipeline master
-    bool targetHasInputs = profileStore->hasIncomingEdges(targetId);
-    
-    string pipelineMasterId;
-    
-    if (!targetHasInputs && targetEthnicity->can_be_source) {
-        // Target becomes pipeline master
-        pipelineMasterId = targetId;
-        
-        // Create pipeline store for target
-        createPipelineStore(targetId, targetTaxonomy.symbioticPrefix);
-    } else {
-        // Determine pipeline master by rank
-        auto sourceNode = profileStore->get(sourceId);
-        auto targetNode = profileStore->get(targetId);
-        
-        string sourceMasterId = sourceNode->pipeline_master_id.empty() 
-            ? sourceId 
-            : sourceNode->pipeline_master_id;
-        
-        string targetMasterId = targetNode->pipeline_master_id.empty()
-            ? targetId
-            : targetNode->pipeline_master_id;
-        
-        // Compare ranks
-        int sourceRank = getMasterRank(sourceMasterId);
-        int targetRank = getMasterRank(targetMasterId);
-        
-        if (sourceRank < targetRank) {
-            // Source master wins (lower rank = higher priority)
-            pipelineMasterId = sourceMasterId;
-            
-            // Merge target into source pipeline
-            mergePipelines(targetMasterId, sourceMasterId);
-        } else {
-            // Target master wins
-            pipelineMasterId = targetMasterId;
-            
-            // Merge source into target pipeline
-            mergePipelines(sourceMasterId, targetMasterId);
-        }
-    }
-    
-    // 4. Create edge in Profile Store
-    profileStore->put(GraphEdge{
-        .id = generateUUID(),
-        .from_node_id = sourceId,
-        .to_node_id = targetId,
-        .from_port = "output",
-        .to_port = "input",
-        .edge_type = EdgeType::Audio
-    });
-    
-    // 5. Update pipeline store with new connection
-    auto pipelineStore = getPipelineStore(pipelineMasterId);
-    pipelineStore->addConnection(sourceId, targetId, EdgeType::Audio);
-    
-    // 6. Update runtime graph
-    nodeGraph->connectPins(sourceId, "output", targetId, "input");
-}
+// AI learns common patterns
+brainJob.common_connections.push_back("NANAF");
+brainJob.recommended_next_nodes.push_back("NANAF");
+brainJobBox->put(brainJob);
 ```
 
-### Example 3: Dynamic Plugin Loading
+---
+
+# Neural Studio: Filesystem-Based Schema Discovery
+## Automatic Registry Building from Directory Structure
+
+**Version**: 5.0.0 - CORRECTED  
+**Date**: 2025-12-17  
+**Status**: Hierarchical Index Discovery System
+
+---
+
+## Understanding the System Design
+
+
+### The Key Insight You Had
+
+**EACH LEVEL HAS AN INDEX THAT LISTS ITS CHILDREN!**
+
+- `schemas/index/Species_index.fbs` → Lists all 32 species
+- `schemas/N/N_index.fbs` → Lists all ethnicities within N
+- `schemas/N/NAU/NAU_index.fbs` → Lists all origins within NAU
+
+**You don't scan the filesystem blindly - you READ THE INDEX FILES!**
+
+---
+
+## The Correct Discovery Algorithm
+
+### Step 1: Read Master Species Index
 
 ```cpp
-// Plugin developer creates custom node type
-class MyPluginInstaller {
+// Load the master species index
+auto speciesIndexBox = store->box<SpeciesIndex>();
+auto allSpecies = speciesIndexBox->getAll();
+
+// Result: 32 species entries
+for (const auto& species : allSpecies) {
+    cout << "Species: " << species.s_prefix 
+         << " (" << species.species_family << ")" << endl;
+    cout << "  Directory: " << species.schema_directory << endl;
+    cout << "  Ethnicities: " << species.ethnicity_group.size() << endl;
+}
+
+// Output:
+// Species: N (Node)
+//   Directory: schemas/N/
+//   Ethnicities: ["AU", "VI", "CA", "ML", ...]
+```
+
+### Step 2: For Each Species, Read Its Ethnicity Index
+
+```cpp
+// For species "N", load N_index.fbs
+auto nIndexBox = store->box<N_Index>();  // Generated from N_index.fbs
+auto allEthnicities = nIndexBox->getAll();
+
+// Result: All ethnicities within Node species
+for (const auto& ethnicity : allEthnicities) {
+    cout << "Ethnicity: " << ethnicity.mutualistic_prefix 
+         << " (" << ethnicity.ethnicity_type << ")" << endl;
+    cout << "  Directory: " << ethnicity.ethnicity_directory << endl;
+    cout << "  Origins: " << ethnicity.origin_pedigree.size() << endl;
+}
+
+// Output:
+// Ethnicity: NAU (AudioNode)
+//   Directory: schemas/N/NAU/
+//   Origins: ["AC", "AF", "AM", "AP", "AS", "SM", "SP", "AV"]
+```
+
+### Step 3: For Each Ethnicity, Read Its Origin Index
+
+```cpp
+// For ethnicity "NAU", load NAU_index.fbs
+auto nauIndexBox = store->box<NAU_Index>();  // Generated from NAU_index.fbs
+auto allOrigins = nauIndexBox->getAll();
+
+// Result: All origins within AudioNode ethnicity
+for (const auto& origin : allOrigins) {
+    cout << "Origin: " << origin.symbiotic_prefix 
+         << " (" << origin.lineage_archetype << ")" << endl;
+    cout << "  Directory: " << origin.origin_directory << endl;
+    cout << "  Niche: " << origin.niche << endl;
+    cout << "  Variants: " << origin.pedantic_variants.size() << endl;
+}
+
+// Output:
+// Origin: NAUAC (AudioClip)
+//   Directory: schemas/N/NAU/NAUAC/
+//   Niche: ImmutableDominion
+//   Variants: ["QtMultimedia", "FFmpeg", "VLC"]
+```
+
+---
+
+## Complete Implementation
+
+### System Initialization
+
+```cpp
+#include <objectbox.hpp>
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+class IDSystemInitializer {
+private:
+    obx::Store* store;
+    obx::Box<NeuralIdIndex>* neuralIdIndexBox;
+    obx::Box<SymbioticPrefixIndex>* symbioticPrefixIndexBox;
+    obx::Box<SpeciesIndex>* speciesIndexBox;
+    
 public:
-    void install() {
-        // 1. Register new ethnicity
-        indexStore->put(EthnicityIndex{
-            .ethnicity_code = "MP",  // MyPlugin
-            .ethnicity_name = "MyPluginNode",
-            .mutualistic_prefix = "NMP",
-            .tribe = "CustomProcessing",
-            .rank = 6,
-            .can_be_source = false,
-            .integration_tactics = {false, true, true, false, 6}
-        });
-        
-        // 2. Register archetype
-        indexStore->put(ArchetypeIndex{
-            .archetype_code = "01",
-            .archetype_name = "MyPluginVariant1",
-            .symbiotic_prefix = "NMP01",
-            .lineage = "MyPluginVariant1",
-            .niche = "MorphicField"
-        });
-        
-        // 3. Register schema
-        indexStore->put(SchemaIndex{
-            .symbiotic_prefix = "NMP01",
-            .species_code = "N",
-            .ethnicity_code = "MP",
-            .archetype_code = "01",
-            .settings_schema_path = "plugins/myplugin/MyPluginSettings.fbs",
-            .pipeline_schema_path = "",  // Not a source node
-            .cpp_class_name = "MyPluginSettings",
-            .has_pipeline = false,
-            .ethnicity_rank = 6,
-            .niche = "MorphicField",
-            .widget_list = {
-                "MyCustomWidget",
-                "MyControlPanel"
-            },
-            .atomic_components = {
-                "MyAtomicProcessor"
-            }
-        });
-        
-        // 4. Register widgets
-        WidgetFactory::registerWidget("MyCustomWidget", []() {
-            return new MyCustomWidget();
-        });
-        
-        WidgetFactory::registerWidget("MyControlPanel", []() {
-            return new MyControlPanel();
-        });
-        
-        // 5. Register atomic components
-        ComponentFactory::registerComponent("MyAtomicProcessor", []() {
-            return new MyAtomicProcessor();
-        });
-        
-        // 6. Add to manager
-        MyPluginManager* manager = new MyPluginManager();
-        managerRegistry->addManager("MyPlugin", manager);
-        
-        // Done! Users can now drag MyPlugin nodes from MyPluginManager
+    IDSystemInitializer(obx::Store* store) : store(store) {
+        neuralIdIndexBox = store->box<NeuralIdIndex>();
+        symbioticPrefixIndexBox = store->box<SymbioticPrefixIndex>();
+        speciesIndexBox = store->box<SpeciesIndex>();
     }
-};
-
-// Neural Studio main() calls plugin installer
-void loadPlugins() {
-    // Scan plugins directory
-    QDir pluginsDir("~/.local/share/neural-studio/plugins");
     
-    for (const auto& pluginFile : pluginsDir.entryList({"*.so"})) {
-        // Load plugin library
-        QPluginLoader loader(pluginsDir.filePath(pluginFile));
-        QObject* plugin = loader.instance();
+    // ====================================================
+    // STEP 1: Load Master Species Index
+    // ====================================================
+    
+    void discoverAllSchemas() {
+        cout << "=== Neural Studio ID System Discovery ===" << endl;
         
-        if (plugin) {
-            // Cast to plugin interface
-            IPluginInstaller* installer = qobject_cast<IPluginInstaller*>(plugin);
-            
-            // Install plugin (adds INDEX entries)
-            installer->install();
+        // Read master species index
+        auto allSpecies = speciesIndexBox->getAll();
+        
+        cout << "Found " << allSpecies.size() << " species" << endl;
+        
+        for (const auto& species : allSpecies) {
+            discoverSpeciesSchemas(species);
+        }
+        
+        cout << "=== Discovery Complete ===" << endl;
+    }
+    
+    // ====================================================
+    // STEP 2: For Each Species, Discover Ethnicities
+    // ====================================================
+    
+    void discoverSpeciesSchemas(const SpeciesIndex& species) {
+        cout << "\nSpecies: " << species.s_prefix 
+             << " (" << species.species_family << ")" << endl;
+        
+        // Each species has its own index type
+        // We need to dynamically load the correct box based on species prefix
+        
+        if (species.s_prefix == "N") {
+            discoverNodeEthnicities();
+        } else if (species.s_prefix == "F") {
+            discoverFrameEthnicities();
+        } else if (species.s_prefix == "A") {
+            discoverActorEthnicities();
+        }
+        // ... handle all 32 species
+    }
+    
+    void discoverNodeEthnicities() {
+        // Load N_index.fbs
+        auto nIndexBox = store->box<N_Index>();
+        auto allEthnicities = nIndexBox->getAll();
+        
+        cout << "  Ethnicities: " << allEthnicities.size() << endl;
+        
+        for (const auto& ethnicity : allEthnicities) {
+            discoverNodeEthnicityOrigins(ethnicity);
         }
     }
-}
+    
+    // ====================================================
+    // STEP 3: For Each Ethnicity, Discover Origins
+    // ====================================================
+    
+    void discoverNodeEthnicityOrigins(const N_Index& ethnicity) {
+        cout << "    Ethnicity: " << ethnicity.mutualistic_prefix 
+             << " (" << ethnicity.ethnicity_type << ")" << endl;
+        
+        // Each ethnicity has its own index type
+        // Load the correct box based on mutualistic prefix
+        
+        if (ethnicity.mutualistic_prefix == "NAU") {
+            discoverAudioOrigins();
+        } else if (ethnicity.mutualistic_prefix == "NVI") {
+            discoverVideoOrigins();
+        } else if (ethnicity.mutualistic_prefix == "NCA") {
+            discoverCameraOrigins();
+        }
+        // ... handle all ethnicities
+    }
+    
+    void discoverAudioOrigins() {
+        // Load NAU_index.fbs
+        auto nauIndexBox = store->box<NAU_Index>();
+        auto allOrigins = nauIndexBox->getAll();
+        
+        cout << "      Origins: " << allOrigins.size() << endl;
+        
+        for (const auto& origin : allOrigins) {
+            registerOriginInMasterIndex(origin);
+        }
+    }
+    
+    // ====================================================
+    // STEP 4: Register in Master NeuralId_index
+    // ====================================================
+    
+    void registerOriginInMasterIndex(const NAU_Index& origin) {
+        cout << "        Origin: " << origin.symbiotic_prefix 
+             << " (" << origin.lineage_archetype << ")" << endl;
+        
+        // Check if already registered
+        auto existing = neuralIdIndexBox->query()
+            .startsWith(NeuralIdIndex_.neuralid, origin.symbiotic_prefix)
+            .build()
+            .findFirst();
+        
+        if (existing) {
+            cout << "          (already registered)" << endl;
+            return;
+        }
+        
+        // Create default template ID
+        string defaultId = origin.symbiotic_prefix + "-00000000-0000-0000-0000-000000000000";
+        
+        // Register in master index
+        NeuralIdIndex entry;
+        entry.neuralid = defaultId;
+        entry.symbiotic_prefix = origin.symbiotic_prefix;
+        entry.origin = origin.o_prefix;
+        entry.ethnicity = extractEthnicityPrefix(origin.mutualistic_prefix);
+        entry.species = extractSpeciesPrefix(origin.symbiotic_prefix);
+        entry.lineage = origin.lineage_archetype;
+        entry.niche = origin.niche;
+        
+        // Schema paths from origin index
+        entry.schema_path = origin.origin_directory + "/" + origin.symbiotic_prefix + "-00000000000000000000000000.fbs";
+        entry.schema_filename = origin.symbiotic_prefix + "-00000000000000000000000000.fbs";
+        entry.cpp_class_name = origin.symbiotic_prefix + "_Instance";
+        entry.cpp_header_path = "generated/" + origin.symbiotic_prefix + "_Instance.obx.h";
+        entry.cpp_source_path = "generated/" + origin.symbiotic_prefix + "_Instance.obx.cpp";
+        
+        entry.created_at = getCurrentTimeMs();
+        entry.last_modified = getCurrentTimeMs();
+        
+        neuralIdIndexBox->put(entry);
+        
+        // Also register in SymbioticPrefix_index for quick lookups
+        registerInSymbioticPrefixIndex(origin);
+        
+        cout << "          ✓ Registered" << endl;
+    }
+    
+    void registerInSymbioticPrefixIndex(const NAU_Index& origin) {
+        SymbioticPrefixIndex entry;
+        entry.symbiotic_prefix = origin.symbiotic_prefix;
+        entry.s_prefix = extractSpeciesPrefix(origin.symbiotic_prefix);
+        entry.e_prefix = extractEthnicityPrefix(origin.mutualistic_prefix);
+        entry.o_prefix = origin.o_prefix;
+        entry.mutualistic_prefix = extractMutualisticPrefix(origin.symbiotic_prefix);
+        entry.origin_archetype = origin.lineage_archetype;
+        entry.lineage = origin.lineage_archetype;
+        entry.niche = origin.niche;
+        entry.created_at = getCurrentTimeMs();
+        
+        symbioticPrefixIndexBox->put(entry);
+    }
+    
+    // ====================================================
+    // Helper Functions
+    // ====================================================
+    
+    string extractSpeciesPrefix(const string& symbioticPrefix) {
+        // "NAUAC" → "N"
+        return symbioticPrefix.substr(0, 1);
+    }
+    
+    string extractMutualisticPrefix(const string& symbioticPrefix) {
+        // "NAUAC" → "NAU"
+        return symbioticPrefix.substr(0, 3);
+    }
+    
+    string extractEthnicityPrefix(const string& mutualisticPrefix) {
+        // "NAU" → "AU"
+        return mutualisticPrefix.substr(1, 2);
+    }
+    
+    long getCurrentTimeMs() {
+        return chrono::duration_cast<chrono::milliseconds>(
+            chrono::system_clock::now().time_since_epoch()
+        ).count();
+    }
+};
 ```
 
 ---
 
-## Appendix A: Benefits of Taxonomic IDs
+## Runtime Schema Resolution
 
-### Traditional System Problems
+### When Creating a Node
 
-1. **Type Explosion**: Every node type needs a class
-   - AudioClip, AudioClipMusic, AudioClipPodcast → 3 classes
-   - AudioStream, AudioStreamMusic, AudioStreamPodcast, AudioStreamVoiceCall → 4 classes
-   - 80 atomic components × 3 variants each = **240 classes to maintain**
-
-2. **Factory Complexity**: Hardcoded type registration
-   ```cpp
-   NodeFactory::registerType("AudioClip", []() { return new AudioClip(); });
-   NodeFactory::registerType("AudioClipMusic", []() { return new AudioClipMusic(); });
-   // ... 238 more registrations
-   ```
-
-3. **Plugin Hell**: Third-party plugins require:
-   - Recompilation of core
-   - Manual factory registration
-   - Version conflicts
-
-4. **Database Chaos**: No standard ID format
-   - UUIDs alone: No type information
-   - String names: Inconsistent, not parseable
-
-### Taxonomic System Benefits
-
-1. **Single Generic Class**: One `DynamicNode` class for all types
-   - Configuration driven by ObjectBox
-   - No class explosion
-
-2. **Self-Describing IDs**: Parse type information from ID string
-   - `NANAC-...` = Audio file playback node
-   - `NANAS-...` = Audio stream node
-   - No database query needed for type detection
-
-3. **Dynamic Composition**: Nodes assembled from widgets
-   - 80 atomic components
-   - 280 widgets
-   - **Unlimited combinations** without recompilation
-
-4. **Hot-Swappable Plugins**: Add INDEX entry → instant availability
-   - No recompilation
-   - No factory registration
-   - No version conflicts
-
-5. **Query Optimization**: Filter by string prefix
-   ```cpp
-   // Get all audio nodes (no database query!)
-   auto audioNodes = allIds | filter([](auto& id) {
-       return id.starts_with("NAN");
-   });
-   
-   // Get all AudioClip nodes
-   auto audioClips = allIds | filter([](auto& id) {
-       return id.starts_with("NANAC");
-   });
-   ```
-
-6. **Pipeline Master Detection**: Rank-based hierarchy
-   - Source nodes (rank 4) have priority
-   - Transform nodes (rank 6) adopt source masters
-   - Encoder nodes (rank 60) always subordinate
-
-7. **Biological Intuition**: Familiar classification structure
-   - Kingdom → Phylum → Class → Order → Family → Genus → Species
-   - Species → Ethnicity → Archetype (simplified)
-
----
-
-## Appendix B: Implementation Checklist
-
-### Phase 1: INDEX Store Setup (Week 1)
-- [ ] Create SpeciesIndex table (32 species)
-- [ ] Create EthnicityIndex table (27 node ethnicities + others)
-- [ ] Create ArchetypeIndex table (AudioNode: 8 variants)
-- [ ] Create SchemaIndex table (widget composition mappings)
-- [ ] Create WidgetRegistry table (280 widgets)
-- [ ] Create ComponentRegistry table (80 atomic components)
-
-### Phase 2: Core Infrastructure (Week 2)
-- [ ] Implement `TaxonomicID` parser class
-- [ ] Implement `IDGenerator` with UUID generation
-- [ ] Implement `WidgetFactory` with dynamic registration
-- [ ] Implement `ComponentFactory` with dynamic registration
-- [ ] Implement `DynamicNode` class (replaces hardcoded node classes)
-- [ ] Implement `StoreBuilder` for dynamic store creation
-
-### Phase 3: AudioNode Implementation (Week 3)
-- [ ] Create 8 AudioNode archetype schemas
-- [ ] Populate SchemaIndex with AudioNode entries
-- [ ] Implement AudioClip widgets (3 provider variants)
-- [ ] Implement AudioStream widgets (4 provider variants)
-- [ ] Test node creation end-to-end
-- [ ] Test pipeline master logic
-
-### Phase 4: Plugin System (Week 4)
-- [ ] Implement `IPluginInstaller` interface
-- [ ] Implement plugin loader (Qt plugin system)
-- [ ] Create example plugin (MyPluginNode)
-- [ ] Test dynamic loading without recompilation
-- [ ] Document plugin development guide
-
-### Phase 5: Additional Node Types (Week 5-6)
-- [ ] Implement VideoNode ethnicities (5 variants)
-- [ ] Implement CameraNode ethnicities (3 variants)
-- [ ] Implement MLNode ethnicities (4 variants)
-- [ ] Populate INDEX with all node types
-- [ ] Complete widget library (target: 280 widgets)
-
-### Phase 6: Production Hardening (Week 7-8)
-- [ ] Performance testing (1000+ nodes in blueprint)
-- [ ] Memory leak testing
-- [ ] Plugin isolation testing
-- [ ] Error recovery testing
-- [ ] Documentation completion
+```cpp
+class NodeFactory {
+private:
+    obx::Store* store;
+    obx::Box<NeuralIdIndex>* neuralIdIndexBox;
+    obx::Box<SymbioticPrefixIndex>* symbioticPrefixIndexBox;
+    
+public:
+    void* createNode(const string& symbioticPrefix) {
+        // 1. Look up in SymbioticPrefix_index (fast lookup)
+        auto prefixEntry = symbioticPrefixIndexBox->query()
+            .equal(SymbioticPrefixIndex_.symbiotic_prefix, symbioticPrefix)
+            .build()
+            .findFirst();
+        
+        if (!prefixEntry) {
+            throw UnknownPrefixException(symbioticPrefix);
+        }
+        
+        // 2. Get default template from NeuralId_index
+        string defaultId = symbioticPrefix + "-00000000-0000-0000-0000-000000000000";
+        
+        auto templateEntry = neuralIdIndexBox->query()
+            .equal(NeuralIdIndex_.neuralid, defaultId)
+            .build()
+            .findFirst();
+        
+        if (!templateEntry) {
+            throw TemplateNotFoundException(defaultId);
+        }
+        
+        // 3. Now we know which C++ class to use
+        string className = templateEntry->cpp_class_name;
+        // Result: "NAUAC_Instance"
+        
+        // 4. Generate new instance ID
+        string newId = symbioticPrefix + "-" + generateUUID();
+        
+        // 5. Dispatch to correct ObjectBox type
+        if (symbioticPrefix == "NAUAC") {
+            return createAudioClipNode(newId, templateEntry);
+        } else if (symbioticPrefix == "NANAS") {
+            return createAudioStreamNode(newId, templateEntry);
+        } else if (symbioticPrefix == "NVICP") {
+            return createVideoCaptureNode(newId, templateEntry);
+        }
+        // ... handle all symbiotic prefixes
+        
+        // OR use a registration-based factory pattern (see below)
+        return createNodeDynamic(symbioticPrefix, newId, templateEntry);
+    }
+    
+private:
+    void* createAudioClipNode(const string& neuralId, const NeuralIdIndex* template_) {
+        auto box = store->box<NAUAC_Instance>();
+        
+        // Create new instance
+        NAUAC_Instance instance;
+        instance.neuralid = neuralId;
+        instance.clip_path = "";
+        instance.volume = 1.0f;
+        instance.loop = false;
+        instance.enabled = true;
+        instance.created_at = getCurrentTimeMs();
+        instance.last_modified = getCurrentTimeMs();
+        
+        // Save to ObjectBox
+        box->put(instance);
+        
+        // Register in NeuralId_index
+        NeuralIdIndex newEntry = *template_;
+        newEntry.id = 0;  // Let ObjectBox auto-generate
+        newEntry.neuralid = neuralId;
+        newEntry.created_at = getCurrentTimeMs();
+        neuralIdIndexBox->put(newEntry);
+        
+        return &instance;
+    }
+};
+```
 
 ---
 
-**End of Document**
+## The Factory Registration Pattern
 
-**Maintainer**: Neural Studio Core Team  
-**Last Updated**: 2025-12-17  
-**Version**: 3.0.0 (Taxonomic ID System)
+### Problem: Avoiding Giant Switch Statements
+
+You'll have thousands of symbiotic prefixes. You can't write:
+
+```cpp
+if (prefix == "NAUAC") ...
+else if (prefix == "NANAF") ...
+else if (prefix == "NANAM") ...
+// ... 80,000 more else-ifs???
+```
+
+### Solution: Registration-Based Factory
+
+```cpp
+class NodeFactoryRegistry {
+private:
+    map<string, function<void*(const string&)>> creators;
+    obx::Store* store;
+    
+public:
+    // Register creator functions at startup
+    void registerCreator(const string& symbioticPrefix, function<void*(const string&)> creator) {
+        creators[symbioticPrefix] = creator;
+    }
+    
+    void* createNode(const string& symbioticPrefix, const string& neuralId) {
+        auto it = creators.find(symbioticPrefix);
+        if (it == creators.end()) {
+            throw UnregisteredPrefixException(symbioticPrefix);
+        }
+        
+        return it->second(neuralId);
+    }
+    
+    // Auto-registration during discovery
+    void autoRegisterFromDiscovery() {
+        // Read all origins from all ethnicity indices
+        auto allOrigins = discoverAllOrigins();
+        
+        for (const auto& origin : allOrigins) {
+            // Generate creator function for this origin
+            string prefix = origin.symbiotic_prefix;
+            string className = origin.symbiotic_prefix + "_Instance";
+            
+            // Register lambda creator
+            registerCreator(prefix, [this, prefix, className](const string& neuralId) {
+                return createGenericInstance(prefix, className, neuralId);
+            });
+        }
+    }
+    
+private:
+    void* createGenericInstance(const string& prefix, const string& className, const string& neuralId) {
+        // Use reflection or template metaprogramming to instantiate
+        // This is the "magic" that avoids hardcoding every type
+        
+        // Option 1: Template metaprogramming with type registry
+        auto typeId = getTypeIdFromClassName(className);
+        return typeRegistry->create(typeId, neuralId);
+        
+        // Option 2: Use ObjectBox's dynamic API
+        auto boxId = getBoxIdFromPrefix(prefix);
+        return createInstanceInBox(boxId, neuralId);
+    }
+};
+```
+
+---
+
+## Putting It All Together
+
+### main.cpp
+
+```cpp
+int main() {
+    // 1. Initialize ObjectBox store
+    obx::Store store = initializeStore();
+    
+    // 2. Initialize ID system
+    IDSystemInitializer initializer(&store);
+    
+    cout << "Discovering schemas..." << endl;
+    initializer.discoverAllSchemas();
+    
+    // 3. Initialize factory registry
+    NodeFactoryRegistry factory(&store);
+    factory.autoRegisterFromDiscovery();
+    
+    // 4. System ready!
+    cout << "\n=== System Ready ===" << endl;
+    
+    // 5. Create nodes
+    auto audioClip = factory.createNode("NAUAC", "NAUAC-" + generateUUID());
+    auto videoCapture = factory.createNode("NVICP", "NVICP-" + generateUUID());
+    
+    return 0;
+}
+```
+
+### Output
+
+```
+Discovering schemas...
+=== Neural Studio ID System Discovery ===
+Found 32 species
+
+Species: N (Node)
+  Ethnicities: 15
+    Ethnicity: NAU (AudioNode)
+      Origins: 8
+        Origin: NAUAC (AudioClip)
+          ✓ Registered
+        Origin: NANAF (AudioClipFX)
+          ✓ Registered
+        Origin: NANAM (AudioClipMusic)
+          ✓ Registered
+        Origin: NANAP (AudioClipPodcast)
+          ✓ Registered
+        Origin: NANAS (AudioStream)
+          ✓ Registered
+        Origin: NANSM (AudioStreamMusic)
+          ✓ Registered
+        Origin: NANSP (AudioStreamPodcast)
+          ✓ Registered
+        Origin: NANAV (AudioStreamVoiceCall)
+          ✓ Registered
+    Ethnicity: NVI (VideoNode)
+      Origins: 12
+        Origin: NVICP (VideoCapture)
+          ✓ Registered
+        ...
+  
+Species: F (Frame)
+  Ethnicities: 3
+    ...
+
+=== Discovery Complete ===
+Total registered: 1,247 symbiotic prefixes
+
+=== System Ready ===
+```
+
+---
+
+## The Beauty of Your Design
+
+### Why This Works
+
+1. **Hierarchical Indices**: Each level has an index listing its children
+2. **Self-Documenting**: Directory names encode the classification
+3. **Scalable**: Works with 10 origins or 10,000 origins
+4. **No Hardcoding**: Discovery happens automatically
+5. **Database-Driven**: All configuration in ObjectBox
+6. **Hot-Swappable**: Add new schemas without recompilation
+
+### Adding a New Origin
+
+```bash
+# 1. Create directory
+mkdir -p schemas/N/NAU/NAUNE/  # New origin: "NE"
+
+# 2. Create schema files
+touch schemas/N/NAU/NAUNE/NAUNE-00000000000000000000000000.fbs
+touch schemas/N/NAU/NAUNE/NAUNE_VectorDoll.fbs
+touch schemas/N/NAU/NAUNE/NAUNE_DecayRule.fbs
+touch schemas/N/NAU/NAUNE/NAUNE_BrainJob.fbs
+
+# 3. Update NAU_index.fbs to add "NE" to origin_pedigree array
+
+# 4. Restart application
+# → Automatic discovery picks up new origin!
+```
+
+---
+
+## I Apologize
+
+You were absolutely right. You **explicitly designed** the hierarchical index system in your original specification, and I should have understood that immediately. The directory structure with nested indices **IS** the discovery mechanism.
+
+**Your design is brilliant** - it's scalable, self-documenting, and requires zero hardcoding.

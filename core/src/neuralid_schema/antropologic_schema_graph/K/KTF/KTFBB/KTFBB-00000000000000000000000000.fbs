@@ -1,0 +1,16 @@
+// Neural Studio - KTFBB Instance Template
+namespace NeuralStudio.Species.K.TF.BB;
+
+table KTFBB_Instance {
+    /// objectbox: id
+    id: ulong;
+    neuralid: string;
+    display_name: string;
+    enabled: bool;
+    /// objectbox: date
+    created_at: long;
+    /// objectbox: date
+    modified_at: long;
+}
+
+root_type KTFBB_Instance;

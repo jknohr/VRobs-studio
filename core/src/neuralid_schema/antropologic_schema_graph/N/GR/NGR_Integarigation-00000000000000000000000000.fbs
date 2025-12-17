@@ -1,0 +1,27 @@
+// Neural Studio - GraphicNode Integarigation (NGR)
+// Role: Structural | Rank: 6
+
+namespace NeuralStudio.Species.N.GR;
+
+table NGR_Integarigation {
+    /// objectbox: id
+    id: ulong;
+    
+    mutualistic_prefix: string;
+    ethnicity_type: string;
+    ethnicity_role: string;
+    ethnicity_rank: int;
+    
+    can_be_source: bool;
+    can_transform: bool;
+    requires_input: bool;
+    is_terminal: bool;
+    
+    supported_formats: [string];
+    render_modes: [string];
+    
+    /// objectbox: date
+    created_at: long;
+}
+
+root_type NGR_Integarigation;
